@@ -9,7 +9,13 @@ end
 
 local function autorebirth()
         while _G.autorebirth == true do
-        game:GetService("ReplicatedStorage"):WaitForChild("GameClient"):WaitForChild("Events"):WaitForChild("RemoteEvent"):WaitForChild("RebirthEvent"):FireServer()
+        local args = {
+    [1] = "Click",
+    [2] = false
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("ClickEvent"):FireServer(unpack(args))
+
         task.wait()
         end
 end
