@@ -3,16 +3,26 @@ local Library = loadstring(Game:HttpGet("https://raw.githubusercontent.com/blood
 
 local function autofarm()
         while _G.autofarm == true do
-            print("work")    
-           game:GetService("ReplicatedStorage"):WaitForChild("ClickEvent"):FireServer("Click", false)
+           local args = {
+    [1] = "Click",
+    [2] = false
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("ClickEvent"):FireServer(unpack(args))
+
            task.wait()
         end
 end
 
 local function autofarm2()
         while _G.autofarm2 == true do
-                print("work2")
-           game:GetService("ReplicatedStorage"):WaitForChild("ClickEvent"):FireServer("Click", true)
+           local args = {
+    [1] = "Click",
+    [2] = true
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("ClickEvent"):FireServer(unpack(args))
+
            task.wait()
         end
 end
