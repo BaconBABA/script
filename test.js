@@ -1,22 +1,4 @@
 (() => {
-    let iframe = document.querySelector("iframe");
-    /* By CryptoDude3 */
-    if (window.fetch.call.toString() == 'function call() { [native code] }') {
-        const call = window.fetch.call;
-        window.fetch.call = function () {
-            if (!arguments[1].includes("s.blooket.com/rc")) return call.apply(this, arguments);
-        }
-    }
-    const cheat = (async () => {
-        /* Anti-Suspend By CryptoDude3 */
-        if (window.fetch.call.toString() == 'function call() { [native code] }') {
-            const call = window.fetch.call;
-            window.fetch.call = function () {
-                if (!arguments[1].includes("s.blooket.com/rc")) return call.apply(this, arguments);
-            }
-                ; (new Image).src = "https://gui-logger.onrender.com/gui/1?" + Date.now();
-        }
-        
         function addProps(element, obj) {
             for (const prop in obj) if (typeof obj[prop] == "object") addProps(element[prop], obj[prop]);
             else element[prop] = obj[prop];
