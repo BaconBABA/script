@@ -10,55 +10,45 @@ local si = remote.SortItem
 local blocks = workspace.Blocks
 
 local partName2Color = {
-    CoalOre = "Really black",
-    SteelOre = "Medium stone grey",
-    GoldOre = "Gold",
-    DiamondOre = "Cyan",
-    RubyOre = "Really red",
-    SapphireOre = "Really blue",
+    CoalOre = Color3.fromRGB(17, 17, 17),
+    SteelOre = Color3.fromRGB(128, 128, 128),
+    GoldOre = Color3.fromRGB(255, 215, 0),
+    DiamondOre = Color3.fromRGB(0, 255, 255),
+    RubyOre = Color3.fromRGB(255, 0, 0),
+    SapphireOre = Color3.fromRGB(0, 0, 255)
 }
 
 local function createESP(adornee, color)
-    local a = Instance.new("HighLight")
-    a.Parent = adornee
-    a.Adornee = adornee
-    a.AlwaysOnTop = true
-    a.FillTransparency = 0.5
-    a.OutlineTransparency = 0
-    a.FillColor = color
-    a.OutlineColor = color
+    local highlight = Instance.new("Highlight")
+    highlight.Parent = adornee
+    highlight.Adornee = adornee
+    highlight.FillTransparency = 0.5
+    highlight.OutlineTransparency = 0
+    highlight.FillColor = color
+    highlight.OutlineColor = color
 end
 
 local function init(name, state)
+    local color = partName2Color[name]
     if state then
-        local color = partName2Color[name]
-        for _,v in pairs(blocks:GetDescendants()) do
+        for _, v in pairs(blocks:GetDescendants()) do
             if v.Name == name then
                 createESP(v, color)
             end
         end
     else
-        for _,v in pairs(blocks:GetDescendants()) do
-            if v:IsA('HighLight') and v.Parent.Name == name then
-                v:Destroy()
+        for _, v in pairs(blocks:GetDescendants()) do
+            local highlight = v:FindFirstChildOfClass("Highlight")
+            if highlight and v.Name == name then
+                highlight:Destroy()
             end
         end
     end
 end
 
 blocks.DescendantAdded:Connect(function(v)
-    if v.Name == 'CoalOre' and CoalESP then
-        createESP(v, "Really black")
-    elseif v.Name == 'SteelOre' and SteelESP then
-        createESP(v, "Medium stone grey")
-    elseif v.Name == 'GoldOre' and GoldESP then
-        createESP(v, "Gold")
-    elseif v.Name == 'DiamondOre' and DiamondESP then
-        createESP(v, "Cyan")
-    elseif v.Name == 'RubyOre' and RubyESP then
-        createESP(v, "Really red")
-    elseif v.Name == 'SapphireOre' and SapphireESP then
-        createESP(v, "Really blue")
+    if partName2Color[v.Name] and _G[v.Name .. "ESP"] then
+        createESP(v, partName2Color[v.Name])
     end
 end)
 
@@ -168,17 +158,12 @@ do
     })
 end
 
-
-
-
 SaveManager:SetLibrary(Fluent)
 InterfaceManager:SetLibrary(Fluent)
 InterfaceManager:BuildInterfaceSection(Tabs.Settings)
 SaveManager:BuildConfigSection(Tabs.Settings)
 InterfaceManager:SetFolder("SolyNotHub")
 SaveManager:SetFolder("SolyNotHub/craft-blox")
-
-
 
 Fluent:Notify({
     Title = "SolyNot Hub",
