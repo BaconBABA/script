@@ -2,11 +2,11 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
-local gr = game.ReplicatedStorage.GameRemotes
+local remote = game.ReplicatedStorage.GameRemotes
 
-local abb = gr.AcceptBreakBlock
-local mi = gr.MoveItem
-local si = gr.SortItem
+local abb = remote.AcceptBreakBlock
+local mi = remote.MoveItem
+local si = remote.SortItem
 local blocks = workspace.Blocks
 
 local partName2Color = {
@@ -19,14 +19,14 @@ local partName2Color = {
 }
 
 local function createESP(adornee, color)
-    local a = Instance.new("BoxHandleAdornment")
+    local a = Instance.new("HighLight")
     a.Parent = adornee
     a.Adornee = adornee
     a.AlwaysOnTop = true
-    a.ZIndex = 0
-    a.Size = adornee.Size
-    a.Transparency = 0.5
-    a.Color = BrickColor.new(color)
+    a.FillTransparency = 0.5
+    a.OutlineTransparency = 0
+    a.FillColor = color
+    a.OutlineColor = color
 end
 
 local function init(name, state)
@@ -78,9 +78,8 @@ local Window = Fluent:CreateWindow({
 })
 
 local Tabs = {
-    Credit = Window:AddTab({ Title = "Credit", Icon = "users" }),
-    Main = Window:AddTab({ Title = "Main", Icon = "scroll" }),
-    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+    Main = Window:AddTab({ Title = "Main", Icon = "" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "" })
 }
 
 local Options = Fluent.Options
@@ -169,13 +168,6 @@ do
             wait()
             init('SapphireOre', Value)
         end
-    })
-
-    local Section2 = Tabs.Credit:AddSection("Credit")
-
-    Section2:AddParagraph({
-        Title = "test",
-        Content = "test"
     })
 end
 
