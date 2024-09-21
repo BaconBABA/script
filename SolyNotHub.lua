@@ -32,9 +32,6 @@ end
 local function init(name, state)
     if state then
         local color = partName2Color[name]
-        if color == nil then
-            color = 'Institutional white'
-        end
         for _,v in pairs(blocks:GetDescendants()) do
             if v.Name == name then
                 createESP(v, color)
@@ -42,7 +39,7 @@ local function init(name, state)
         end
     else
         for _,v in pairs(blocks:GetDescendants()) do
-            if v:IsA('BoxHandleAdornment') and v.Parent.Name == name then
+            if v:IsA('HighLight') and v.Parent.Name == name then
                 v:Destroy()
             end
         end
