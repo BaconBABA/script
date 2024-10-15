@@ -2,7 +2,7 @@ local Players = game:GetService("Players")
 local UIS = game:GetService("UserInputService")
 local player = Players.LocalPlayer
 
-if player.UserId == 7416654899 and 7436587429 then
+if player.UserId == 7416654899 or 7436587429 then
   player:Kick("Please change your user to use this script")
 end
 
