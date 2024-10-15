@@ -51,11 +51,6 @@ local function updateItems()
                 itemCache[descendant.Parent] = true
                 table.insert(items, descendant.Parent)
             end
-        elseif descendant.Parent:FindFirstChild("ProximityPrompt") and (descendant.Name == "NewItemPickupScript" or descendant.Name == "ClickEvent") then
-            if not itemCache[descendant.Parent] then
-                itemCache[descendant.Parent] = true
-                table.insert(items, descendant.Parent)
-            end
         end
     end
     return items
@@ -88,8 +83,6 @@ local function createItemFrame(object)
             fireclickdetector(object.ClickDetector)
             task.wait(0.3)
             player.Character.HumanoidRootPart.CFrame = cpos
-        elseif object:FindFirstChild("ProximityPrompt") then
-            fireproximityprompt(object.ProximityPrompt)
         end
     end)
 end
