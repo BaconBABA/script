@@ -2,7 +2,6 @@ local Players = game:GetService("Players")
 local UIS = game:GetService("UserInputService")
 local player = Players.LocalPlayer
 
--- Setup GUI
 local PiggyGui = Instance.new("ScreenGui")
 PiggyGui.Parent = game.CoreGui
 
