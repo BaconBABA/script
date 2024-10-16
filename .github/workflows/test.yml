@@ -20,8 +20,6 @@ jobs:
             MESSAGE="$COMMIT_COUNT new commits"
           fi
 
-          DESCRIPTION=""
-
           curl -H "Content-Type: application/json" \
             -X POST \
             -d '{
