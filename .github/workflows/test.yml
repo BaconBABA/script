@@ -34,7 +34,7 @@ jobs:
               "username": "GitHub",
               "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
               "embeds": [{
-                "title": "[${{ github.repository }}:${{ github.ref_name }}] '"$MESSAGE"'",
+                "title": "[${{ github.repository }}:${{ github.ref_name }}],
                 "description": "'"$DESCRIPTION"'",
                 "color": 5814783
               }]
