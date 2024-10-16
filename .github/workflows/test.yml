@@ -22,12 +22,6 @@ jobs:
 
           DESCRIPTION=""
 
-          for i in $(seq 0 $(($COMMIT_COUNT - 1))); do
-            COMMIT_MESSAGE=$(echo '${{ toJson(github.event.commits) }}' | jq -r ".[$i].message")
-            COMMIT_URL=$(echo '${{ toJson(github.event.commits) }}' | jq -r ".[$i].url")
-            DESCRIPTION+="\`[$(echo $COMMIT_URL` - $COMMIT_MESSAGE\n"
-          done
-
           curl -H "Content-Type: application/json" \
             -X POST \
             -d '{
@@ -35,7 +29,7 @@ jobs:
               "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
               "embeds": [{
                 "title": "[${{ github.repository }}:${{ github.ref_name }}] '"$MESSAGE"'",
-                "description": "'"$DESCRIPTION"'",
+                "description": "`${{ github.event.head_commit.id }}` - ${{ github.event.head_commit.message }}",
                 "url": "${{ github.event.head_commit.url }}",
                 "color": 5814783
               }]
