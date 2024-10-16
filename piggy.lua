@@ -2,16 +2,22 @@ local Players = game:GetService("Players")
 local UIS = game:GetService("UserInputService")
 local player = Players.LocalPlayer
 
-local PiggyGui = Instance.new("ScreenGui", game.CoreGui)
-local ScrollingFrame = Instance.new("ScrollingFrame", PiggyGui)
+-- Setup GUI
+local PiggyGui = Instance.new("ScreenGui")
+PiggyGui.Parent = game.CoreGui
+
+local ScrollingFrame = Instance.new("ScrollingFrame")
+ScrollingFrame.Parent = PiggyGui
 ScrollingFrame.BackgroundColor3 = Color3.fromRGB(38, 38, 38)
 ScrollingFrame.Position = UDim2.new(0.08, 0, 0.42, 0)
 ScrollingFrame.Size = UDim2.new(0, 296, 0, 388)
 ScrollingFrame.CanvasSize = UDim2.new(0, 0, 5, 0)
 
-local UIGridLayout = Instance.new("UIGridLayout", ScrollingFrame)
+local UIGridLayout = Instance.new("UIGridLayout")
+UIGridLayout.Parent = ScrollingFrame
 UIGridLayout.CellSize = UDim2.new(0, 90, 0, 90)
 
+local itemCache, frameCache = {}, {}
 local isDragging, dragStart, startPos
 
 local function updateDrag(input)
@@ -39,37 +45,24 @@ UIS.InputChanged:Connect(function(input)
     end
 end)
 
-local itemCache = {}
-local frameCache = {}
-
-local function updateItems()
-    local newItems = {}
-    for _, obj in pairs(workspace:GetDescendants()) do
-        if (obj.Name == "ItemPickupScript" or obj.Name == "NewItemPickupScript") and obj.Parent:FindFirstChild("ClickDetector") or obj.Name == "ClickEvent" then
-            if not itemCache[obj.Parent] then
-                itemCache[obj.Parent] = true
-                table.insert(newItems, obj.Parent)
-            end
-        end
-    end
-    return newItems
-end
-
 local function createItemFrame(item)
-    local ItemFrame = Instance.new("TextButton", ScrollingFrame)
+    local ItemFrame = Instance.new("TextButton")
+    ItemFrame.Parent = ScrollingFrame
     ItemFrame.BackgroundColor3 = Color3.new(1, 1, 1)
     ItemFrame.BackgroundTransparency = 0.95
     ItemFrame.Size = UDim2.new(0, 100, 0, 100)
     ItemFrame.Text = ""
 
-    local Viewport = Instance.new("ViewportFrame", ItemFrame)
+    local Viewport = Instance.new("ViewportFrame")
+    Viewport.Parent = ItemFrame
     Viewport.Size = UDim2.new(1, 0, 1, 0)
     Viewport.BackgroundTransparency = 1
 
     local clone = item:Clone()
     clone.Parent = Viewport
 
-    local camera = Instance.new("Camera", Viewport)
+    local camera = Instance.new("Camera")
+    camera.Parent = Viewport
     camera.CameraType = Enum.CameraType.Fixed
     camera.CFrame = CFrame.new(item.Position + Vector3.new(0, 3, 0), item.Position)
     Viewport.CurrentCamera = camera
@@ -88,24 +81,25 @@ local function createItemFrame(item)
     frameCache[item] = ItemFrame
 end
 
-local function refreshUI()
-    local items = updateItems()
-    
-    for item, frame in pairs(frameCache) do
-        if not item:IsDescendantOf(workspace) then
-            frame:Destroy()
-            frameCache[item] = nil
-            itemCache[item] = nil
-        end
-    end
-
-    for _, item in pairs(items) do
-        if not frameCache[item] then
-            createItemFrame(item)
-        end
+local function onItemAdded(item)
+    if (item.Name == "ItemPickupScript" or item.Name == "NewItemPickupScript") and 
+       (item.Parent:FindFirstChild("ClickDetector") or item.Name == "ClickEvent") and 
+       not itemCache[item.Parent] then
+        itemCache[item.Parent] = true
+        createItemFrame(item.Parent)
     end
 end
 
-while task.wait(1) do
-    refreshUI()
+local function onItemRemoved(item)
+    if itemCache[item.Parent] and frameCache[item.Parent] then
+        frameCache[item.Parent]:Destroy()
+        itemCache[item.Parent], frameCache[item.Parent] = nil, nil
+    end
+end
+
+workspace.DescendantAdded:Connect(onItemAdded)
+workspace.DescendantRemoving:Connect(onItemRemoved)
+
+for _, item in pairs(workspace:GetDescendants()) do
+    onItemAdded(item)
 end
