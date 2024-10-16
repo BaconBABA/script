@@ -32,4 +32,4 @@ jobs:
                 "color": 5814783
               }]
             }' \
-            https://discord.com/api/webhooks/1285249000123011084/I0lTJuGkb6keUpunnqykUsX2fKH1QApPy30fhEuMssYAeP9l2nbojnONPdpLVbwDXU5N
+            "${{ secrets.DISCORD_WEBHOOK_URL }}"
