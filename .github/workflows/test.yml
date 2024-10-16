@@ -31,7 +31,7 @@ jobs:
                   "color": 5814783
                 }]
               }' \
-              <YOUR_WEBHOOK_URL>
+              https://discord.com/api/webhooks/1285249000123011084/I0lTJuGkb6keUpunnqykUsX2fKH1QApPy30fhEuMssYAeP9l2nbojnONPdpLVbwDXU5N
           else
             curl -H "Content-Type: application/json" \
               -X POST \
