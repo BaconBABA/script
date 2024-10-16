@@ -1,5 +1,5 @@
 local Library = loadstring(Game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wizard"))()
-
+print("run")
 local function autofarm()
         while _G.autofarm == true do
            game:GetService("ReplicatedStorage"):WaitForChild("ClickEvent"):FireServer("Click")
