@@ -11,6 +11,10 @@ jobs:
     steps:
       - name: Send Commit Data to Discord
         run: |
+          COMMIT_ID=${{ github.event.head_commit.id }}
+          SHORT_COMMIT_ID=${COMMIT_ID: -7}  # Get the last 7 characters of the commit ID
+          COMMIT_MESSAGE="${{ github.event.head_commit.message }}"
+          
           COMMIT_COUNT=$(echo '${{ toJson(github.event.commits) }}' | jq '. | length')
           MESSAGE=""
 
@@ -27,7 +31,7 @@ jobs:
               "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
               "embeds": [{
                 "title": "[${{ github.repository }}:${{ github.ref_name }}] '"$MESSAGE"'",
-                "description": "`${{ github.event.head_commit.id }}` - ${{ github.event.head_commit.message }}",
+                "description": "`['"$SHORT_COMMIT_ID"'`] - '"$COMMIT_MESSAGE"'",
                 "url": "${{ github.event.head_commit.url }}",
                 "color": 5814783
               }]
