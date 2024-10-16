@@ -168,7 +168,7 @@ SaveManager:SetFolder("SolyNotHub/craft-blox")
 Fluent:Notify({
     Title = "SolyNot Hub",
     Content = string.format("The script has been loaded in %.3f seconds.", tick() - ExecutionStartTime),
-    Duration = 5
+    Duration = 3
 })
 
 SaveManager:LoadAutoloadConfig()
