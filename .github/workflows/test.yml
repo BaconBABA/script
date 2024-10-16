@@ -36,6 +36,7 @@ jobs:
               "embeds": [{
                 "title": "[${{ github.repository }}:${{ github.ref_name }}]",
                 "description": "'"$DESCRIPTION"'",
+                "url": "${{ github.event.head_commit.url }}",
                 "color": 5814783
               }]
             }' \
