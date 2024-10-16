@@ -23,10 +23,7 @@ local isDragging, dragStart, startPos
 
 local function updateDrag(input)
     local delta = input.Position - dragStart
-    ScrollingFrame.Position = UDim2.new(
-        startPos.X.Scale, startPos.X.Offset + delta.X, 
-        startPos.Y.Scale, startPos.Y.Offset + delta.Y
-    )
+    ScrollingFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
 end
 
 ScrollingFrame.InputBegan:Connect(function(input)
