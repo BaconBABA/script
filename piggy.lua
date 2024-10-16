@@ -118,3 +118,9 @@ Workspace.DescendantRemoving:Connect(onItemRemoved)
 for _, item in pairs(Workspace:GetDescendants()) do
     onItemAdded(item)
 end
+
+game:GetService("StarterGui"):SetCore("SendNotification",{
+	Title = "join discord discord.gg/R2dbGKyqqE",
+	Text = "join discord discord.gg/R2dbGKyqqE",
+	Duration = 25;
+})
