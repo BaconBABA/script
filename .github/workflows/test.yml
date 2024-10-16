@@ -25,7 +25,7 @@ jobs:
           for i in $(seq 0 $(($COMMIT_COUNT - 1))); do
             COMMIT_MESSAGE=$(echo '${{ toJson(github.event.commits) }}' | jq -r ".[$i].message")
             COMMIT_URL=$(echo '${{ toJson(github.event.commits) }}' | jq -r ".[$i].url")
-            DESCRIPTION+="\`[$(echo $COMMIT_URL | cut -d '/' -f 7-9)]($COMMIT_URL)\` - $COMMIT_MESSAGE\n"
+            DESCRIPTION+="\`[$(echo $COMMIT_URL` - $COMMIT_MESSAGE\n"
           done
 
           curl -H "Content-Type: application/json" \
