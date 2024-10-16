@@ -8,45 +8,16 @@ jobs:
     steps:
       - name: Send Commit Data to Discord
         run: |
-          COMMIT_COUNT=$(jq '.commits | length' <<< ${{ toJSON(github.event) }})
-          AUTHOR_NAME=${{ github.event.head_commit.author.name }}
-          AUTHOR_USERNAME=${{ github.actor }}
-          AUTHOR_AVATAR=${{ github.event.head_commit.author.avatar_url }}
-
-          if [ "$COMMIT_COUNT" -eq 1 ]; then
-            COMMIT_MESSAGE="${{ github.event.head_commit.message }}"
-            COMMIT_URL="${{ github.event.head_commit.url }}"
-            curl -H "Content-Type: application/json" \
-              -X POST \
-              -d '{
-                "username": "GitHub",
-                "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
-                "embeds": [{
-                  "author": {
-                    "name": "'"${AUTHOR_NAME} (${AUTHOR_USERNAME})"'",
-                    "icon_url": "'"${AUTHOR_AVATAR}"'"
-                  },
-                  "title": "[${{ github.repository }}:${{ github.ref_name }}] 1 new commit",
-                  "description": "`[`[${{ github.sha }}](${COMMIT_URL})`]` - ${COMMIT_MESSAGE}",
-                  "color": 5814783
-                }]
-              }' \
-              https://discord.com/api/webhooks/1285249000123011084/I0lTJuGkb6keUpunnqykUsX2fKH1QApPy30fhEuMssYAeP9l2nbojnONPdpLVbwDXU5N
-          else
-            curl -H "Content-Type: application/json" \
-              -X POST \
-              -d '{
-                "username": "GitHub",
-                "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
-                "embeds": [{
-                  "author": {
-                    "name": "'"${AUTHOR_NAME} (${AUTHOR_USERNAME})"'",
-                    "icon_url": "'"${AUTHOR_AVATAR}"'"
-                  },
-                  "title": "[${{ github.repository }}:${{ github.ref_name }}] '"$COMMIT_COUNT"' new commits",
-                  "description": "View the latest commits [here](${COMMIT_URL})",
-                  "color": 5814783
-                }]
-              }' \
-              https://discord.com/api/webhooks/1285249000123011084/I0lTJuGkb6keUpunnqykUsX2fKH1QApPy30fhEuMssYAeP9l2nbojnONPdpLVbwDXU5N
-          fi
+          curl -H "Content-Type: application/json" \
+            -X POST \
+            -d '{
+              "username": "GitHub",
+              "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+              "embeds": [{
+                "title": "[${{ github.repository }}:${{ github.ref_name }}] New Commit by ${{ github.actor }}",
+                "description": "`${{ github.event.head_commit.id }}` - ${{ github.event.head_commit.message }}",
+                "url": "${{ github.event.head_commit.url }}",
+                "color": 5814783
+              }]
+            }' \
+            https://discord.com/api/webhooks/1285249000123011084/I0lTJuGkb6keUpunnqykUsX2fKH1QApPy30fhEuMssYAeP9l2nbojnONPdpLVbwDXU5N
