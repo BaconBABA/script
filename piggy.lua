@@ -1,9 +1,11 @@
 local Players = game:GetService("Players")
 local UIS = game:GetService("UserInputService")
 local player = Players.LocalPlayer
+local CoreGui = game:GetService("CoreGui")
+local Workspace = game:GetService("Workspace")
 
 local PiggyGui = Instance.new("ScreenGui")
-PiggyGui.Parent = game.CoreGui
+PiggyGui.Parent = CoreGui
 
 local ScrollingFrame = Instance.new("ScrollingFrame")
 ScrollingFrame.Parent = PiggyGui
@@ -21,7 +23,10 @@ local isDragging, dragStart, startPos
 
 local function updateDrag(input)
     local delta = input.Position - dragStart
-    ScrollingFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    ScrollingFrame.Position = UDim2.new(
+        startPos.X.Scale, startPos.X.Offset + delta.X, 
+        startPos.Y.Scale, startPos.Y.Offset + delta.Y
+    )
 end
 
 ScrollingFrame.InputBegan:Connect(function(input)
@@ -76,8 +81,22 @@ local function createItemFrame(item)
             player.Character.HumanoidRootPart.CFrame = originalPos
         end
     end)
-
     frameCache[item] = ItemFrame
+    local function update()
+        ItemFrame.Visible = item.Transparency < 1
+        if ItemFrame.Visible then
+            for _, child in ipairs(Viewport:GetChildren()) do
+                if child:IsA("Model") or child:IsA("Part") then
+                    child:Destroy()
+                end
+            end
+            local clone = item:Clone()
+            clone.Parent = Viewport
+            camera.CFrame = CFrame.new(item.Position + Vector3.new(0, 3, 0), item.Position)
+        end
+    end
+    update()
+    item:GetPropertyChangedSignal("Transparency"):Connect(update)
 end
 
 local function onItemAdded(item)
@@ -96,9 +115,9 @@ local function onItemRemoved(item)
     end
 end
 
-workspace.DescendantAdded:Connect(onItemAdded)
-workspace.DescendantRemoving:Connect(onItemRemoved)
+Workspace.DescendantAdded:Connect(onItemAdded)
+Workspace.DescendantRemoving:Connect(onItemRemoved)
 
-for _, item in pairs(workspace:GetDescendants()) do
+for _, item in pairs(Workspace:GetDescendants()) do
     onItemAdded(item)
 end
