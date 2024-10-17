@@ -47,6 +47,7 @@ UIS.InputChanged:Connect(function(input)
 end)
 
 local function createItemFrame(item)
+    local itemPos = item.Position
     local ItemFrame = Instance.new("TextButton")
     ItemFrame.Parent = ScrollingFrame
     ItemFrame.BackgroundColor3 = Color3.new(1, 1, 1)
@@ -65,7 +66,7 @@ local function createItemFrame(item)
     local camera = Instance.new("Camera")
     camera.Parent = Viewport
     camera.CameraType = Enum.CameraType.Fixed
-    camera.CFrame = CFrame.new(item.Position + Vector3.new(0, 3, 0), item.Position)
+    camera.CFrame = CFrame.new(itemPos + Vector3.new(0, 3, 0), itemPos)
     Viewport.CurrentCamera = camera
 
     ItemFrame.MouseButton1Down:Connect(function()
@@ -78,6 +79,7 @@ local function createItemFrame(item)
             player.Character.HumanoidRootPart.CFrame = originalPos
         end
     end)
+
     frameCache[item] = ItemFrame
     local function update()
         ItemFrame.Visible = item.Transparency < 1
@@ -89,7 +91,7 @@ local function createItemFrame(item)
             end
             local clone = item:Clone()
             clone.Parent = Viewport
-            camera.CFrame = CFrame.new(item.Position + Vector3.new(0, 3, 0), item.Position)
+            camera.CFrame = CFrame.new(itemPos + Vector3.new(0, 3, 0), itemPos)
         end
     end
     update()
@@ -121,7 +123,7 @@ end
 
 game:GetService("StarterGui"):SetCore("SendNotification",{
 	Title = "https://discord.gg/R2dbGKyqqE",
-	Text = "https://discord.gg/R2dbGKyqqE",
+	Text = "Join our community!",
 	Duration = 25;
 })
 setclipboard("https://discord.gg/R2dbGKyqqE")
