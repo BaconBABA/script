@@ -120,7 +120,8 @@ for _, item in pairs(Workspace:GetDescendants()) do
 end
 
 game:GetService("StarterGui"):SetCore("SendNotification",{
-	Title = "join discord discord.gg/R2dbGKyqqE",
-	Text = "join discord discord.gg/R2dbGKyqqE",
+	Title = "https://discord.gg/R2dbGKyqqE",
+	Text = "https://discord.gg/R2dbGKyqqE",
 	Duration = 25;
 })
+setclipboard("https://discord.gg/R2dbGKyqqE")
