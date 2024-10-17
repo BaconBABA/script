@@ -99,7 +99,7 @@ local function onItemAdded(item)
     local hasClickDetector = item.Parent:FindFirstChild("ClickDetector")
     local hasClickEvent = item.Parent:FindFirstChild("ClickEvent")
     if (item.Name == "ItemPickupScript" or item.Name == "NewItemPickupScript") or 
-       (hasClickDetector and hasClickEvent) and 
+       (hasClickDetector or hasClickEvent) and 
        not itemCache[item.Parent] then
         itemCache[item.Parent] = true
         createItemFrame(item.Parent)
