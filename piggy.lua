@@ -1,11 +1,9 @@
 local Players = game:GetService("Players")
 local UIS = game:GetService("UserInputService")
 local player = Players.LocalPlayer
-local CoreGui = game:GetService("CoreGui")
-local Workspace = game:GetService("Workspace")
 
 local PiggyGui = Instance.new("ScreenGui")
-PiggyGui.Parent = CoreGui
+PiggyGui.Parent = game:GetService("CoreGui")
 
 local ScrollingFrame = Instance.new("ScrollingFrame")
 ScrollingFrame.Parent = PiggyGui
@@ -79,7 +77,6 @@ local function createItemFrame(item)
             player.Character.HumanoidRootPart.CFrame = originalPos
         end
     end)
-
     frameCache[item] = ItemFrame
     local function update()
         ItemFrame.Visible = item.Transparency < 1
@@ -99,8 +96,10 @@ local function createItemFrame(item)
 end
 
 local function onItemAdded(item)
-    if (item.Name == "ItemPickupScript" or item.Name == "NewItemPickupScript") and 
-       (item.Parent:FindFirstChild("ClickDetector") or item.Name == "ClickEvent") and 
+    local hasClickDetector = item.Parent:FindFirstChild("ClickDetector")
+    local hasClickEvent = item.Parent:FindFirstChild("ClickEvent")
+    if (item.Name == "ItemPickupScript" or item.Name == "NewItemPickupScript") or 
+       (game.PlaceId == 5661005779 and hasClickDetector and hasClickEvent) and 
        not itemCache[item.Parent] then
         itemCache[item.Parent] = true
         createItemFrame(item.Parent)
@@ -114,8 +113,8 @@ local function onItemRemoved(item)
     end
 end
 
-Workspace.DescendantAdded:Connect(onItemAdded)
-Workspace.DescendantRemoving:Connect(onItemRemoved)
+game:GetService("Workspace").DescendantAdded:Connect(onItemAdded)
+game:GetService("Workspace").DescendantRemoving:Connect(onItemRemoved)
 
 for _, item in pairs(Workspace:GetDescendants()) do
     onItemAdded(item)
