@@ -106,8 +106,7 @@ local function createItemFrame(item)
 end
 
 local function onItemAdded(item)
-    if string.find(item.Name, "BlueprintItem") 
-    or string.match(item.Name, ".*Door$") 
+    if string.match(item.Name, ".*Door$") 
     or string.match(item.Name, "^Page%d+$")
     or string.match(item.Name, "^Board%d+$")
     or item.Name == "TNTPart"
@@ -115,7 +114,8 @@ local function onItemAdded(item)
     or (item.Parent and (string.match(item.Parent.Name, ".*Door$") 
     or string.match(item.Parent.Name, "^Page%d+$")
     or string.match(item.Parent.Name, "^Board%d+$")
-    or item.Parent.Name == "TNTPart"
+    or item.Parent.Name == "TNTPart" 
+    or item.Parent.Name == "BlueprintItem"
     or item.Parent.Name == "PlankWall")) then
         return
     end
