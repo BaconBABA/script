@@ -41,6 +41,7 @@ UIS.InputChanged:Connect(function(input)
         updateDrag(input)
     end
 end)
+
 local function createViewport(item)
     local Viewport = Instance.new("ViewportFrame")
     Viewport.Size = UDim2.new(1, 0, 1, 0)
@@ -88,32 +89,52 @@ local function createItemFrame(item)
             player.Character.HumanoidRootPart.CFrame = originalPos
         end
     end)
+
     frameCache[item] = {Frame = ItemFrame, Viewport = Viewport, Clone = clone}
+
     local function update()
         if item.Transparency < 1 then
+            ItemFrame.Visible = true
             frameCache[item].Clone = updateViewport(Viewport, frameCache[item].Clone, item)
         else
             ItemFrame.Visible = false
         end
     end
+
     update()
     item:GetPropertyChangedSignal("Transparency"):Connect(update)
 end
 
 local function onItemAdded(item)
-    if ((item.Name == "ItemPickupScript" or item.Name == "NewItemPickupScript") and item.Parent:FindFirstChild("ClickDetector")) or 
-       (item.Parent:FindFirstChild("ClickDetector") or item.Parent:FindFirstChild("ClickEvent")) and 
-       not itemCache[item.Parent] then
-        itemCache[item.Parent] = true
-        task.defer(function() createItemFrame(item.Parent) end)
+    if string.find(item.Name, "BlueprintItem") 
+    or string.match(item.Name, ".*Door$") 
+    or string.match(item.Name, "^Page%d+$")
+    or string.match(item.Name, "^Board%d+$")
+    or item.Name == "TNTPart"
+    or item.Name == "PlankWall"
+    or (item.Parent and (string.match(item.Parent.Name, ".*Door$") 
+    or string.match(item.Parent.Name, "^Page%d+$")
+    or string.match(item.Parent.Name, "^Board%d+$")
+    or item.Parent.Name == "TNTPart"
+    or item.Parent.Name == "PlankWall")) then
+        return
+    end
+
+    local parent = item.Parent
+    if ((item.Name == "ItemPickupScript" or item.Name == "NewItemPickupScript") and parent:FindFirstChild("ClickDetector")) 
+    or (parent:FindFirstChild("ClickDetector") or parent:FindFirstChild("ClickEvent")) 
+    and not itemCache[parent] then
+        itemCache[parent] = true
+        task.defer(function() createItemFrame(parent) end)
     end
 end
 
 local function onItemRemoved(item)
-    if frameCache[item.Parent] then
-        frameCache[item.Parent].Frame:Destroy()
-        frameCache[item.Parent].Clone:Destroy()
-        itemCache[item.Parent], frameCache[item.Parent] = nil, nil
+    local parent = item.Parent
+    if frameCache[parent] then
+        frameCache[parent].Frame:Destroy()
+        frameCache[parent].Clone:Destroy()
+        itemCache[parent], frameCache[parent] = nil, nil
     end
 end
 
