@@ -111,6 +111,7 @@ local function onItemAdded(item)
     or string.match(item.Name, "^Board%d+$")
     or string.match(item.Name, "^Bear.+$")
     or string.match(item.Name, "^Button%d+$")
+    or string.match(item.Name, "%.%.part$")
     or item.Name == "TNTPart"
     or item.Name == "PlankWall"
     or item.Name == "BlueprintItem"
@@ -120,17 +121,14 @@ local function onItemAdded(item)
     or item.Name == "Trigger"
     or item.Name == "DoorMain"
     or item.Name == "Panel"
-    or item.Name == "HumanoidRootPart"
-    or item.Name == "InsertPart"
-    or item.Name == "WaterPart"
-    or item.Name == "KeyCodePart"
-    or item.Name == "FirePart"
-    or item.Name == "ATMPart"
+    or item.Name == "AddButton"
+    or item.Name == "SubTractButton"
     or (item.Parent and (string.match(item.Parent.Name, ".*Door$") 
     or string.match(item.Parent.Name, "^Page%d+$")
     or string.match(item.Parent.Name, "^Board%d+$")
     or string.match(item.Parent.Name, "^Bear.+$")
     or string.match(item.Parent.Name, "^Button%d+$")
+    or string.match(item.Parent.Name, "%.%.part$")
     or item.Parent.Name == "TNTPart" 
     or item.Parent.Name == "BlueprintItem"
     or item.Parent.Name == "LadderTrigger"
@@ -139,12 +137,8 @@ local function onItemAdded(item)
     or item.Parent.Name == "Trigger"
     or item.Parent.Name == "DoorMain"
     or item.Parent.Name == "Panel"
-    or item.Parent.Name == "HumanoidRootPart"
-    or item.Parent.Name == "InsertPart"
-    or item.Parent.Name == "WaterPart"
-    or item.Parent.Name == "KeyCodePart"
-    or item.Parent.Name == "FirePart"
-    or item.Parent.Name == "ATMPart"
+    or item.Parent.Name == "AddButton"
+    or item.Parent.Name == "SubTractButton"
     or item.Parent.Name == "PlankWall")) then
         return
     end
