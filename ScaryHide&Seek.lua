@@ -68,7 +68,7 @@ do
     Tabs.Main:AddButton({
         Title = "Join our discord",
         Callback = function()
-            setclipboard(https://discord.gg/R2dbGKyqqE)
+            setclipboard("https://discord.gg/R2dbGKyqqE")
         end
     }) 
 end
