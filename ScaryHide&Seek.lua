@@ -65,6 +65,12 @@ do
             tweenTeleport(humanoidRootPart, CFrame.new(112, 15, 398), 0.5)
         end
     })
+    Tabs.Main:AddButton({
+        Title = "Join our discord",
+        Callback = function()
+            setclipboard(https://discord.gg/R2dbGKyqqE)
+        end
+    }) 
 end
 SaveManager:SetLibrary(Fluent)InterfaceManager:SetLibrary(Fluent)InterfaceManager:BuildInterfaceSection(Tabs.Settings)SaveManager:BuildConfigSection(Tabs.Settings)InterfaceManager:SetFolder("SolyNotHub")SaveManager:SetFolder("SolyNotHub/ScaryHideNSeek")
 Fluent:Notify({
