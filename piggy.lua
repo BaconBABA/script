@@ -106,47 +106,8 @@ local function createItemFrame(item)
 end
 
 local function onItemAdded(item)
-    if string.match(item.Name, ".*Door$") 
-    or string.match(item.Name, "^Page%d+$")
-    or string.match(item.Name, "^Board%d+$")
-    or string.match(item.Name, "^Bear.+$")
-    or string.match(item.Name, "^Button%d+$")
-    or string.match(item.Name, "%.%.part$")
-    or item.Name == "TNTPart"
-    or item.Name == "PlankWall"
-    or item.Name == "BlueprintItem"
-    or item.Name == "LadderTrigger"
-    or item.Name == "SnowPart"
-    or item.Name == "Eye"
-    or item.Name == "Trigger"
-    or item.Name == "DoorMain"
-    or item.Name == "Panel"
-    or item.Name == "AddButton"
-    or item.Name == "SubTractButton"
-    or (item.Parent and (string.match(item.Parent.Name, ".*Door$") 
-    or string.match(item.Parent.Name, "^Page%d+$")
-    or string.match(item.Parent.Name, "^Board%d+$")
-    or string.match(item.Parent.Name, "^Bear.+$")
-    or string.match(item.Parent.Name, "^Button%d+$")
-    or string.match(item.Parent.Name, "%.%.part$")
-    or item.Parent.Name == "TNTPart" 
-    or item.Parent.Name == "BlueprintItem"
-    or item.Parent.Name == "LadderTrigger"
-    or item.Parent.Name == "SnowPart"
-    or item.Parent.Name == "Eye"
-    or item.Parent.Name == "Trigger"
-    or item.Parent.Name == "DoorMain"
-    or item.Parent.Name == "Panel"
-    or item.Parent.Name == "AddButton"
-    or item.Parent.Name == "SubTractButton"
-    or item.Parent.Name == "PlankWall")) then
-        return
-    end
-
     local parent = item.Parent
-    if ((item.Name == "ItemPickupScript" or item.Name == "NewItemPickupScript") and parent:FindFirstChild("ClickDetector")) 
-    or (parent:FindFirstChild("ClickDetector") or parent:FindFirstChild("ClickEvent")) 
-    and not itemCache[parent] then
+    if item.Name == "ItemPickupScript" or item.Name == "NewItemPickupScript" or (item.Name == "Script" and item.Parent:FindFirstChild("ClickDetector")) and not itemCache[parent] then
         itemCache[parent] = true
         task.defer(function() createItemFrame(parent) end)
     end
