@@ -131,7 +131,12 @@ end
 
 local loop = coroutine.wrap(function()
     while task.wait(2) do
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/ez.lua"))()
+        local success, errorMessage = pcall(function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/ez.lua"))()
+        end)
+        if not success then
+            warn("Error loading script:", errorMessage)
+        end
     end
 end)
 loop()
