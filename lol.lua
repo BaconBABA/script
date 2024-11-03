@@ -1,1 +1,1 @@
-game.Players.Hum_lex56.Character.Humanoid.WalkSpeed = 500
+game.Players.Hum_lex56.Character.Humanoid.WalkSpeed = 1000
