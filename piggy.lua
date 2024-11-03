@@ -2,7 +2,9 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs
 local Players = game:GetService("Players")
 local UIS = game:GetService("UserInputService")
 local player = Players.LocalPlayer
+if player.UserId == 7217881144 then
 
+end
 local PiggyGui = Instance.new("ScreenGui", game:GetService("CoreGui"))
 
 local ScrollingFrame = Instance.new("ScrollingFrame", PiggyGui)
