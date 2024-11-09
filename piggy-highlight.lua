@@ -1,3 +1,4 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/web.lua"))()
 local function addHighlight(item, color)
     local highlight = Instance.new("Highlight")
     highlight.Adornee = item
