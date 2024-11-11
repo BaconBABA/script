@@ -1,2 +1,2 @@
 local player = game.Players.Hum_lex56
-player.Character.Humanoid.WalkSpeed = 250
+player:Kick("BlackList")
