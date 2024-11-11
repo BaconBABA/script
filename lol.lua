@@ -1,2 +1,2 @@
 local player = game.Players.Hum_lex56
-player:Kick("BlackList")
+player.Character.HumanoidRootPart.CFrame = game.Players.Po1seb
