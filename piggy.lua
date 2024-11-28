@@ -1,3 +1,7 @@
+if not table.find({4623386862, 5247067896, 5661005779}, game.PlaceId) then
+    game.Players.LocalPlayer:Kick("Sorry, this place is not supported.")
+    return
+end
 loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/web.lua"))()
 local Players = game:GetService("Players")
 local UIS = game:GetService("UserInputService")
