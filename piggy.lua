@@ -111,7 +111,7 @@ end
 
 local function onItemAdded(item)
     local parent = item.Parent
-    if item.Name == "ItemPickupScript" or item.Name == "NewItemPickupScript" or (item.Name == "Script" and item.Parent:FindFirstChild("ClickDetector")) and not itemCache[parent] then
+    if item.Name == "ItemPickupScript" or item.Name == "NewItemPickupScript" or (item.Name == "Script" and item.Parent:FindFirstChild("ClickDetector") and item.Parent:FindFirstChild("Mesh")) then
         itemCache[parent] = true
         task.defer(function() createItemFrame(parent) end)
     end
