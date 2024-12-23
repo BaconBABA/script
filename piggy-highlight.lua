@@ -18,7 +18,7 @@ local function removeHighlight(item)
 end
 
 local function processItem(item)
-    local isItemScript = item.Name == "ItemPickupScript" or item.Name == "NewItemPickupScript" or (item.Name == "Script" and item.Parent:FindFirstChild("ClickDetector"))
+    local isItemScript = item.Name == "ItemPickupScript" or item.Name == "NewItemPickupScript" or (item.Name == "Script" and item.Parent:FindFirstChild("ClickDetector") and item.Parent:FindFirstChild("Mesh"))
     if isItemScript then addHighlight(item.Parent, Color3.fromRGB(128, 187, 219)) end
 end
 
@@ -28,7 +28,7 @@ end
 
 game.Workspace.DescendantAdded:Connect(processItem)
 game.Workspace.DescendantRemoving:Connect(function(item)
-    if item.Name == "ItemPickupScript" or item.Name == "NewItemPickupScript" or (item.Name == "Script" and item.Parent:FindFirstChild("ClickDetector")) then
+    if item.Name == "ItemPickupScript" or item.Name == "NewItemPickupScript" or (item.Name == "Script" and item.Parent:FindFirstChild("ClickDetector") and item.Parent:FindFirstChild("Mesh")) then
         removeHighlight(item.Parent)
     end
 end)
