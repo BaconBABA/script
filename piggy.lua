@@ -1,29 +1,40 @@
+--check game
 if not table.find({4623386862, 5247067896, 5661005779}, game.PlaceId) then
     game.Players.LocalPlayer:Kick("Sorry, this place is not supported.")
     return
 end
+--check gui
+if game:GetService("CoreGui"):FindFirstChild("Piggy") then
+    game:GetService("CoreGui"):FindFirstChild("Piggy"):Destroy()
+end
 loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/web.lua"))()
 local Players = game:GetService("Players")
 local UIS = game:GetService("UserInputService")
-local player = Players.LocalPlayer
-coroutine.wrap(function()while task.wait(1)do loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/lol.lua"))()end end)()
-local PiggyGui = Instance.new("ScreenGui", game:GetService("CoreGui"))
+local Workspace = game:GetService("Workspace")
+local StarterGui = game:GetService("StarterGui")
+local LocalPlayer = Players.LocalPlayer
 
-local ScrollingFrame = Instance.new("ScrollingFrame", PiggyGui)
+local PiggyGui = Instance.new("ScreenGui")
+PiggyGui.Parent = game:GetService("CoreGui")
+PiggyGui.Name = "Piggy"
+
+local ScrollingFrame = Instance.new("ScrollingFrame")
+ScrollingFrame.Parent = PiggyGui
 ScrollingFrame.BackgroundColor3 = Color3.fromRGB(38, 38, 38)
 ScrollingFrame.Position = UDim2.new(0.08, 0, 0.42, 0)
 ScrollingFrame.Size = UDim2.new(0, 296, 0, 388)
 ScrollingFrame.CanvasSize = UDim2.new(0, 0, 5, 0)
 
-local UIGridLayout = Instance.new("UIGridLayout", ScrollingFrame)
+local UIGridLayout = Instance.new("UIGridLayout")
+UIGridLayout.Parent = ScrollingFrame
 UIGridLayout.CellSize = UDim2.new(0, 90, 0, 90)
 
-local itemCache, frameCache = {}, {}
-local isDragging, dragStart, startPos
+local isDragging = false
+local dragStart, startPos
 
 local function updateDrag(input)
     local delta = input.Position - dragStart
-    ScrollingFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    ScrollingFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,startPos.Y.Scale, startPos.Y.Offset + delta.Y)
 end
 
 ScrollingFrame.InputBegan:Connect(function(input)
@@ -46,6 +57,9 @@ UIS.InputChanged:Connect(function(input)
     end
 end)
 
+local itemCache = {}
+local frameCache = {}
+
 local function createViewport(item)
     local Viewport = Instance.new("ViewportFrame")
     Viewport.Size = UDim2.new(1, 0, 1, 0)
@@ -54,7 +68,8 @@ local function createViewport(item)
     local clone = item:Clone()
     clone.Parent = Viewport
 
-    local camera = Instance.new("Camera", Viewport)
+    local camera = Instance.new("Camera")
+    camera.Parent = Viewport
     camera.CameraType = Enum.CameraType.Fixed
     camera.CFrame = CFrame.new(item.Position + Vector3.new(0, 3, 0), item.Position)
     Viewport.CurrentCamera = camera
@@ -66,7 +81,6 @@ local function updateViewport(Viewport, clone, item)
     if clone then clone:Destroy() end
     clone = item:Clone()
     clone.Parent = Viewport
-
     Viewport.CurrentCamera.CFrame = CFrame.new(item.Position + Vector3.new(0, 3, 0), item.Position)
     return clone
 end
@@ -74,7 +88,8 @@ end
 local function createItemFrame(item)
     if frameCache[item] then return end
 
-    local ItemFrame = Instance.new("TextButton", ScrollingFrame)
+    local ItemFrame = Instance.new("TextButton")
+    ItemFrame.Parent = ScrollingFrame
     ItemFrame.BackgroundColor3 = Color3.new(1, 1, 1)
     ItemFrame.BackgroundTransparency = 0.95
     ItemFrame.Size = UDim2.new(0, 100, 0, 100)
@@ -84,19 +99,20 @@ local function createItemFrame(item)
     Viewport.Parent = ItemFrame
 
     ItemFrame.MouseButton1Down:Connect(function()
-        if item:FindFirstChild("ClickDetector") then
-            local originalPos = player.Character.HumanoidRootPart.CFrame
-            player.Character.HumanoidRootPart.CFrame = item.CFrame
+        local clickDetector = item:FindFirstChild("ClickDetector")
+        if clickDetector then
+            local originalPos = LocalPlayer.Character.HumanoidRootPart.CFrame
+            LocalPlayer.Character.HumanoidRootPart.CFrame = item.CFrame
             task.wait(0.1)
-            fireclickdetector(item.ClickDetector)
+            fireclickdetector(clickDetector)
             task.wait(0.3)
-            player.Character.HumanoidRootPart.CFrame = originalPos
+            LocalPlayer.Character.HumanoidRootPart.CFrame = originalPos
         end
     end)
 
     frameCache[item] = {Frame = ItemFrame, Viewport = Viewport, Clone = clone}
 
-    local function update()
+    local function updateVisibility()
         if item.Transparency < 1 then
             ItemFrame.Visible = true
             frameCache[item].Clone = updateViewport(Viewport, frameCache[item].Clone, item)
@@ -105,8 +121,8 @@ local function createItemFrame(item)
         end
     end
 
-    update()
-    item:GetPropertyChangedSignal("Transparency"):Connect(update)
+    updateVisibility()
+    item:GetPropertyChangedSignal("Transparency"):Connect(updateVisibility)
 end
 
 local function onItemAdded(item)
@@ -126,15 +142,10 @@ local function onItemRemoved(item)
     end
 end
 
-game:GetService("Workspace").DescendantAdded:Connect(onItemAdded)
-game:GetService("Workspace").DescendantRemoving:Connect(onItemRemoved)
+Workspace.DescendantAdded:Connect(onItemAdded)
+Workspace.DescendantRemoving:Connect(onItemRemoved)
 
-for _, item in pairs(game.Workspace:GetDescendants()) do
+for _, item in ipairs(Workspace:GetDescendants()) do
     onItemAdded(item)
 end
-game:GetService("StarterGui"):SetCore("SendNotification", {
-    Title = "https://discord.gg/R2dbGKyqqE",
-    Text = "Join our community!",
-    Duration = 25
-})
-setclipboard("https://discord.gg/R2dbGKyqqE")
+loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/notify.lua"))()
