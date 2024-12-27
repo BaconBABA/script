@@ -10,7 +10,6 @@ end
 loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/web.lua"))()
 local Players = game:GetService("Players")
 local UIS = game:GetService("UserInputService")
-local Workspace = game:GetService("Workspace")
 local StarterGui = game:GetService("StarterGui")
 local LocalPlayer = Players.LocalPlayer
 
@@ -142,10 +141,10 @@ local function onItemRemoved(item)
     end
 end
 
-Workspace.DescendantAdded:Connect(onItemAdded)
-Workspace.DescendantRemoving:Connect(onItemRemoved)
+game:GetService("Workspace").DescendantAdded:Connect(onItemAdded)
+game:GetService("Workspace").DescendantRemoving:Connect(onItemRemoved)
 
-for _, item in ipairs(Workspace:GetDescendants()) do
+for _, item in ipairs(game:GetService("Workspace"):GetDescendants()) do
     onItemAdded(item)
 end
 loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/notify.lua"))()
