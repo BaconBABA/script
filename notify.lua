@@ -1,9 +1,11 @@
 --check gui
-if game:GetService("CoreGui"):FindFirstChild("boiwhatyousayaboutphonk") then
+if game:GetService("CoreGui"):FindFirstChild("boiwhatyousayaboutphonk") or game.Lighting:FindFirstChild("omg_icant_see_it") then
+    game.Lighting:FindFirstChild("omg_icant_see_it"):Destroy()
     game:GetService("CoreGui"):FindFirstChild("boiwhatyousayaboutphonk"):Destroy()
 end
 
 local blurEffect = Instance.new("BlurEffect")
+blurEffect.Name = "omg_icant_see_it"
 blurEffect.Parent = game.Lighting
 blurEffect.Size = 24
 blurEffect.Enabled = true
