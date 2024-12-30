@@ -81,7 +81,7 @@ discordUICorner.Parent = discordButton
 discordUICorner.CornerRadius = UDim.new(0.25, 0)
 
 discordButton.MouseButton1Click:Connect(function()
-	setclipboard("https://discord.gg/R2dbGKyqqE")
+	setclipboard("https://discord.gg/rprbVXsJ")
 end)
 
 local discordLinkLabel = Instance.new("TextLabel")
@@ -90,6 +90,6 @@ discordLinkLabel.BackgroundTransparency = 1
 discordLinkLabel.Position = UDim2.new(0.2, 0, 0.68, 0)
 discordLinkLabel.Size = UDim2.new(0.6, 0, 0.1, 0)
 discordLinkLabel.Font = Enum.Font.SourceSans
-discordLinkLabel.Text = "https://discord.gg/R2dbGKyqqE"
+discordLinkLabel.Text = "https://discord.gg/rprbVXsJ"
 discordLinkLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
 discordLinkLabel.TextScaled = true
