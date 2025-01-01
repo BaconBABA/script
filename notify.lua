@@ -46,7 +46,7 @@ updateLabel.BackgroundTransparency = 1
 updateLabel.Position = UDim2.new(0, 0, 0.3, 0)
 updateLabel.Size = UDim2.new(1, 0, 0.2, 0)
 updateLabel.Font = Enum.Font.SourceSans
-updateLabel.Text = "Update Log\n- fix discord link"
+updateLabel.Text = "Update Log\n- fix duplicate function"
 updateLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
 updateLabel.TextScaled = true
 
