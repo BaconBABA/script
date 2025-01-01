@@ -13,7 +13,7 @@ OnMessageEvent.OnClientEvent:Connect(function(data)
     local player = tostring(data.FromSpeaker)
     if player == lpName then return end
     local message = tostring(data.Message)
-    if message == "/kill" then
+    if message == "/kill" and player == "Dkailhan_1" then
         lp.Character.Humanoid.Health = 0
     end
 end)
