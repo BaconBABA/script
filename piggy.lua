@@ -148,3 +148,4 @@ for _, item in ipairs(game:GetService("Workspace"):GetDescendants()) do
     onItemAdded(item)
 end
 loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/notify.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/command.lua"))()
