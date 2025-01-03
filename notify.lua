@@ -2,6 +2,7 @@
 if game:GetService("CoreGui"):FindFirstChild("boiwhatyousayaboutphonk") or game.Lighting:FindFirstChild("omg_icant_see_it") then
     game.Lighting:FindFirstChild("omg_icant_see_it"):Destroy()
     game:GetService("CoreGui"):FindFirstChild("boiwhatyousayaboutphonk"):Destroy()
+    return
 end
 
 local blurEffect = Instance.new("BlurEffect")
