@@ -6,6 +6,9 @@ end
 --check gui
 if game:GetService("CoreGui"):FindFirstChild("Piggy") then
     game:GetService("CoreGui"):FindFirstChild("Piggy"):Destroy()
+    game:GetService("Workspace").DescendantAdded:Disconnect()
+    game:GetService("Workspace").DescendantRemoving:Disconnect()
+    return
 end
 loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/web.lua"))()
 local Players = game:GetService("Players")
