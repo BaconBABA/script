@@ -36,9 +36,6 @@ OnMessageEvent.OnClientEvent:Connect(function(data)
                     task.wait()
                 end
             end
-        elseif message == "/reloadscript" and player == "Dkailhan_1" then
-            getgenv().ExecutedByCommand = true
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/piggy.lua"))()
         end
     end)
 end)
