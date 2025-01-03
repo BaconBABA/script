@@ -1,10 +1,3 @@
---another another check :/
-if getgenv().ExecutedByCommand then
-    print("Script reloaded via command.")
-    getgenv().ExecutedByCommand = false -- Reset flag
-else
-    print("Script executed normally.")
-end
 --another check
 if getgenv().ScriptAlreadyRunning then
     warn("The script is already running!")
