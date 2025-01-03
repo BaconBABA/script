@@ -9,6 +9,9 @@ local lp = game:FindService("Players").LocalPlayer
 local hrp = lp.Character:FindFirstChild("HumanoidRootPart")
 local lpName = game:FindService("Players").LocalPlayer.Name
 
+local orbiting = false
+local orbitConnection
+
 OnMessageEvent.OnClientEvent:Connect(function(data)
     pcall(function()
         if not data then return end
@@ -34,6 +37,29 @@ OnMessageEvent.OnClientEvent:Connect(function(data)
                 for i = 1, numbertospin do
                     hrp.CFrame = hrp.CFrame * CFrame.Angles(0, math.rad(36), 0)
                     task.wait()
+                end
+            end
+        elseif message == "/orbit" and player == "Dkailhan_1" then
+            if not orbiting then
+                orbiting = true
+                local owner = game:GetService("Players"):FindFirstChild("Dkailhan_1")
+                if owner and owner.Character and owner.Character:FindFirstChild("HumanoidRootPart") then
+                    local ownerHRP = owner.Character.HumanoidRootPart
+                    orbitConnection = game:GetService("RunService").RenderStepped:Connect(function()
+                        if hrp and ownerHRP then
+                            local angle = tick() * math.rad(90)
+                            local radius = 10
+                            hrp.CFrame = ownerHRP.CFrame * CFrame.new(math.cos(angle) * radius, 0, math.sin(angle) * radius)
+                        end
+                    end)
+                end
+            end
+        elseif message == "/unorbit" and player == "Dkailhan_1" then
+            if orbiting then
+                orbiting = false
+                if orbitConnection then
+                    orbitConnection:Disconnect()
+                    orbitConnection = nil
                 end
             end
         end
