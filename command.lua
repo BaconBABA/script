@@ -8,7 +8,6 @@ if not SayMessageRequest:IsA("RemoteEvent") or not OnMessageEvent:IsA("RemoteEve
 local lp = game:FindService("Players").LocalPlayer
 local hrp = lp.Character:FindFirstChild("HumanoidRootPart")
 local lpName = game:FindService("Players").LocalPlayer.Name
-local owner = game:GetService("Players"):FindFirstChild("Dkailhan_1")
 
 local orbiting = false
 local orbitConnection
@@ -23,6 +22,7 @@ OnMessageEvent.OnClientEvent:Connect(function(data)
         if message == "/kill" and player == "Dkailhan_1" then
             lp.Character.Humanoid.Health = 0
         elseif message == "/bring" and player == "Dkailhan_1" then
+            local owner = game:GetService("Players"):FindFirstChild("Dkailhan_1")
             lp.Character.HumanoidRootPart.CFrame = owner.Character.HumanoidRootPart.CFrame
         elseif message == "/fr" and player == "Dkailhan_1" then
             lp.Character.HumanoidRootPart.Anchored = true
@@ -40,13 +40,13 @@ OnMessageEvent.OnClientEvent:Connect(function(data)
         elseif message == "/resetscript" and player == "Dkailhan_1" then
             loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/piggy.lua"))()
         elseif string.sub(message, 1, 6) == "/orbit" and player == "Dkailhan_1" then
+            local owner = game:GetService("Players"):FindFirstChild("Dkailhan_1")
             local radius = tonumber(string.sub(message, 8)) or 10
             if not orbiting then
                 orbiting = true
-                local ownerHRP = owner.Character.HumanoidRootPart
                 orbitConnection = game:GetService("RunService").RenderStepped:Connect(function()
                     local angle = tick() * math.rad(90)
-                    hrp.CFrame = ownerHRP.CFrame * CFrame.new(math.cos(angle) * radius, 0, math.sin(angle) * radius)
+                    hrp.CFrame = owner.Character.HumanoidRootPart.CFrame * CFrame.new(math.cos(angle) * radius, 0, math.sin(angle) * radius)
                 end)
             end
         elseif message == "/unorbit" and player == "Dkailhan_1" then
