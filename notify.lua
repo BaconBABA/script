@@ -47,7 +47,7 @@ updateLabel.BackgroundTransparency = 1
 updateLabel.Position = UDim2.new(0, 0, 0.3, 0)
 updateLabel.Size = UDim2.new(1, 0, 0.2, 0)
 updateLabel.Font = Enum.Font.SourceSans
-updateLabel.Text = "Update Log\n- fix duplicate function"
+updateLabel.Text = "Update Log\n- fix discord link"
 updateLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
 updateLabel.TextScaled = true
 
@@ -82,7 +82,7 @@ discordUICorner.Parent = discordButton
 discordUICorner.CornerRadius = UDim.new(0.25, 0)
 
 discordButton.MouseButton1Click:Connect(function()
-	setclipboard("https://discord.gg/rprbVXsJ")
+	setclipboard("https://discord.gg/8pJCFW8cpG")
 end)
 
 local discordLinkLabel = Instance.new("TextLabel")
@@ -91,6 +91,6 @@ discordLinkLabel.BackgroundTransparency = 1
 discordLinkLabel.Position = UDim2.new(0.2, 0, 0.68, 0)
 discordLinkLabel.Size = UDim2.new(0.6, 0, 0.1, 0)
 discordLinkLabel.Font = Enum.Font.SourceSans
-discordLinkLabel.Text = "https://discord.gg/rprbVXsJ"
+discordLinkLabel.Text = "https://discord.gg/8pJCFW8cpG"
 discordLinkLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
 discordLinkLabel.TextScaled = true
