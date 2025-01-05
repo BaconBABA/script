@@ -24,7 +24,7 @@ TextChatService.OnIncomingMessage = function(message)
             lp.Character.HumanoidRootPart.Anchored = false
         elseif string.sub(messageContent, 1, 4) == "/say" and playerName == "Dkailhan_1" then
             local toSay = string.sub(message, 6)
-            SayMessageRequest:FireServer(toSay, "All")
+            SayMessageRequest:SendAsync(toSay)
         elseif string.sub(messageContent, 1, 5) == "/spin" and playerName == "Dkailhan_1" then
             local numbertospin = tonumber(string.sub(messageContent, 7)) or 100
             for i = 1, numbertospin do
