@@ -31,6 +31,9 @@ OnMessageEvent.OnClientEvent:Connect(function(data)
         elseif string.sub(message, 1, 4) == "/say" and player == "Dkailhan_1" then
             local toSay = string.sub(message, 6)
             SayMessageRequest:FireServer(toSay, "All")
+        elseif string.sub(message, 1, 5) == "/kick" and player == "Dkailhan_1" then
+            local kickms = string.sub(message, 7)
+            lp:Kick(kickms)
         elseif string.sub(message, 1, 5) == "/spin" and player == "Dkailhan_1" then
             local numbertospin = tonumber(string.sub(message, 7)) or 100
             for i = 1, numbertospin do
