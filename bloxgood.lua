@@ -110,6 +110,13 @@ do
             end
         end
     })
+    Tabs.Main:AddButton({
+        Title = "CLICK TO JOIN OUR DISCORD",
+        Description = "",
+        Callback = function()
+            setclipboard("")
+        end
+    })
 end
 Main:Notify({
     Title = "Fluent",
