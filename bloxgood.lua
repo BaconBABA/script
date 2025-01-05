@@ -112,9 +112,9 @@ do
     })
     Tabs.Main:AddButton({
         Title = "CLICK TO JOIN OUR DISCORD",
-        Description = "",
+        Description = "https://discord.gg/8pJCFW8cpG",
         Callback = function()
-            setclipboard("")
+            setclipboard("https://discord.gg/8pJCFW8cpG")
         end
     })
 end
