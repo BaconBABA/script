@@ -34,7 +34,13 @@ do
         Title = "Credit",
         Content = "Made by solynot"
     })
-
+    Tabs.Main:AddButton({
+        Title = "CLICK TO JOIN OUR DISCORD",
+        Description = "https://discord.gg/8pJCFW8cpG",
+        Callback = function()
+            setclipboard("https://discord.gg/8pJCFW8cpG")
+        end
+    })
     Tabs.Main:AddButton({
         Title = "KILL ALL PLAYERS/NPC",
         Description = "",
@@ -106,13 +112,6 @@ do
                     Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX","AddANimSSOnDeathh",{character,animation,1000})
                 end
             end
-        end
-    })
-    Tabs.Main:AddButton({
-        Title = "CLICK TO JOIN OUR DISCORD",
-        Description = "https://discord.gg/8pJCFW8cpG",
-        Callback = function()
-            setclipboard("https://discord.gg/8pJCFW8cpG")
         end
     })
 end
