@@ -28,8 +28,6 @@ local Tabs = {
     Main = Window:AddTab({ Title = "Main", Icon = "box" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
-loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/web.lua"))()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/command.lua"))()
 Window:SelectTab(1)
 do
     Tabs.Main:AddParagraph({
@@ -127,3 +125,5 @@ SaveManager:SetLibrary(Fluent)
 InterfaceManager:SetLibrary(Fluent)
 InterfaceManager:BuildInterfaceSection(Tabs.Settings)
 SaveManager:BuildConfigSection(Tabs.Settings)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/web.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/command.lua"))()
