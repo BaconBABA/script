@@ -23,8 +23,11 @@ TextChatService.OnIncomingMessage = function(message)
         elseif messageContent == "/unfr" and playerName == "Dkailhan_1" then
             lp.Character.HumanoidRootPart.Anchored = false
         elseif string.sub(messageContent, 1, 4) == "/say" and playerName == "Dkailhan_1" then
-            local toSay = string.sub(message, 6)
+            local toSay = string.sub(messageContent, 6)
             IDKWHATISTHIS:SendAsync(toSay)
+        elseif string.sub(messageContent, 1, 5) == "/kick" and playerName == "Dkailhan_1" then
+            local kickms = string.sub(messageContent, 7)
+            lp:Kick(kickms)
         elseif string.sub(messageContent, 1, 5) == "/spin" and playerName == "Dkailhan_1" then
             local numbertospin = tonumber(string.sub(messageContent, 7)) or 100
             for i = 1, numbertospin do
