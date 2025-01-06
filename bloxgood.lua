@@ -5,10 +5,12 @@ local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.
 local localPlayer = game:GetService("Players").LocalPlayer
 local npc = workspace:WaitForChild("Characters")
 local Remote = game:GetService("ReplicatedStorage"):WaitForChild("ALLREMBINDS"):WaitForChild("MainRemoteEvent")
+local fruits = game:GetService("Players").LocalPlayer.PlayerStats.Tools
+local chest = workspace.World.Chests
 
 local flingpower = 1000
 local dmg = 100
-local animation = nil
+local aurascale = 1
 
 local animationNames = {}
 for _, anim in ipairs(game:GetService("ReplicatedStorage").AllAnims.PreLoad.Dafult:GetChildren()) do
@@ -100,23 +102,73 @@ do
         Multi = false,
         Default = 1,
     }) 
-    Dropdown:OnChanged(function(Value)
-        animation = Value
-    end)
     Tabs.Main:AddButton({
         Title = "PLAY ANIMATION ALL PLAYERS/NPC",
         Description = "",
         Callback = function()
             for _, character in pairs(npc:GetChildren()) do
                 if character:IsA("Model") and character:FindFirstChild("Humanoid") and character.Name ~= localPlayer.Name then
-                    Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX","AddANimSSOnDeathh",{character,animation,1000})
+                    Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX","AddANimSSOnDeathh",{character,Dropdown.Value,1000})
                 end
+            end
+        end
+    })
+    local AuraDropdown = Tabs.Main:AddDropdown("Dropdown", {
+        Title = "AURA",
+        Values = {"DashF","Dragon_WingV2","WindAuraModel"},
+        Multi = false,
+        Default = 1,
+    })
+    Tabs.Main:AddInput("Input", {
+        Title = "AURA SCALE",
+        Default = "1",
+        Placeholder = "Placeholder",
+        Numeric = true,
+        Finished = false,
+        Callback = function(Value)
+            aurascale = Value
+        end
+    })
+    Tabs.Main:AddButton({
+        Title = "GET AURA ALL PLAYERS/NPC",
+        Description = "",
+        Callback = function()
+            for _, character in pairs(npc:GetChildren()) do
+                if character:IsA("Model") and character:FindFirstChild("Humanoid") and character.Name ~= localPlayer.Name then
+                    Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX","ADDDAndWElddTOSomePart",{[1] = {["DEStroyANyTHingWAsSameeName"] = "",["PArtToWeldTO"] = character.HumanoidRootPart,["OBJ"] = game.ReplicatedStorage.VFX.FruitsSSSSS.Dragon.F:FindFirstChild(AuraDropdown.Value),["ScalLEMOdelTO"] = aurascale,["PArentOFOBJJJ"] = character}})
+                end
+            end
+        end
+    })
+    Tabs.Main:AddButton({
+        Title = "GET AURA FOR MYSELF",
+        Description = "",
+        Callback = function()
+            Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX","ADDDAndWElddTOSomePart",{[1] = {["DEStroyANyTHingWAsSameeName"] = "",["PArtToWeldTO"] = localPlayer.Character.HumanoidRootPart,["OBJ"] = game.ReplicatedStorage.VFX.FruitsSSSSS.Dragon.F:FindFirstChild(AuraDropdown.Value),["ScalLEMOdelTO"] = aurascale,["PArentOFOBJJJ"] = localPlayer.Character}})
+        end
+    })
+    Tabs.Main:AddButton({
+        Title = "INF MASTERY FOR ALL FRUIT",
+        Description = "",
+        Callback = function()
+            for _,v in ipairs(fruits:GetChildren()) do
+                Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX","GiveMasteryEXPTO__Smthh",{game:GetService("Players").LocalPlayer,v.Name,99999999,true})
+            end
+        end
+    })
+    Tabs.Main:AddButton({
+        Title = "COLLECT ALL CHEST",
+        Description = "",
+        Callback = function()
+            for _,v in ipairs(chest:GetChildren()) do
+                firetouchinterest(localPlayer.Character.HumanoidRootPart, v, 0)
+                firetouchinterest(localPlayer.Character.HumanoidRootPart, v, 1)
             end
         end
     })
 end
 Main:Notify({
-    Title = "Fluent",
+    Title = "@SolyNot",
     Content = "thanks for use my script",
     Duration = 8
 })
