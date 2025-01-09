@@ -148,7 +148,7 @@ do
         end
     })
     Tabs.Main:AddButton({
-        Title = "INF MASTERY FOR ALL FRUIT",
+        Title = "INF MASTERY FOR EVERYTHING",
         Description = "",
         Callback = function()
             for _,v in ipairs(fruits:GetChildren()) do
