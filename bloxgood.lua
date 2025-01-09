@@ -2,10 +2,11 @@ local Main = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/re
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
+-- Services and Variables
 local localPlayer = game:GetService("Players").LocalPlayer
 local npc = workspace:WaitForChild("Characters")
 local Remote = game:GetService("ReplicatedStorage"):WaitForChild("ALLREMBINDS"):WaitForChild("MainRemoteEvent")
-local fruits = game:GetService("Players").LocalPlayer.PlayerStats.Tools
+local fruits = localPlayer.PlayerStats.Tools
 local chest = workspace.World.Chests
 
 local flingpower = 1000
@@ -13,8 +14,16 @@ local dmg = 100
 local aurascale = 1
 
 local animationNames = {}
+local fruitsName = {}
+
 for _, anim in ipairs(game:GetService("ReplicatedStorage").AllAnims.PreLoad.Dafult:GetChildren()) do
-    if anim:IsA("Animation") then table.insert(animationNames, anim.Name) end
+    if anim:IsA("Animation") then
+        table.insert(animationNames, anim.Name)
+    end
+end
+
+for _, fruit in ipairs(fruits:GetChildren()) do
+    table.insert(fruitsName, fruit.Name)
 end
 
 local Window = Main:CreateWindow({
@@ -28,152 +37,164 @@ local Window = Main:CreateWindow({
 
 local Tabs = {
     Main = Window:AddTab({ Title = "Main", Icon = "box" }),
-    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+    OP = Window:AddTab({ Title = "OP", Icon = "skull" }),
+    Fruits = Window:AddTab({ Title = "Fruits", Icon = "apple" }),
+    Aura = Window:AddTab({ Title = "Aura", Icon = "star" }),
+    Chests = Window:AddTab({ Title = "Chests", Icon = "lock" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
 }
 Window:SelectTab(1)
-do
-    Tabs.Main:AddParagraph({
-        Title = "Credit",
-        Content = "Made by solynot"
-    })
-    Tabs.Main:AddButton({
-        Title = "CLICK TO JOIN OUR DISCORD",
-        Description = "https://discord.gg/8pJCFW8cpG",
-        Callback = function()
-            setclipboard("https://discord.gg/8pJCFW8cpG")
-        end
-    })
-    Tabs.Main:AddButton({
-        Title = "KILL ALL PLAYERS/NPC",
-        Description = "",
-        Callback = function()
-            for _, character in pairs(npc:GetChildren()) do
-                if character:IsA("Model") and character:FindFirstChild("Humanoid") and character.Name ~= localPlayer.Name then
-                    Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX","Main_DamgeR___",{character, {Using = "Combat", Damge = 999999, FromPlayer = localPlayer}})
-                end
+
+-- Main Tab
+Tabs.Main:AddParagraph({
+    Title = "Credit",
+    Content = "Made by solynot"
+})
+Tabs.Main:AddButton({
+    Title = "CLICK TO JOIN OUR DISCORD",
+    Description = "https://discord.gg/8pJCFW8cpG",
+    Callback = function()
+        setclipboard("https://discord.gg/8pJCFW8cpG")
+    end
+})
+
+-- OP Tab
+Tabs.OP:AddButton({
+    Title = "KILL ALL PLAYERS/NPC",
+    Description = "",
+    Callback = function()
+        for _, character in pairs(npc:GetChildren()) do
+            if character:IsA("Model") and character:FindFirstChild("Humanoid") and character.Name ~= localPlayer.Name then
+                Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX","Main_DamgeR___",{character, {Using = "Combat", Damge = 999999, FromPlayer = localPlayer}})
             end
         end
-    })
-    Tabs.Main:AddInput("Input", {
-        Title = "DAMAGE",
-        Default = "100",
-        Placeholder = "Placeholder",
-        Numeric = true,
-        Finished = false,
-        Callback = function(Value)
-            dmg = Value
-        end
-    })
-    Tabs.Main:AddButton({
-        Title = "DAMAGE ALL PLAYERS/NPC",
-        Description = "",
-        Callback = function()
-            for _, character in pairs(npc:GetChildren()) do
-                if character:IsA("Model") and character:FindFirstChild("Humanoid") and character.Name ~= localPlayer.Name then
-                    Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX","Main_DamgeR___",{character, {Using = "Combat", Damge = dmg, FromPlayer = localPlayer}})
-                end
+    end
+})
+Tabs.OP:AddInput("Input", {
+    Title = "DAMAGE",
+    Default = "100",
+    Numeric = true,
+    Callback = function(Value)
+        dmg = Value
+    end
+})
+Tabs.OP:AddButton({
+    Title = "DAMAGE ALL PLAYERS/NPC",
+    Description = "",
+    Callback = function()
+        for _, character in pairs(npc:GetChildren()) do
+            if character:IsA("Model") and character:FindFirstChild("Humanoid") and character.Name ~= localPlayer.Name then
+                Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "Main_DamgeR___", { character, { Using = "Combat", Damge = dmg, FromPlayer = localPlayer } })
             end
         end
-    })
-    Tabs.Main:AddInput("Input", {
-        Title = "FLING POWER",
-        Default = "1000",
-        Placeholder = "Placeholder",
-        Numeric = true,
-        Finished = false,
-        Callback = function(Value)
-            flingpower = Value
-        end
-    })
-    Tabs.Main:AddButton({
-        Title = "FLING ALL PLAYERS/NPC",
-        Description = "",
-        Callback = function()
-            for _, character in pairs(npc:GetChildren()) do
-                if character:IsA("Model") and character:FindFirstChild("Humanoid") and character.Name ~= localPlayer.Name then
-                    Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX","ASeemblyLinearVEllChangerr",{character:FindFirstChild("HumanoidRootPart"),Vector3.new(0, flingpower, 0)})
-                end
+    end
+})
+Tabs.OP:AddInput("Input", {
+    Title = "FLING POWER",
+    Default = "1000",
+    Numeric = true,
+    Callback = function(Value)
+        flingpower = Value
+    end
+})
+Tabs.OP:AddButton({
+    Title = "FLING ALL PLAYERS/NPC",
+    Description = "",
+    Callback = function()
+        for _, character in pairs(npc:GetChildren()) do
+            if character:IsA("Model") and character:FindFirstChild("Humanoid") and character.Name ~= localPlayer.Name then
+                Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "ASeemblyLinearVEllChangerr", { character:FindFirstChild("HumanoidRootPart"), Vector3.new(0, flingpower, 0) })
             end
         end
-    })
-    local Dropdown = Tabs.Main:AddDropdown("Dropdown", {
-        Title = "ANIMATION",
-        Values = animationNames,
-        Multi = false,
-        Default = 1,
-    }) 
-    Tabs.Main:AddButton({
-        Title = "PLAY ANIMATION ALL PLAYERS/NPC",
-        Description = "",
-        Callback = function()
-            for _, character in pairs(npc:GetChildren()) do
-                if character:IsA("Model") and character:FindFirstChild("Humanoid") and character.Name ~= localPlayer.Name then
-                    Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX","AddANimSSOnDeathh",{character,Dropdown.Value,1000})
-                end
+    end
+})
+
+-- Fruits Tab
+local FruitDropDown = Tabs.Fruits:AddDropdown("Dropdown", {
+    Title = "FRUITS",
+    Values = fruitsName,
+    Multi = false,
+    Default = 1,
+})
+Tabs.Fruits:AddButton({
+    Title = "GET FRUIT",
+    Description = "",
+    Callback = function()
+        Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "AddToolToBackpackKKK", { FruitDropDown.Value .. " Fruit", localPlayer:WaitForChild("Backpack"), true, true })
+    end
+})
+Tabs.Fruits:AddButton({
+    Title = "GET ALL FRUITS",
+    Description = "",
+    Callback = function()
+        for _, fruit in ipairs(fruits:GetChildren()) do
+            Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "AddToolToBackpackKKK", { fruit.Name .. " Fruit", localPlayer:WaitForChild("Backpack"), true, true })
+        end
+    end
+})
+Tabs.Fruits:AddButton({
+    Title = "INF MASTERY FOR EVERYTHING",
+    Description = "",
+    Callback = function()
+        for _, fruit in ipairs(fruits:GetChildren()) do
+            Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "GiveMasteryEXPTO__Smthh", { localPlayer, fruit.Name, 99999999, true })
+        end
+    end
+})
+
+-- Aura Tab
+local AuraDropdown = Tabs.Aura:AddDropdown("Dropdown", {
+    Title = "AURA",
+    Values = { "DashF", "Dragon_WingV2", "WindAuraModel" },
+    Multi = false,
+    Default = 1,
+})
+Tabs.Aura:AddInput("Input", {
+    Title = "AURA SCALE",
+    Default = "1",
+    Numeric = true,
+    Callback = function(Value)
+        aurascale = Value
+    end
+})
+Tabs.Aura:AddButton({
+    Title = "GET AURA ALL PLAYERS/NPC",
+    Description = "",
+    Callback = function()
+        for _, character in pairs(npc:GetChildren()) do
+            if character:IsA("Model") and character:FindFirstChild("Humanoid") and character.Name ~= localPlayer.Name then
+                Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "ADDDAndWElddTOSomePart", {[1] = {DEStroyANyTHingWAsSameeName = "",PArtToWeldTO = character.HumanoidRootPart,OBJ = game.ReplicatedStorage.VFX.FruitsSSSSS.Dragon.F:FindFirstChild(AuraDropdown.Value),ScalLEMOdelTO = aurascale,PArentOFOBJJJ = character,}})
             end
         end
-    })
-    local AuraDropdown = Tabs.Main:AddDropdown("Dropdown", {
-        Title = "AURA",
-        Values = {"DashF","Dragon_WingV2","WindAuraModel"},
-        Multi = false,
-        Default = 1,
-    })
-    Tabs.Main:AddInput("Input", {
-        Title = "AURA SCALE",
-        Default = "1",
-        Placeholder = "Placeholder",
-        Numeric = true,
-        Finished = false,
-        Callback = function(Value)
-            aurascale = Value
+    end
+})
+Tabs.Aura:AddButton({
+    Title = "GET AURA FOR MYSELF",
+    Description = "",
+    Callback = function()
+        Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "ADDDAndWElddTOSomePart", {[1] = {DEStroyANyTHingWAsSameeName = "",PArtToWeldTO = localPlayer.Character.HumanoidRootPart,OBJ = game.ReplicatedStorage.VFX.FruitsSSSSS.Dragon.F:FindFirstChild(AuraDropdown.Value),ScalLEMOdelTO = aurascale,PArentOFOBJJJ = localPlayer.Character,}})
+    end
+})
+
+-- Chests Tab
+Tabs.Chests:AddButton({
+    Title = "COLLECT ALL CHESTS",
+    Description = "",
+    Callback = function()
+        for _, chest in ipairs(chest:GetChildren()) do
+            firetouchinterest(localPlayer.Character.HumanoidRootPart, chest, 0)
+            firetouchinterest(localPlayer.Character.HumanoidRootPart, chest, 1)
         end
-    })
-    Tabs.Main:AddButton({
-        Title = "GET AURA ALL PLAYERS/NPC",
-        Description = "",
-        Callback = function()
-            for _, character in pairs(npc:GetChildren()) do
-                if character:IsA("Model") and character:FindFirstChild("Humanoid") and character.Name ~= localPlayer.Name then
-                    Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX","ADDDAndWElddTOSomePart",{[1] = {["DEStroyANyTHingWAsSameeName"] = "",["PArtToWeldTO"] = character.HumanoidRootPart,["OBJ"] = game.ReplicatedStorage.VFX.FruitsSSSSS.Dragon.F:FindFirstChild(AuraDropdown.Value),["ScalLEMOdelTO"] = aurascale,["PArentOFOBJJJ"] = character}})
-                end
-            end
-        end
-    })
-    Tabs.Main:AddButton({
-        Title = "GET AURA FOR MYSELF",
-        Description = "",
-        Callback = function()
-            Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX","ADDDAndWElddTOSomePart",{[1] = {["DEStroyANyTHingWAsSameeName"] = "",["PArtToWeldTO"] = localPlayer.Character.HumanoidRootPart,["OBJ"] = game.ReplicatedStorage.VFX.FruitsSSSSS.Dragon.F:FindFirstChild(AuraDropdown.Value),["ScalLEMOdelTO"] = aurascale,["PArentOFOBJJJ"] = localPlayer.Character}})
-        end
-    })
-    Tabs.Main:AddButton({
-        Title = "INF MASTERY FOR EVERYTHING",
-        Description = "",
-        Callback = function()
-            for _,v in ipairs(fruits:GetChildren()) do
-                Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX","GiveMasteryEXPTO__Smthh",{game:GetService("Players").LocalPlayer,v.Name,99999999,true})
-            end
-        end
-    })
-    Tabs.Main:AddButton({
-        Title = "COLLECT ALL CHEST",
-        Description = "",
-        Callback = function()
-            for _,v in ipairs(chest:GetChildren()) do
-                firetouchinterest(localPlayer.Character.HumanoidRootPart, v, 0)
-                firetouchinterest(localPlayer.Character.HumanoidRootPart, v, 1)
-            end
-        end
-    })
-end
+    end
+})
+
 Main:Notify({
     Title = "@SolyNot",
-    Content = "thanks for use my script",
+    Content = "thanks for using my script",
     Duration = 8
 })
-SaveManager:SetLibrary(Fluent)
-InterfaceManager:SetLibrary(Fluent)
+SaveManager:SetLibrary(Main)
+InterfaceManager:SetLibrary(Main)
 InterfaceManager:BuildInterfaceSection(Tabs.Settings)
 SaveManager:BuildConfigSection(Tabs.Settings)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/web.lua"))()
