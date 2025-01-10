@@ -68,7 +68,7 @@ Tabs.Main:AddParagraph({
 })
 Tabs.Main:AddParagraph({
 	Title = "Update Log",
-	Content = "[*] WORKING ON ANIMATION PLAYER(ARGON IS PATCH I CANT PUSH THE UPDATE)"
+	Content = "[*] WORKING ON ANIMATION PLAYER(ARGON IS PATCH I CANT PUSH THE UPDATE)\nSCRIPT IS NOW WORKING SORRY FOR DOWNTIME"
 })
 Tabs.Main:AddButton({
     Title = "CLICK TO JOIN OUR DISCORD",
