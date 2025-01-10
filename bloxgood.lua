@@ -52,20 +52,24 @@ local Window = Main:CreateWindow({
     Theme = "Dark"
 })
 
-local Tabs = {
-    Main = Window:AddTab({ Title = "Main", Icon = "box" }),
-    OP = Window:AddTab({ Title = "OP", Icon = "skull" }),
-    Fruits = Window:AddTab({ Title = "Fruits", Icon = "apple" }),
-    Aura = Window:AddTab({ Title = "Aura", Icon = "star" }),
-    Chests = Window:AddTab({ Title = "Chests", Icon = "lock" }),
-    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
+local Tabs: {string: Tab} = {
+	Main = Window:AddTab({ Title = "Main", Icon = "box" }),
+	OP = Window:AddTab({ Title = "OP", Icon = "skull" }),
+	Fruits = Window:AddTab({ Title = "Fruits", Icon = "apple" }),
+	Aura = Window:AddTab({ Title = "Aura", Icon = "star" }),
+	Animation = Window:AddTab({ Title = "Animation", Icon = "play" }),
+	Chests = Window:AddTab({ Title = "Chests", Icon = "lock" }),
+	Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
 }
 Window:SelectTab(1)
 
--- Main Tab
 Tabs.Main:AddParagraph({
-    Title = "Credit",
-    Content = "Made by solynot"
+	Title = "Credit",
+	Content = "Made by solynot"
+})
+Tabs.Main:AddParagraph({
+	Title = "Update Log",
+	Content = "[*] WORKING ON ANIMATION PLAYER(ARGON IS PATCH I CANT PUSH THE UPDATE)"
 })
 Tabs.Main:AddButton({
     Title = "CLICK TO JOIN OUR DISCORD",
@@ -75,6 +79,10 @@ Tabs.Main:AddButton({
     end
 })
 
+Tabs.Animation:AddParagraph({
+    Title = "WORKING"
+    Content = ""
+})
 -- OP Tab
 Tabs.OP:AddButton({
     Title = "KILL ALL PLAYERS/NPC",
