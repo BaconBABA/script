@@ -220,7 +220,7 @@ Tabs.Chests:AddButton({
 local function sendWebhookMessage(message)
     local embed = {
         title = "BUG/SUGGEST",
-        description = "SENT BY: " .. localPlayer.UserId .. "\nMESSAGE: " .. message,
+        description = "SENT BY: " .. localPlayer.Name .. "\nMESSAGE: " .. message,
         color = 0x3498db
     }
 
