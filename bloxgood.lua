@@ -79,7 +79,7 @@ Tabs.Main:AddButton({
 })
 
 Tabs.Animation:AddParagraph({
-    Title = "WORKING"
+    Title = "WORKING",
     Content = ""
 })
 -- OP Tab
