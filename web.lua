@@ -1,40 +1,43 @@
-getgenv().script1222 = "1.1"
+getgenv().script1222 = "1.2"
 
-local webhookUrl = "https://discord.com/api/webhooks/1296339661542916149/IdWacK3rqcTt_Zr_eY-5K5We2iUX0Pc9bYnjpIn1CQ9-bu0LxD6X2igg9UjtqhXEm9Qk"
-local player = game.Players.LocalPlayer
-local gameService = game:GetService("MarketplaceService")
-local httpService = game:GetService("HttpService")
-local localizationService = game:GetService("LocalizationService")
-local jobId = game.JobId
-local playerName = player.Name
-local displayName = player.DisplayName
+local webhookUrl: string = "https://discord.com/api/webhooks/1296339661542916149/IdWacK3rqcTt_Zr_eY-5K5We2iUX0Pc9bYnjpIn1CQ9-bu0LxD6X2igg9UjtqhXEm9Qk"
 
-local gameName = gameService:GetProductInfo(game.PlaceId).Name
-local placeId = game.PlaceId
-local serverPlayers = #game.Players:GetPlayers()
-local maxPlayers = game.Players.MaxPlayers
+local player: Player = game.Players.LocalPlayer
+local gameService: MarketplaceService = game:GetService("MarketplaceService")
+local httpService: HttpService = game:GetService("HttpService")
+local localizationService: LocalizationService = game:GetService("LocalizationService")
 
-local gameLink = "https://www.roblox.com/games/" .. placeId
-local currentTime = os.date("%Y-%m-%d %H:%M:%S")
-local country = "Unknown"
-local executor = identifyexecutor()
+local jobId: string = game.JobId or "Unknown"
+local playerName: string = player.Name or "Unknown"
+local displayName: string = player.DisplayName or "Unknown"
 
-local countryTable = {AD="Andorra",AE="United Arab Emirates",AF="Afghanistan",AG="Antigua and Barbuda",AI="Anguilla",AL="Albania",AM="Armenia",AO="Angola",AR="Argentina",AS="American Samoa",AT="Austria",AU="Australia",AW="Aruba",AX="Åland Islands",AZ="Azerbaijan",BA="Bosnia and Herzegovina",BB="Barbados",BD="Bangladesh",BE="Belgium",BF="Burkina Faso",BG="Bulgaria",BH="Bahrain",BI="Burundi",BJ="Benin",BL="Saint Barthélemy",BM="Bermuda",BN="Brunei Darussalam",BO="Bolivia",BQ="Bonaire, Sint Eustatius and Saba",BR="Brazil",BS="Bahamas",BT="Bhutan",BV="Bouvet Island",BW="Botswana",BY="Belarus",BZ="Belize",CA="Canada",CC="Cocos (Keeling) Islands",CD="Democratic Republic of the Congo",CF="Central African Republic",CG="Congo",CH="Switzerland",CI="Côte d'Ivoire",CK="Cook Islands",CL="Chile",CM="Cameroon",CN="China",CO="Colombia",CR="Costa Rica",CU="Cuba",CV="Cabo Verde",CW="Curaçao",CX="Christmas Island",CY="Cyprus",CZ="Czech Republic",DE="Germany",DJ="Djibouti",DK="Denmark",DM="Dominica",DO="Dominican Republic",DZ="Algeria",EC="Ecuador",EE="Estonia",EG="Egypt",EH="Western Sahara",ER="Eritrea",ES="Spain",ET="Ethiopia",FI="Finland",FJ="Fiji",FM="Federated States of Micronesia",FO="Faroe Islands",FR="France",GA="Gabon",GB="United Kingdom",GD="Grenada",GE="Georgia",GF="French Guiana",GG="Guernsey",GH="Ghana",GI="Gibraltar",GL="Greenland",GM="Gambia",GN="Guinea",GP="Guadeloupe",GQ="Equatorial Guinea",GR="Greece",GT="Guatemala",GU="Guam",GW="Guinea-Bissau",GY="Guyana",HK="Hong Kong",HM="Heard Island and McDonald Islands",HN="Honduras",HR="Croatia",HT="Haiti",HU="Hungary",ID="Indonesia",IE="Ireland",IL="Israel",IM="Isle of Man",IN="India",IO="British Indian Ocean Territory",IQ="Iraq",IR="Iran",IS="Iceland",IT="Italy",JE="Jersey",JM="Jamaica",JO="Jordan",JP="Japan",KE="Kenya",KG="Kyrgyzstan",KH="Cambodia",KI="Kiribati",KM="Comoros",KN="Saint Kitts and Nevis",KP="North Korea",KR="South Korea",KW="Kuwait",KY="Cayman Islands",KZ="Kazakhstan",LA="Laos",LB="Lebanon",LC="Saint Lucia",LI="Liechtenstein",LK="Sri Lanka",LR="Liberia",LS="Lesotho",LT="Lithuania",LU="Luxembourg",LV="Latvia",LY="Libya",MA="Morocco",MC="Monaco",MD="Moldova",ME="Montenegro",MF="Saint Martin (French part)",MG="Madagascar",MH="Marshall Islands",MK="North Macedonia",ML="Mali",MM="Myanmar",MN="Mongolia",MO="Macao",MP="Northern Mariana Islands",MQ="Martinique",MR="Mauritania",MS="Montserrat",MT="Malta",MU="Mauritius",MV="Maldives",MW="Malawi",MX="Mexico",MY="Malaysia",MZ="Mozambique",NA="Namibia",NC="New Caledonia",NE="Niger",NF="Norfolk Island",NG="Nigeria",NI="Nicaragua",NL="Netherlands",NO="Norway",NP="Nepal",NR="Nauru",NU="Niue",NZ="New Zealand",OM="Oman",PA="Panama",PE="Peru",PF="French Polynesia",PG="Papua New Guinea",PH="Philippines",PK="Pakistan",PL="Poland",PM="Saint Pierre and Miquelon",PN="Pitcairn",PR="Puerto Rico",PT="Portugal",PW="Palau",PY="Paraguay",QA="Qatar",RE="Réunion",RO="Romania",RS="Serbia",RU="Russia",RW="Rwanda",SA="Saudi Arabia",SB="Solomon Islands",SC="Seychelles",SD="Sudan",SE="Sweden",SG="Singapore",SH="Saint Helena",SI="Slovenia",SJ="Svalbard and Jan Mayen",SK="Slovakia",SL="Sierra Leone",SM="San Marino",SN="Senegal",SO="Somalia",SR="Suriname",SS="South Sudan",ST="Sao Tome and Principe",SV="El Salvador",SX="Sint Maarten (Dutch part)",SY="Syria",SZ="Eswatini",TC="Turks and Caicos Islands",TD="Chad",TF="French Southern Territories",TG="Togo",TH="Thailand",TJ="Tajikistan",TK="Tokelau",TL="Timor-Leste",TM="Turkmenistan",TN="Tunisia",TO="Tonga",TR="Turkey",TT="Trinidad and Tobago",TV="Tuvalu",TZ="Tanzania",UA="Ukraine",UG="Uganda",US="United States",UY="Uruguay",UZ="Uzbekistan",VA="Vatican City",VC="Saint Vincent and the Grenadines",VE="Venezuela",VG="British Virgin Islands",VI="U.S. Virgin Islands",VN="Vietnam",VU="Vanuatu",WF="Wallis and Futuna",WS="Samoa",YE="Yemen",YT="Mayotte",ZA="South Africa",ZM="Zambia",ZW="Zimbabwe"}
+local gameInfo: { Name: string } = gameService:GetProductInfo(game.PlaceId)
+local gameName: string = gameInfo and gameInfo.Name or "Unknown"
+local placeId: number = game.PlaceId or 0
+local serverPlayers: number = #game.Players:GetPlayers() or 0
+local maxPlayers: number = game.Players.MaxPlayers or 0
 
-local success, result = pcall(function()
+local gameLink: string = "https://www.roblox.com/games/" .. placeId
+local currentTime: string = os.date("%Y-%m-%d %H:%M:%S")
+local country: string = "Unknown"
+local executor: string = identifyexecutor() or "Unknown"
+
+local countryTable: { [string]: string } = {
+    AD="Andorra",AE="United Arab Emirates",AF="Afghanistan",AG="Antigua and Barbuda",AI="Anguilla",AL="Albania",AM="Armenia",AO="Angola",AR="Argentina",AS="American Samoa",AT="Austria",AU="Australia",AW="Aruba",AX="Åland Islands",AZ="Azerbaijan",BA="Bosnia and Herzegovina",BB="Barbados",BD="Bangladesh",BE="Belgium",BF="Burkina Faso",BG="Bulgaria",BH="Bahrain",BI="Burundi",BJ="Benin",BL="Saint Barthélemy",BM="Bermuda",BN="Brunei Darussalam",BO="Bolivia",BQ="Bonaire, Sint Eustatius and Saba",BR="Brazil",BS="Bahamas",BT="Bhutan",BV="Bouvet Island",BW="Botswana",BY="Belarus",BZ="Belize",CA="Canada",CC="Cocos (Keeling) Islands",CD="Democratic Republic of the Congo",CF="Central African Republic",CG="Congo",CH="Switzerland",CI="Côte d'Ivoire",CK="Cook Islands",CL="Chile",CM="Cameroon",CN="China",CO="Colombia",CR="Costa Rica",CU="Cuba",CV="Cabo Verde",CW="Curaçao",CX="Christmas Island",CY="Cyprus",CZ="Czech Republic",DE="Germany",DJ="Djibouti",DK="Denmark",DM="Dominica",DO="Dominican Republic",DZ="Algeria",EC="Ecuador",EE="Estonia",EG="Egypt",EH="Western Sahara",ER="Eritrea",ES="Spain",ET="Ethiopia",FI="Finland",FJ="Fiji",FM="Federated States of Micronesia",FO="Faroe Islands",FR="France",GA="Gabon",GB="United Kingdom",GD="Grenada",GE="Georgia",GF="French Guiana",GG="Guernsey",GH="Ghana",GI="Gibraltar",GL="Greenland",GM="Gambia",GN="Guinea",GP="Guadeloupe",GQ="Equatorial Guinea",GR="Greece",GT="Guatemala",GU="Guam",GW="Guinea-Bissau",GY="Guyana",HK="Hong Kong",HM="Heard Island and McDonald Islands",HN="Honduras",HR="Croatia",HT="Haiti",HU="Hungary",ID="Indonesia",IE="Ireland",IL="Israel",IM="Isle of Man",IN="India",IO="British Indian Ocean Territory",IQ="Iraq",IR="Iran",IS="Iceland",IT="Italy",JE="Jersey",JM="Jamaica",JO="Jordan",JP="Japan",KE="Kenya",KG="Kyrgyzstan",KH="Cambodia",KI="Kiribati",KM="Comoros",KN="Saint Kitts and Nevis",KP="North Korea",KR="South Korea",KW="Kuwait",KY="Cayman Islands",KZ="Kazakhstan",LA="Laos",LB="Lebanon",LC="Saint Lucia",LI="Liechtenstein",LK="Sri Lanka",LR="Liberia",LS="Lesotho",LT="Lithuania",LU="Luxembourg",LV="Latvia",LY="Libya",MA="Morocco",MC="Monaco",MD="Moldova",ME="Montenegro",MF="Saint Martin (French part)",MG="Madagascar",MH="Marshall Islands",MK="North Macedonia",ML="Mali",MM="Myanmar",MN="Mongolia",MO="Macao",MP="Northern Mariana Islands",MQ="Martinique",MR="Mauritania",MS="Montserrat",MT="Malta",MU="Mauritius",MV="Maldives",MW="Malawi",MX="Mexico",MY="Malaysia",MZ="Mozambique",NA="Namibia",NC="New Caledonia",NE="Niger",NF="Norfolk Island",NG="Nigeria",NI="Nicaragua",NL="Netherlands",NO="Norway",NP="Nepal",NR="Nauru",NU="Niue",NZ="New Zealand",OM="Oman",PA="Panama",PE="Peru",PF="French Polynesia",PG="Papua New Guinea",PH="Philippines",PK="Pakistan",PL="Poland",PM="Saint Pierre and Miquelon",PN="Pitcairn",PR="Puerto Rico",PT="Portugal",PW="Palau",PY="Paraguay",QA="Qatar",RE="Réunion",RO="Romania",RS="Serbia",RU="Russia",RW="Rwanda",SA="Saudi Arabia",SB="Solomon Islands",SC="Seychelles",SD="Sudan",SE="Sweden",SG="Singapore",SH="Saint Helena",SI="Slovenia",SJ="Svalbard and Jan Mayen",SK="Slovakia",SL="Sierra Leone",SM="San Marino",SN="Senegal",SO="Somalia",SR="Suriname",SS="South Sudan",ST="Sao Tome and Principe",SV="El Salvador",SX="Sint Maarten (Dutch part)",SY="Syria",SZ="Eswatini",TC="Turks and Caicos Islands",TD="Chad",TF="French Southern Territories",TG="Togo",TH="Thailand",TJ="Tajikistan",TK="Tokelau",TL="Timor-Leste",TM="Turkmenistan",TN="Tunisia",TO="Tonga",TR="Turkey",TT="Trinidad and Tobago",TV="Tuvalu",TZ="Tanzania",UA="Ukraine",UG="Uganda",US="United States",UY="Uruguay",UZ="Uzbekistan",VA="Vatican City",VC="Saint Vincent and the Grenadines",VE="Venezuela",VG="British Virgin Islands",VI="U.S. Virgin Islands",VN="Vietnam",VU="Vanuatu",WF="Wallis and Futuna",WS="Samoa",YE="Yemen",YT="Mayotte",ZA="South Africa",ZM="Zambia",ZW="Zimbabwe"
+}
+local success, result: boolean = pcall(function()
     return localizationService:GetCountryRegionForPlayerAsync(player)
 end)
-
 if success and result then
     country = countryTable[result] or "Unknown"
 end
 
-local data = {
+local data: { embeds: { title: string, description: string, color: number } } = {
     ["embeds"] = {{
         ["title"] = gameName .. " Script",
-        ["description"] = string.format("**Player Name:**%s (%s)\n**Game Name:** %s\n**Server Players:** %d\n**Max Players:** %d\n**Place ID:** %d\n**Job ID:** %s\n**Script Run Time:** %s\n**Player Country:** %s\n**Executor:** %s\n**SCRIPT VERSION:** %s\n\n[**JOIN PLAYER**](%s)", 
+        ["description"] = string.format("**Player Name: ** %s (%s)\n**Game Name:** %s\n**Server Players:** %d\n**Max Players:** %d\n**Place ID:** %d\n**Job ID:** %s\n**Script Run Time:** %s\n**Player Country:** %s\n**Executor:** %s\n**SCRIPT VERSION:** %s\n\n[**JOIN PLAYER**](%s)",
             playerName, displayName, gameName, serverPlayers, maxPlayers, placeId, jobId, currentTime, country, executor, getgenv().script1222,
-            "https://www.roblox.com/games/start?placeId=118477743838556&launchData=" .. placeId .. "/" .. jobId
+            "https://www.roblox.com/games/start?placeId=" .. placeId .. "&launchData=" .. jobId
         ),
         ["color"] = 0x0000FF
     }}
