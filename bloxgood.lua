@@ -20,18 +20,18 @@ local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/d
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
 -- Services and Variables
-local localPlayer = game:GetService("Players").LocalPlayer
+local localPlayer: Player = game:GetService("Players").LocalPlayer
 local npc = workspace:WaitForChild("Characters")
-local Remote = game:GetService("ReplicatedStorage"):WaitForChild("ALLREMBINDS"):WaitForChild("MainRemoteEvent")
+local Remote: RemoteEvent = game:GetService("ReplicatedStorage"):WaitForChild("ALLREMBINDS"):WaitForChild("MainRemoteEvent")
 local fruits = localPlayer.PlayerStats.Tools
 local chest = workspace.World.Chests
 
-local flingpower = 1000
-local dmg = 100
-local aurascale = 1
+local flingpower: number = 1000
+local dmg: number = 100
+local aurascale: number = 1
 
-local animationNames = {}
-local fruitsName = {}
+local animationNames: {string} = {}
+local fruitsName: {string} = {}
 
 for _, anim in ipairs(game:GetService("ReplicatedStorage").AllAnims.PreLoad.Dafult:GetChildren()) do
     if anim:IsA("Animation") then
@@ -96,12 +96,12 @@ Tabs.OP:AddButton({
     end
 })
 Tabs.OP:AddInput("Input", {
-    Title = "DAMAGE",
-    Default = "100",
-    Numeric = true,
-    Callback = function(Value)
-        dmg = Value
-    end
+	Title = "DAMAGE",
+	Default = tostring(dmg),
+	Numeric = true,
+	Callback = function(Value: string)
+		dmg = tonumber(Value) or dmg
+	end
 })
 Tabs.OP:AddButton({
     Title = "DAMAGE ALL PLAYERS/NPC",
@@ -115,12 +115,12 @@ Tabs.OP:AddButton({
     end
 })
 Tabs.OP:AddInput("Input", {
-    Title = "FLING POWER",
-    Default = "1000",
-    Numeric = true,
-    Callback = function(Value)
-        flingpower = Value
-    end
+	Title = "FLING POWER",
+	Default = tostring(flingpower),
+	Numeric = true,
+	Callback = function(Value: string)
+		flingpower = tonumber(Value) or flingpower 
+	end
 })
 Tabs.OP:AddButton({
     Title = "FLING ALL PLAYERS/NPC",
@@ -135,11 +135,12 @@ Tabs.OP:AddButton({
 })
 
 -- Fruits Tab
-local FruitDropDown = Tabs.Fruits:AddDropdown("Dropdown", {
-    Title = "FRUITS",
-    Values = fruitsName,
-    Multi = false,
-    Default = 1,
+local FruitDropDown: DropdownMenuItem<Dropdown>
+FruitDropDown = Tabs.Fruits:AddDropdown("Dropdown", {
+	Title="FRUITS",
+	Values=fruitsName,
+	Multi=false,
+	Default=1,
 })
 Tabs.Fruits:AddButton({
     Title = "GET FRUIT",
@@ -168,19 +169,22 @@ Tabs.Fruits:AddButton({
 })
 
 -- Aura Tab
-local AuraDropdown = Tabs.Aura:AddDropdown("Dropdown", {
-    Title = "AURA",
-    Values = { "DashF", "Dragon_WingV2", "WindAuraModel" },
-    Multi = false,
-    Default = 1,
+local AuraDropdown: DropdownMenuItem<Dropdown>
+
+AuraDropdown = Tabs.Aura:AddDropdown("Dropdown", {
+	Title="AURA",
+	Values={"DashF", "Dragon_WingV2", "WindAuraModel"},
+	Multi=false,
+	Default=1,
 })
+
 Tabs.Aura:AddInput("Input", {
-    Title = "AURA SCALE",
-    Default = "1",
-    Numeric = true,
-    Callback = function(Value)
-        aurascale = Value
-    end
+	Title="AURA SCALE",
+	Default=tostring(aurascale),
+	Numeric=true,
+	Callback=function(Value:string)
+		aurascale=tonumber(Value) or aurascale
+	end,
 })
 Tabs.Aura:AddButton({
     Title = "GET AURA ALL PLAYERS/NPC",
