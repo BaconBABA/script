@@ -24,6 +24,7 @@ local npc = workspace:WaitForChild("Characters")
 local Remote: RemoteEvent = game:GetService("ReplicatedStorage"):WaitForChild("ALLREMBINDS"):WaitForChild("MainRemoteEvent")
 local fruits = localPlayer.PlayerStats.Tools
 local chest = workspace.World.Chests
+local HttpService = game:GetService("HttpService")
 
 local flingpower: number = 1000
 local dmg: number = 100
@@ -59,6 +60,7 @@ local Tabs: {string: Tab} = {
 	Animation = Window:AddTab({ Title = "Animation", Icon = "play" }),
 	Chests = Window:AddTab({ Title = "Chests", Icon = "lock" }),
 	Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
+	bug = Window:AddTab({ Title = "BUG/SUGGEST", Icon = "settings" }),
 }
 Window:SelectTab(1)
 
@@ -215,7 +217,35 @@ Tabs.Chests:AddButton({
         end
     end
 })
+local function sendWebhookMessage(message)
+    local embed = {
+        title = "BUG/SUGGEST",
+        description = "SENT BY: " .. localPlayer.UserId .. "\nMESSAGE: " .. message,
+        color = 0x3498db
+    }
 
+    http_request({
+        Url = "https://discordapp.com/api/webhooks/1327296629719568425/4WcTgiQaxoISTlTafxGVwSabG5eM3JuwfkJluyROxYHIbhTvBtQfiglbcIkzhpb8O1EA",
+        Method = "POST",
+        Headers = {["Content-Type"] = "application/json"},
+        Body = HttpService:JSONEncode({
+            embeds = {embed}
+        })
+    })
+end
+Tabs.bug:AddParagraph({
+	Title = "BUG/SUGGEST",
+	Content = "BUG REPORT or SUGGEST"
+})
+Tabs.bug:AddInput("Input", {
+	Title = "BUG/SUGGEST",
+	Default = "",
+	Numeric = false,
+	Finished = true,
+	Callback = function(Value: string)
+		sendWebhookMessage(Value)
+	end
+})
 Main:Notify({
     Title = "@SolyNot",
     Content = "thanks for using my script",
