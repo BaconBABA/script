@@ -43,7 +43,7 @@ for _, fruit in ipairs(fruits:GetChildren()) do
 end
 
 local Window = Main:CreateWindow({
-    Title = "solynot " .. Main.Version,
+    Title = "solynot " .. getgenv().script1222,
     SubTitle = "by SolyNot",
     TabWidth = 160,
     Size = UDim2.fromOffset(580, 460),
