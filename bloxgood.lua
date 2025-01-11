@@ -70,7 +70,7 @@ Tabs.Main:AddParagraph({
 })
 Tabs.Main:AddParagraph({
 	Title = "Update Log",
-	Content = "[*] WORKING ON ANIMATION PLAYER(ARGON IS PATCH I CANT PUSH THE UPDATE)\nSCRIPT IS NOW WORKING SORRY FOR DOWNTIME"
+	Content = "add animation tab"
 })
 Tabs.Main:AddButton({
     Title = "CLICK TO JOIN OUR DISCORD",
@@ -80,10 +80,6 @@ Tabs.Main:AddButton({
     end
 })
 
-Tabs.Animation:AddParagraph({
-    Title = "WORKING",
-    Content = ""
-})
 -- OP Tab
 Tabs.OP:AddButton({
     Title = "KILL ALL PLAYERS/NPC",
@@ -217,6 +213,31 @@ Tabs.Chests:AddButton({
         end
     end
 })
+--animation tabs
+local AnimationDropDown: DropdownMenuItem<Dropdown>
+AnimationDropDown = Tabs.Animation:AddDropdown("Dropdown", {
+	Title="ANIMATION",
+	Values=animationNames,
+	Multi=false,
+	Default=1,
+})
+Tabs.Animation:AddButton({
+	Title = "PLAY ANIMATION ALL PLAYERS/NPC",
+	Callback = function()
+		for _, character in pairs(npc:GetChildren()) do
+			if character:IsA("Model") and character:FindFirstChild("Humanoid") and character.Name ~= localPlayer.Name then
+				Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "AddANimSSOnDeathh", {character, AnimationDropDown.Value, 99999})
+			end
+		end
+	end
+})
+Tabs.Animation:AddButton({
+	Title = "PLAY ANIMATION FOR MYSELF",
+	Callback = function()
+		Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "AddANimSSOnDeathh", {localPlayer.Character, AnimationDropDown.Value, 99999})
+	end
+})
+--bug tabs
 local function sendWebhookMessage(message)
     local embed = {
         title = "BUG/SUGGEST",
