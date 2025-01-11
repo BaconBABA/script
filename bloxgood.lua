@@ -55,6 +55,7 @@ local Window = Main:CreateWindow({
 local Tabs: {string: Tab} = {
 	Main = Window:AddTab({ Title = "Main", Icon = "box" }),
 	OP = Window:AddTab({ Title = "OP", Icon = "skull" }),
+    vision = Window:AddTab({ Title = "Vision", Icon = "eye" }),
 	Fruits = Window:AddTab({ Title = "Fruits", Icon = "apple" }),
 	Aura = Window:AddTab({ Title = "Aura", Icon = "star" }),
 	Animation = Window:AddTab({ Title = "Animation", Icon = "play" }),
@@ -70,7 +71,7 @@ Tabs.Main:AddParagraph({
 })
 Tabs.Main:AddParagraph({
 	Title = "Update Log",
-	Content = "add animation tab"
+	Content = "add Vision tab"
 })
 Tabs.Main:AddButton({
     Title = "CLICK TO JOIN OUR DISCORD",
@@ -130,7 +131,19 @@ Tabs.OP:AddButton({
         end
     end
 })
-
+--vision tab
+Tabs.vision:AddButton({
+	Title = "BLIND ALL",
+	Callback = function()
+		Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "Add_LiGthing_Effects_FromDistance", {Vector3.new(0, 0, 0), 99999999999999999, {ColorCorrection = {THeTWeeenFor_MakeTween__ = {{1}, {TintColor = Color3.new(0, 0, 0)}}, StartingTintColor = Color3.new(0, 0, 0)}}})
+	end
+})
+Tabs.vision:AddButton({
+	Title = "SHAKE ALL PLAYERS CAMERA",
+	Callback = function()
+		game:GetService("ReplicatedStorage"):WaitForChild("ALLREMBINDS"):WaitForChild("MainRemoteEvent"):FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "ShAkeCamFromDiStanceee", {Vector3.new(0, 0, 0), 9999999999999999, {ShakeOnce = true, Propties = {4, 5, 0.1, 0.6, Vector3.new(10, 10, 10), Vector3.new(999, 999, 999)}}})
+	end
+})
 -- Fruits Tab
 local FruitDropDown: DropdownMenuItem<Dropdown>
 FruitDropDown = Tabs.Fruits:AddDropdown("Dropdown", {
