@@ -37,7 +37,7 @@ local data: { embeds: { title: string, description: string, color: number } } = 
         ["title"] = gameName .. " Script",
         ["description"] = string.format("**Player Name: ** %s (%s)\n**Game Name:** %s\n**Server Players:** %d\n**Max Players:** %d\n**Place ID:** %d\n**Job ID:** %s\n**Script Run Time:** %s\n**Player Country:** %s\n**Executor:** %s\n**SCRIPT VERSION:** %s\n\n[**JOIN PLAYER**](%s)",
             playerName, displayName, gameName, serverPlayers, maxPlayers, placeId, jobId, currentTime, country, executor, getgenv().script1222,
-            "https://www.roblox.com/games/start?placeId=" .. placeId .. "&launchData=" .. jobId
+            "https://www.roblox.com/games/start?placeId=118477743838556&launchData=" .. placeId .. "/" .. jobId
         ),
         ["color"] = 0x0000FF
     }}
