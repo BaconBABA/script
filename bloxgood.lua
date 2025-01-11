@@ -25,6 +25,31 @@ local Remote: RemoteEvent = game:GetService("ReplicatedStorage"):WaitForChild("A
 local fruits = localPlayer.PlayerStats.Tools
 local chest = workspace.World.Chests
 local HttpService = game:GetService("HttpService")
+local backpack = localPlayer:WaitForChild("Backpack")
+
+local tool = Instance.new("Tool")
+tool.Name = "CLICK TO DELETE"
+tool.RequiresHandle = false
+
+tool.Activated:Connect(function()
+    local mouse = localPlayer:GetMouse()
+    local target = mouse.Target
+
+    if target and target:IsA("BasePart") then
+        local existingSelectionBox = target:FindFirstChild("SelectionBox")
+
+        if existingSelectionBox then
+            existingSelectionBox:Destroy()
+        else
+            local selectionBox = Instance.new("SelectionBox")
+            selectionBox.Name = "SelectionBox"
+            selectionBox.Adornee = target
+            selectionBox.Parent = target
+            game:GetService("ReplicatedStorage"):WaitForChild("ALLREMBINDS"):WaitForChild("MainRemoteEvent"):FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "ChangeProptyOfSmtHSH", {target, "Parent", localPlayer.Character})
+            localPlayer.Character.Humanoid.Health = 0
+        end
+    end
+end)
 
 local flingpower: number = 1000
 local dmg: number = 100
@@ -44,7 +69,7 @@ for _, fruit in ipairs(fruits:GetChildren()) do
 end
 
 local Window = Main:CreateWindow({
-    Title = "solynot " .. 1.2,
+    Title = "solynot " .. 1.3,
     SubTitle = "by SolyNot",
     TabWidth = 160,
     Size = UDim2.fromOffset(580, 460),
@@ -71,7 +96,7 @@ Tabs.Main:AddParagraph({
 })
 Tabs.Main:AddParagraph({
 	Title = "Update Log",
-	Content = "add Vision tab"
+	Content = "ADD FE CLICK TO DESTROY"
 })
 Tabs.Main:AddButton({
     Title = "CLICK TO JOIN OUR DISCORD",
@@ -82,6 +107,13 @@ Tabs.Main:AddButton({
 })
 
 -- OP Tab
+Tabs.OP:AddButton({
+    Title = "CLICK TO DESTROY(FE)",
+    Description = "",
+    Callback = function()
+        tool.Parent = localPlayer.Character
+    end
+})
 Tabs.OP:AddButton({
     Title = "KILL ALL PLAYERS/NPC",
     Description = "",
@@ -136,6 +168,18 @@ Tabs.vision:AddButton({
 	Title = "BLIND ALL",
 	Callback = function()
 		Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "Add_LiGthing_Effects_FromDistance", {Vector3.new(0, 0, 0), 99999999999999999, {ColorCorrection = {THeTWeeenFor_MakeTween__ = {{1}, {TintColor = Color3.new(0, 0, 0)}}, StartingTintColor = Color3.new(0, 0, 0)}}})
+	end
+})
+Tabs.vision:AddButton({
+	Title = "red sky",
+	Callback = function()
+		Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "Add_LiGthing_Effects_FromDistance", {Vector3.new(0, 0, 0), 99999999999999999, {ColorCorrection = {THeTWeeenFor_MakeTween__ = {{1}, {TintColor = Color3.new(1, 0, 0)}}, StartingTintColor = Color3.new(1, 0, 0)}}})
+	end
+})
+Tabs.vision:AddButton({
+	Title = "white sky",
+	Callback = function()
+		Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "Add_LiGthing_Effects_FromDistance", {Vector3.new(0, 0, 0), 99999999999999999, {ColorCorrection = {THeTWeeenFor_MakeTween__ = {{1}, {TintColor = Color3.new(1, 1, 1)}}, StartingTintColor = Color3.new(1, 1, 1)}}})
 	end
 })
 Tabs.vision:AddButton({
