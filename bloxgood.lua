@@ -171,6 +171,16 @@ Tabs.vision:AddButton({
 	end
 })
 Tabs.vision:AddButton({
+	Title = "TRULY BLIND ALL",
+	Callback = function()
+		for _, character in pairs(npc:GetChildren()) do
+			if character:IsA("Model") and character:FindFirstChild("Humanoid") and character.Name ~= localPlayer.Name then
+				Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "ByNetworkOwnerMethodExecuteMainModuleFunctionsOnClient_Server_SideS", {"kemothebest9097?______SDSDSDSCXZVCLOPXZ12", character:WaitForChild("HumanoidRootPart"), "ChangeProptyOfSmtHSH", {{{character:WaitForChild("HumanoidRootPart"), "Responsiveness", 500, {["CHanGeProptYAfterTime"] = {0, 9999999999999999}}}, {character:WaitForChild("HumanoidRootPart"), "Position", Vector3.new(0, 1e15, 0), {["CHanGeProptYAfterTime"] = {0, Vector3.new(0, 1e15, 0)}}}}}})
+			end
+		end
+	end
+})
+Tabs.vision:AddButton({
 	Title = "red sky",
 	Callback = function()
 		Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "Add_LiGthing_Effects_FromDistance", {Vector3.new(0, 0, 0), 99999999999999999, {ColorCorrection = {THeTWeeenFor_MakeTween__ = {{1}, {TintColor = Color3.new(1, 0, 0)}}, StartingTintColor = Color3.new(1, 0, 0)}}})
@@ -186,6 +196,12 @@ Tabs.vision:AddButton({
 	Title = "SHAKE ALL PLAYERS CAMERA",
 	Callback = function()
 		game:GetService("ReplicatedStorage"):WaitForChild("ALLREMBINDS"):WaitForChild("MainRemoteEvent"):FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "ShAkeCamFromDiStanceee", {Vector3.new(0, 0, 0), 9999999999999999, {ShakeOnce = true, Propties = {4, 5, 0.1, 0.6, Vector3.new(10, 10, 10), Vector3.new(999, 999, 999)}}})
+	end
+})
+Tabs.vision:AddButton({
+	Title = "SUPER SHAKE ALL PLAYERS CAMERA",
+	Callback = function()
+		game:GetService("ReplicatedStorage"):WaitForChild("ALLREMBINDS"):WaitForChild("MainRemoteEvent"):FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "ShAkeCamFromDiStanceee", {Vector3.new(0, 0, 0), 9999999999999999, {ShakeOnce = true, Propties = {9999999999, 999999, 5, 555, Vector3.new(10, 999999999, 10), Vector3.new(999, 999, 999)}}})
 	end
 })
 -- Fruits Tab
