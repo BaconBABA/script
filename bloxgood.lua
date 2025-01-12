@@ -97,7 +97,7 @@ Tabs.Main:AddParagraph({
 })
 Tabs.Main:AddParagraph({
 	Title = "Update Log",
-	Content = "ADD FE CLICK TO DESTROY"
+	Content = "ADD MONEY TAB"
 })
 Tabs.Main:AddButton({
     Title = "CLICK TO JOIN OUR DISCORD",
@@ -203,6 +203,12 @@ Tabs.vision:AddButton({
 	Title = "SUPER SHAKE ALL PLAYERS CAMERA",
 	Callback = function()
 		Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "ShAkeCamFromDiStanceee", {Vector3.new(0, 0, 0), 9999999999999999, {ShakeOnce = true, Propties = {9999999999, 999999, 5, 555, Vector3.new(10, 999999999, 10), Vector3.new(999, 999, 999)}}})
+	end
+})
+Tabs.vision:AddButton({
+	Title = "EARTHQUAKE",
+	Callback = function()
+		Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "ShAkeCamFromDiStanceee", {Vector3.new(0, 0, 0), 9999999999999999, {ShakeOnce = true, Propties = {5, 5, 5, 5, Vector3.new(5, 5, 5), Vector3.new(5, 5, 5)}}})
 	end
 })
 --money tab
