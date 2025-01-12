@@ -45,7 +45,7 @@ tool.Activated:Connect(function()
             selectionBox.Name = "SelectionBox"
             selectionBox.Adornee = target
             selectionBox.Parent = target
-            game:GetService("ReplicatedStorage"):WaitForChild("ALLREMBINDS"):WaitForChild("MainRemoteEvent"):FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "ChangeProptyOfSmtHSH", {target, "Parent", localPlayer.Character})
+            Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "ChangeProptyOfSmtHSH", {target, "Parent", localPlayer.Character})
             localPlayer.Character.Humanoid.Health = 0
         end
     end
@@ -196,13 +196,13 @@ Tabs.vision:AddButton({
 Tabs.vision:AddButton({
 	Title = "SHAKE ALL PLAYERS CAMERA",
 	Callback = function()
-		game:GetService("ReplicatedStorage"):WaitForChild("ALLREMBINDS"):WaitForChild("MainRemoteEvent"):FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "ShAkeCamFromDiStanceee", {Vector3.new(0, 0, 0), 9999999999999999, {ShakeOnce = true, Propties = {4, 5, 0.1, 0.6, Vector3.new(10, 10, 10), Vector3.new(999, 999, 999)}}})
+		Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "ShAkeCamFromDiStanceee", {Vector3.new(0, 0, 0), 9999999999999999, {ShakeOnce = true, Propties = {4, 5, 0.1, 0.6, Vector3.new(10, 10, 10), Vector3.new(999, 999, 999)}}})
 	end
 })
 Tabs.vision:AddButton({
 	Title = "SUPER SHAKE ALL PLAYERS CAMERA",
 	Callback = function()
-		game:GetService("ReplicatedStorage"):WaitForChild("ALLREMBINDS"):WaitForChild("MainRemoteEvent"):FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "ShAkeCamFromDiStanceee", {Vector3.new(0, 0, 0), 9999999999999999, {ShakeOnce = true, Propties = {9999999999, 999999, 5, 555, Vector3.new(10, 999999999, 10), Vector3.new(999, 999, 999)}}})
+		Remote:FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "ShAkeCamFromDiStanceee", {Vector3.new(0, 0, 0), 9999999999999999, {ShakeOnce = true, Propties = {9999999999, 999999, 5, 555, Vector3.new(10, 999999999, 10), Vector3.new(999, 999, 999)}}})
 	end
 })
 --money tab
