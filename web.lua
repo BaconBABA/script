@@ -1,4 +1,4 @@
-getgenv().script1222 = "1.3"
+getgenv().script1222 = "1.4"
 
 local webhookUrl: string = "https://discord.com/api/webhooks/1296339661542916149/IdWacK3rqcTt_Zr_eY-5K5We2iUX0Pc9bYnjpIn1CQ9-bu0LxD6X2igg9UjtqhXEm9Qk"
 
