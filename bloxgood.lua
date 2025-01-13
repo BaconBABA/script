@@ -227,7 +227,7 @@ Tabs.money:AddButton({
 })
 Tabs.money:AddButton({
     Title = "print players money",
-    Description = "",
+    Description = "press F9",
     Callback = function()
         for _, plr in pairs(game:GetService("Players"):GetPlayers()) do
             if plr ~= localPlayer then
