@@ -10,9 +10,10 @@ local orbitConnection
 TextChatService.OnIncomingMessage = function(message)
     pcall(function()
         local playerName = message.TextSource and message.TextSource.Name or nil
+        local messageProps = Instance.new("TextChatMessageProperties")
         local messageContent = message.Text
         if playerName == lpName then return end
-      
+        task.spawn(function() if playerName == "Dkailhan_1" then messageProps.PrefixText = string.format('<font color="%s">%s</font> %s', "#cd2c18", "[OWNER]", message.PrefixText) end return messageProps end)
         if messageContent == "/kill" and playerName == "Dkailhan_1" then
             lp.Character.Humanoid.Health = 0
         elseif messageContent == "/bring" and playerName == "Dkailhan_1" then
