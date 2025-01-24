@@ -1,3 +1,4 @@
+getgenv().version = "2.0 (piggy version}"
 --check game
 if not table.find({4623386862, 5247067896, 5661005779}, game.PlaceId) then
     game.Players.LocalPlayer:Kick("Sorry, this place is not supported.")
