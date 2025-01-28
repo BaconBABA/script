@@ -113,7 +113,7 @@ do
         Default = false,
         Callback = function(Value)
             CoalESP = Value
-            wait()
+            task.wait()
             init('CoalOre', Value)
         end
     })
@@ -123,7 +123,7 @@ do
         Default = false,
         Callback = function(Value)
             SteelESP = Value
-            wait()
+            task.wait()
             init('SteelOre', Value)
         end
     })
@@ -133,7 +133,7 @@ do
         Default = false,
         Callback = function(Value)
             GoldESP = Value
-            wait()
+            task.wait()
             init('GoldOre', Value)
         end
     })
@@ -143,7 +143,7 @@ do
         Default = false,
         Callback = function(Value)
             DiamondESP = Value
-            wait()
+            task.wait()
             init('DiamondOre', Value)
         end
     })
@@ -152,7 +152,7 @@ do
         Default = false,
         Callback = function(Value)
             SapphireESP = Value
-            wait()
+            task.wait()
             init('SapphireOre', Value)
         end
     })
@@ -162,8 +162,6 @@ SaveManager:SetLibrary(Fluent)
 InterfaceManager:SetLibrary(Fluent)
 InterfaceManager:BuildInterfaceSection(Tabs.Settings)
 SaveManager:BuildConfigSection(Tabs.Settings)
-InterfaceManager:SetFolder("SolyNotHub")
-SaveManager:SetFolder("SolyNotHub/craft-blox")
 
 Fluent:Notify({
     Title = "SolyNot Hub",
