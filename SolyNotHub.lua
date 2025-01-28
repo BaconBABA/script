@@ -70,7 +70,7 @@ local Tabs = {
 }
 
 local Options = Fluent.Options
-
+Window:SelectTab(1)
 do
     local Section1 = Tabs.Main:AddSection("Player")
 
@@ -170,5 +170,5 @@ Fluent:Notify({
 })
 
 SaveManager:LoadAutoloadConfig()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/notify.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/web.lua"))()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/command.lua"))()
