@@ -64,19 +64,9 @@ local function i2p(i, customgen)
 end
 
 local screenUI = Instance.new("ScreenGui")
-screenUI.Name = "SolyNot Spy\n A remote spy for low executer"
+screenUI.Name = "SolyNot Spy"
 screenUI.ResetOnSpawn = false
 screenUI.Parent = gethui() or game.CoreGui
-
-local subtitle = Instance.new("TextLabel", header)
-subtitle.Size = UDim2.new(1, -70, 0, 20)
-subtitle.Position = UDim2.new(0,10,0,42)
-subtitle.BackgroundTransparency = 1
-subtitle.Text = "A remote spy for low executer"
-subtitle.TextColor3 = Color3.new(1,1,1)
-subtitle.Font = Enum.Font.Gotham
-subtitle.TextSize = 14
-subtitle.TextXAlignment = Enum.TextXAlignment.Left
 
 local mainFrame = Instance.new("Frame", screenUI)
 mainFrame.Name = "MainFrame"
@@ -103,6 +93,16 @@ title.Text = "SolyNot Spy"
 title.TextColor3 = Color3.new(1,1,1)
 title.Font = Enum.Font.GothamBold
 title.TextSize = 24
+
+local subtitle = Instance.new("TextLabel", header)
+subtitle.Size = UDim2.new(1, -70, 0, 20)
+subtitle.Position = UDim2.new(0,10,0,42)
+subtitle.BackgroundTransparency = 1
+subtitle.Text = "A remote spy for low executer"
+subtitle.TextColor3 = Color3.new(1,1,1)
+subtitle.Font = Enum.Font.Gotham
+subtitle.TextSize = 14
+subtitle.TextXAlignment = Enum.TextXAlignment.Left
 
 local closeButton = Instance.new("TextButton", header)
 closeButton.Size = UDim2.new(0,40,0,40)
