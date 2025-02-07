@@ -29,47 +29,58 @@ local function formatstr(str)
 end
 
 local function i2p(i, customgen)
-	if customgen then return customgen end
-	local player = getplayer(i)
-	local parent = i
-	local out = ""
-	if not parent then return "nil" end
-	if player then
-		while true do
-			if parent == player.Character then
-				return player == Players.LocalPlayer and 'game:GetService("Players").LocalPlayer.Character' .. out or i2p(player) .. ".Character" .. out
-			else
-				out = (parent.Name:match("[%a_]+[%w+]*") ~= parent.Name and (':FindFirstChild(' .. formatstr(parent.Name) .. ')') or ("." .. parent.Name)) .. out
-			end
-			task.wait()
-			parent = parent.Parent
-		end
-	elseif parent ~= game then
-		while true do
-			if parent and parent.Parent == game then
-				if cloneref(parent.ClassName) then
-					return string.lower(parent.ClassName) == "workspace" and workspace{out} or 'game:GetService("' .. parent.ClassName .. '")' .. out
-				else
-					return parent.Name:match("[%a_]+[%w+]*") and "game." .. parent.Name .. out or 'game:FindFirstChild(' .. formatstr(parent.Name) .. ')' .. out
-				end
-			elseif not parent.Parent then
-				if parent.ClassName == "DataModel" then
-					return "game" .. out
-				else
-					return "game." .. parent.Name .. out
-				end
-			else
-				out = (parent.Name:match("[%a_]+[%w+]*") ~= parent.Name and (':WaitForChild(' .. formatstr(parent.Name) .. ')') or (':WaitForChild("' .. parent.Name .. '")')) .. out
-			end
-			if i:IsDescendantOf(Players.LocalPlayer) then
-				return 'game:GetService("Players").LocalPlayer' .. out
-			end
-			parent = parent.Parent
-			task.wait()
-		end
-	else
-		return "game"
-	end
+    local success, result = pcall(function()
+        if customgen then 
+            return customgen 
+        end
+        local player = getplayer(i)
+        local parent = i
+        local out = ""
+        if not parent then 
+            return "nil" 
+        end
+        if player then
+            while true do
+                if parent == player.Character then
+                    return player == Players.LocalPlayer and 'game:GetService("Players").LocalPlayer.Character' .. out or i2p(player) .. ".Character" .. out
+                else
+                    out = (parent.Name:match("[%a_]+[%w+]*") ~= parent.Name and (':FindFirstChild(' .. formatstr(parent.Name) .. ')') or ("." .. parent.Name)) .. out
+                end
+                task.wait()
+                parent = parent.Parent
+            end
+        elseif parent ~= game then
+            while true do
+                if parent and parent.Parent == game then
+                    if cloneref(parent.ClassName) then
+                        return string.lower(parent.ClassName) == "workspace" and workspace{out} or 'game:GetService("' .. parent.ClassName .. '")' .. out
+                    else
+                        return parent.Name:match("[%a_]+[%w+]*") and "game." .. parent.Name .. out or 'game:FindFirstChild(' .. formatstr(parent.Name) .. ')' .. out
+                    end
+                elseif not parent.Parent then
+                    if parent.ClassName == "DataModel" then
+                        return "game" .. out
+                    else
+                        return "game." .. parent.Name .. out
+                    end
+                else
+                    out = (parent.Name:match("[%a_]+[%w+]*") ~= parent.Name and (':WaitForChild(' .. formatstr(parent.Name) .. ')') or (':WaitForChild("' .. parent.Name .. '")')) .. out
+                end
+                if i:IsDescendantOf(Players.LocalPlayer) then
+                    return 'game:GetService("Players").LocalPlayer' .. out
+                end
+                parent = parent.Parent
+                task.wait()
+            end
+        else
+            return "game"
+        end
+    end)
+    if success then
+        return result
+    else
+        return "error: " .. tostring(result)
+    end
 end
 
 local screenUI = Instance.new("ScreenGui")
@@ -167,7 +178,7 @@ codeScroll.BackgroundColor3 = Color3.fromRGB(20,20,20)
 codeScroll.BorderSizePixel = 0
 
 local highlighter = Highlight.new(codeScroll)
-
+highlighter:setRaw("--Don't forgot to join our discord https://discord.gg/8pJCFW8cpG\n--Serializer and Highlighter by https://github.com/78n")
 local controlFrame = Instance.new("Frame", mainFrame)
 controlFrame.Name = "ControlFrame"
 controlFrame.Size = UDim2.new(1, -20, 0, 50)
