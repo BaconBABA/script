@@ -64,7 +64,7 @@ local function i2p(i, customgen)
 end
 
 local screenUI = Instance.new("ScreenGui")
-screenUI.Name = "SolyNot Spy"
+screenUI.Name = "SolyNot Spy\n A remote spy for low executer"
 screenUI.ResetOnSpawn = false
 screenUI.Parent = gethui() or game.CoreGui
 
