@@ -3,6 +3,7 @@ local Players = cloneref(game:GetService("Players"))
 local UserInputService = cloneref(game:GetService("UserInputService"))
 local RunService = cloneref(game:GetService("RunService"))
 local TweenService = cloneref(game:GetService("TweenService"))
+--Serializer and Highlighter by https://github.com/78n
 local Serializer = loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/SimpleSpy/refs/heads/main/Dependencies/Libraries/Serializer.luau"))()
 local Highlight = loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/SimpleSpy/main/Highlight.lua"))()
 
@@ -106,7 +107,7 @@ local subtitle = Instance.new("TextLabel", header)
 subtitle.Size = UDim2.new(1, -70, 0, 20)
 subtitle.Position = UDim2.new(0,10,0,42)
 subtitle.BackgroundTransparency = 1
-subtitle.Text = "A remote spy for low executer"
+subtitle.Text = "A remote spy for low executer       Serializer and Highlighter by https://github.com/78n"
 subtitle.TextColor3 = Color3.new(1,1,1)
 subtitle.Font = Enum.Font.Gotham
 subtitle.TextSize = 14
