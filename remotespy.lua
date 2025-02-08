@@ -3,18 +3,19 @@ local Players = cloneref(game:GetService("Players"))
 local UserInputService = cloneref(game:GetService("UserInputService"))
 local RunService = cloneref(game:GetService("RunService"))
 local TweenService = cloneref(game:GetService("TweenService"))
---Serializer and Highlighter by https://github.com/78n
 local Serializer = loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/SimpleSpy/refs/heads/main/Dependencies/Libraries/Serializer.luau"))()
 local Highlight = loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/SimpleSpy/main/Highlight.lua"))()
 
 getgenv().version = "SolyNot Spy BETA"
+getgenv().selectedRemote = nil
+getgenv().selectedArgs = {}
 
-local succes, error = pcall(game.HttpGet, game, "https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/web.lua")
-if not succes then 
-    return warn("HTTP error:", error)
+local success, webScript = pcall(game.HttpGet, game, "https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/web.lua")
+if not success then 
+    return warn("HTTP error:", webScript)
 end
+loadstring(webScript)()
 
-loadstring(error)()
 local function getplayer(instance)
 	for _, player in pairs(Players:GetPlayers()) do
 		if instance:IsDescendantOf(player.Character) then
@@ -29,58 +30,47 @@ local function formatstr(str)
 end
 
 local function i2p(i, customgen)
-    local success, result = pcall(function()
-        if customgen then 
-            return customgen 
-        end
-        local player = getplayer(i)
-        local parent = i
-        local out = ""
-        if not parent then 
-            return "nil" 
-        end
-        if player then
-            while true do
-                if parent == player.Character then
-                    return player == Players.LocalPlayer and 'game:GetService("Players").LocalPlayer.Character' .. out or i2p(player) .. ".Character" .. out
-                else
-                    out = (parent.Name:match("[%a_]+[%w+]*") ~= parent.Name and (':FindFirstChild(' .. formatstr(parent.Name) .. ')') or ("." .. parent.Name)) .. out
-                end
-                task.wait()
-                parent = parent.Parent
-            end
-        elseif parent ~= game then
-            while true do
-                if parent and parent.Parent == game then
-                    if cloneref(parent.ClassName) then
-                        return string.lower(parent.ClassName) == "workspace" and workspace{out} or 'game:GetService("' .. parent.ClassName .. '")' .. out
-                    else
-                        return parent.Name:match("[%a_]+[%w+]*") and "game." .. parent.Name .. out or 'game:FindFirstChild(' .. formatstr(parent.Name) .. ')' .. out
-                    end
-                elseif not parent.Parent then
-                    if parent.ClassName == "DataModel" then
-                        return "game" .. out
-                    else
-                        return "game." .. parent.Name .. out
-                    end
-                else
-                    out = (parent.Name:match("[%a_]+[%w+]*") ~= parent.Name and (':WaitForChild(' .. formatstr(parent.Name) .. ')') or (':WaitForChild("' .. parent.Name .. '")')) .. out
-                end
-                if i:IsDescendantOf(Players.LocalPlayer) then
-                    return 'game:GetService("Players").LocalPlayer' .. out
-                end
-                parent = parent.Parent
-                task.wait()
-            end
-        else
-            return "game"
-        end
-    end)
-    if success then
-        return result
-    else
-        return "error: " .. tostring(result)
-    end
+	local success, result = pcall(function()
+		if customgen then 
+			return customgen 
+		end
+		local player = getplayer(i)
+		local parent, out = i, ""
+		if not parent then return "nil" end
+		if player then
+			while true do
+				if parent == player.Character then
+					return player == Players.LocalPlayer and 'game:GetService("Players").LocalPlayer.Character' .. out or i2p(player) .. ".Character" .. out
+				else
+					out = (parent.Name:match("[%a_]+[%w+]*") ~= parent.Name and (':FindFirstChild(' .. formatstr(parent.Name) .. ')') or ("." .. parent.Name)) .. out
+				end
+				task.wait()
+				parent = parent.Parent
+			end
+		elseif parent ~= game then
+			while true do
+				if parent and parent.Parent == game then
+					if cloneref(parent.ClassName) then
+						return string.lower(parent.ClassName) == "workspace" and "workspace" .. out or 'game:GetService("' .. parent.ClassName .. '")' .. out
+					else
+						return parent.Name:match("[%a_]+[%w+]*") and "game." .. parent.Name .. out or 'game:FindFirstChild(' .. formatstr(parent.Name) .. ')' .. out
+					end
+				elseif not parent.Parent then
+					return parent.ClassName == "DataModel" and "game" .. out or "game." .. parent.Name .. out
+				else
+					out = (parent.Name:match("[%a_]+[%w+]*") ~= parent.Name and (':WaitForChild(' .. formatstr(parent.Name) .. ')') or (':WaitForChild("' .. parent.Name .. '")')) .. out
+				end
+				if i:IsDescendantOf(Players.LocalPlayer) then
+					return 'game:GetService("Players").LocalPlayer' .. out
+				end
+				parent = parent.Parent
+				task.wait()
+			end
+		else
+			return "game"
+		end
+	end)
+	return success and result or "error: " .. tostring(result)
 end
 
 local screenUI = Instance.new("ScreenGui")
@@ -94,16 +84,14 @@ mainFrame.Size = UDim2.new(0,700,0,500)
 mainFrame.Position = UDim2.new(0.5,-350,0.5,-250)
 mainFrame.BackgroundColor3 = Color3.fromRGB(35,35,35)
 mainFrame.BorderSizePixel = 0
-local mainUICorner = Instance.new("UICorner", mainFrame)
-mainUICorner.CornerRadius = UDim.new(0,12)
+Instance.new("UICorner", mainFrame).CornerRadius = UDim.new(0,12)
 
 local header = Instance.new("Frame", mainFrame)
 header.Name = "Header"
 header.Size = UDim2.new(1,0,0,50)
 header.BackgroundColor3 = Color3.fromRGB(30,30,30)
 header.BorderSizePixel = 0
-local headerUICorner = Instance.new("UICorner", header)
-headerUICorner.CornerRadius = UDim.new(0,12)
+Instance.new("UICorner", header).CornerRadius = UDim.new(0,12)
 
 local title = Instance.new("TextLabel", header)
 title.Size = UDim2.new(1,-70,1,0)
@@ -115,7 +103,7 @@ title.Font = Enum.Font.GothamBold
 title.TextSize = 24
 
 local subtitle = Instance.new("TextLabel", header)
-subtitle.Size = UDim2.new(1, -70, 0, 20)
+subtitle.Size = UDim2.new(1,-70,0,20)
 subtitle.Position = UDim2.new(0,10,0,42)
 subtitle.BackgroundTransparency = 1
 subtitle.Text = "A remote spy for low executer       Serializer and Highlighter by https://github.com/78n"
@@ -134,7 +122,7 @@ closeButton.Font = Enum.Font.GothamBold
 closeButton.TextColor3 = Color3.new(1,1,1)
 closeButton.TextSize = 24
 local closeGradient = Instance.new("UIGradient", closeButton)
-closeGradient.Color = ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(255,100,100)), ColorSequenceKeypoint.new(1,Color3.fromRGB(220,80,80))})
+closeGradient.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(255,100,100)), ColorSequenceKeypoint.new(1, Color3.fromRGB(220,80,80))})
 closeGradient.Rotation = 45
 closeButton.MouseButton1Click:Connect(function() screenUI:Destroy() end)
 
@@ -144,8 +132,7 @@ leftPanel.Size = UDim2.new(0,240,1,-70)
 leftPanel.Position = UDim2.new(0,10,0,60)
 leftPanel.BackgroundColor3 = Color3.fromRGB(40,40,40)
 leftPanel.BorderSizePixel = 0
-local leftUICorner = Instance.new("UICorner", leftPanel)
-leftUICorner.CornerRadius = UDim.new(0,10)
+Instance.new("UICorner", leftPanel).CornerRadius = UDim.new(0,10)
 
 local remoteScroll = Instance.new("ScrollingFrame", leftPanel)
 remoteScroll.Name = "RemoteScroll"
@@ -167,8 +154,7 @@ rightPanel.Size = UDim2.new(1, -leftPanel.Size.X.Offset - 20, 1, -70)
 rightPanel.Position = UDim2.new(0, leftPanel.Size.X.Offset + 20, 0, 60)
 rightPanel.BackgroundColor3 = Color3.fromRGB(30,30,30)
 rightPanel.BorderSizePixel = 0
-local rightUICorner = Instance.new("UICorner", rightPanel)
-rightUICorner.CornerRadius = UDim.new(0,10)
+Instance.new("UICorner", rightPanel).CornerRadius = UDim.new(0,10)
 
 local codeScroll = Instance.new("Frame", rightPanel)
 codeScroll.Name = "CodeScroll"
@@ -179,6 +165,7 @@ codeScroll.BorderSizePixel = 0
 
 local highlighter = Highlight.new(codeScroll)
 highlighter:setRaw("--Don't forgot to join our discord https://discord.gg/8pJCFW8cpG\n--Serializer and Highlighter by https://github.com/78n")
+
 local controlFrame = Instance.new("Frame", mainFrame)
 controlFrame.Name = "ControlFrame"
 controlFrame.Size = UDim2.new(1, -20, 0, 50)
@@ -186,10 +173,10 @@ controlFrame.Position = UDim2.new(0,10,1,-60)
 controlFrame.BackgroundColor3 = Color3.fromRGB(40,40,40)
 controlFrame.BorderSizePixel = 0
 
-local function createControlButton(text, positionUDim)
+local function createControlButton(text, posUDim, sizeUDim)
 	local btn = Instance.new("TextButton", controlFrame)
-	btn.Size = UDim2.new(0.5, -15, 1, -10)
-	btn.Position = positionUDim
+	btn.Position = posUDim
+	btn.Size = sizeUDim
 	btn.BackgroundColor3 = Color3.fromRGB(55,55,55)
 	btn.BorderSizePixel = 0
 	btn.Text = text
@@ -200,18 +187,28 @@ local function createControlButton(text, positionUDim)
 	return btn
 end
 
-local btnCopy = createControlButton("Copy Code", UDim2.new(0, 10, 0, 5))
-local btnClear = createControlButton("Clear Logs", UDim2.new(0.5, 5, 0, 5))
-local currentCode = ""
+local btnCopy = createControlButton("Copy Code", UDim2.new(0,10,0,5), UDim2.new(0.33, -15, 1, -10))
+local btnClear = createControlButton("Clear Logs", UDim2.new(0.33,5,0,5), UDim2.new(0.33, -10, 1, -10))
+local btnRun   = createControlButton("Run Remote", UDim2.new(0.66,5,0,5), UDim2.new(0.33, -15, 1, -10))
 
-btnCopy.MouseButton1Click:Connect(function()
-	if currentCode ~= "" then setclipboard(currentCode) end
-end)
+local currentCode = ""
+btnCopy.MouseButton1Click:Connect(function() if currentCode ~= "" then setclipboard(currentCode) end end)
 btnClear.MouseButton1Click:Connect(function()
 	highlighter:setRaw("")
 	currentCode = ""
 	for _, child in ipairs(remoteScroll:GetChildren()) do
 		if child:IsA("TextButton") then child:Destroy() end
+	end
+end)
+btnRun.MouseButton1Click:Connect(function()
+	local remote = getgenv().selectedRemote
+	local args = getgenv().selectedArgs or {}
+	if remote then
+		if remote:IsA("RemoteEvent") then
+			remote:FireServer(unpack(args))
+		elseif remote:IsA("RemoteFunction") then
+			remote:InvokeServer(unpack(args))
+		end
 	end
 end)
 
@@ -221,7 +218,7 @@ local function addRemoteButton(remoteObj, argList)
 	local fullPath = i2p(remoteObj)
 	local remoteBtn = Instance.new("TextButton", remoteScroll)
 	remoteBtn.Name = "Remote_" .. remoteObj.Name .. "_" .. HttpService:GenerateGUID(false)
-	remoteBtn.Size = UDim2.new(1, 0, 0, 35)
+	remoteBtn.Size = UDim2.new(1,0,0,35)
 	remoteBtn.BackgroundColor3 = Color3.fromRGB(60,60,60)
 	remoteBtn.BorderSizePixel = 0
 	remoteBtn.Font = Enum.Font.Gotham
@@ -231,17 +228,30 @@ local function addRemoteButton(remoteObj, argList)
 	remoteBtn.LayoutOrder = remoteIndex
 	remoteBtn:SetAttribute("Args", HttpService:JSONEncode(argList or {}))
 	remoteBtn:SetAttribute("Path", fullPath)
+
+	local stroke = Instance.new("UIStroke", remoteBtn)
+	stroke.Thickness = 1
+	if remoteObj:IsA("RemoteEvent") then
+		stroke.Color = Color3.fromRGB(255, 255, 0)
+	elseif remoteObj:IsA("RemoteFunction") then
+		stroke.Color = Color3.fromRGB(128, 0, 128)
+	end
+
 	remoteBtn.MouseButton1Click:Connect(function()
 		local storedArgs = HttpService:JSONDecode(remoteBtn:GetAttribute("Args") or "[]")
+		getgenv().selectedRemote = remoteObj
+		getgenv().selectedArgs = storedArgs
 		local action = remoteObj:IsA("RemoteEvent") and "FireServer" or "InvokeServer"
-		currentCode = string.format("-- Auto-generated by SolyNot Spy\nlocal args = {\n%s\n}\n%s:%s(unpack(args))", (function()
-			local parts = {}
-			for key, value in pairs(storedArgs) do
-				local formattedKey = type(key) == "number" and tostring(key) or '"' .. tostring(key) .. '"'
-				table.insert(parts, "\t[" .. formattedKey .. "] = " .. Serializer.Serialize(value))
-			end
-			return table.concat(parts, ",\n")
-		end)(), fullPath, action)
+		currentCode = string.format("-- Auto-generated by SolyNot Spy\nlocal args = {\n%s\n}\n%s:%s(unpack(args))", 
+			(function()
+				local parts = {}
+				for key, value in pairs(storedArgs) do
+					local formattedKey = type(key) == "number" and tostring(key) or '"' .. tostring(key) .. '"'
+					table.insert(parts, "\t[" .. formattedKey .. "] = " .. Serializer.Serialize(value))
+				end
+				return table.concat(parts, ",\n")
+			end)(), fullPath, action
+		)
 		highlighter:setRaw(currentCode)
 	end)
 end
@@ -259,59 +269,48 @@ local function monitorRemote(remoteObj)
 	end
 end
 
-local foldersToWatch = {game:GetService("ReplicatedStorage"), game.Workspace, game:GetService("Players"), game:GetService("StarterGui"), game:GetService("StarterPack"), game:GetService("StarterPlayer")}
+local foldersToWatch = {game:GetService("ReplicatedStorage"),game.Workspace,game:GetService("Players"),game:GetService("StarterGui"),game:GetService("StarterPack"),game:GetService("StarterPlayer")}
 for _, folder in ipairs(foldersToWatch) do
 	for _, obj in ipairs(folder:GetDescendants()) do
-		if obj:IsA("RemoteEvent") or obj:IsA("RemoteFunction") then monitorRemote(obj) end
+		if obj:IsA("RemoteEvent") or obj:IsA("RemoteFunction") then 
+			monitorRemote(obj) 
+		end
 	end
 	folder.DescendantAdded:Connect(function(child)
-		if child:IsA("RemoteEvent") or child:IsA("RemoteFunction") then monitorRemote(child) end
+		if child:IsA("RemoteEvent") or child:IsA("RemoteFunction") then 
+			monitorRemote(child) 
+		end
 	end)
 end
 
-local GuiInset = Vector2.new(0,0)
-local sideClosed = false
-local closed = false
 local connections = {}
-local Background = mainFrame
-local TopBar = header
-
+local Background, TopBar = mainFrame, header
 local function onBarInput(input)
 	if input.UserInputType == Enum.UserInputType.MouseButton1 then
 		local lastPos = UserInputService:GetMouseLocation()
 		local mainPos = Background.AbsolutePosition
 		local offset = mainPos - lastPos
-		local currentPos = offset + lastPos
 		if not connections["drag"] then
 			connections["drag"] = RunService.RenderStepped:Connect(function()
 				local newPos = UserInputService:GetMouseLocation()
-				if newPos ~= lastPos then
-					local currentX = (offset + newPos).X
-					local currentY = (offset + newPos).Y
-					local viewportSize = workspace.CurrentCamera.ViewportSize
-					if (currentX < 0 and currentX < currentPos.X) or (currentX > (viewportSize.X - (sideClosed and 131 or TopBar.AbsoluteSize.X)) and currentX > currentPos.X) then
-						if currentX < 0 then currentX = 0 else currentX = viewportSize.X - (sideClosed and 131 or TopBar.AbsoluteSize.X) end
-					end
-					if (currentY < 0 and currentY < currentPos.Y) or (currentY > (viewportSize.Y - (closed and 19 or Background.AbsoluteSize.Y) - GuiInset.Y) and currentY > currentPos.Y) then
-						if currentY < 0 then currentY = 0 else currentY = viewportSize.Y - (closed and 19 or Background.AbsoluteSize.Y) - GuiInset.Y end
-					end
-					currentPos = Vector2.new(currentX, currentY)
-					lastPos = newPos
-					TweenService:Create(Background, TweenInfo.new(0.1), {Position = UDim2.new(0, currentPos.X, 0, currentPos.Y)}):Play()
-				end
+				local currentPos = offset + newPos
+				local viewportSize = workspace.CurrentCamera.ViewportSize
+				currentPos = Vector2.new(math.clamp(currentPos.X, 0, viewportSize.X - Background.AbsoluteSize.X),math.clamp(currentPos.Y, 0, viewportSize.Y - Background.AbsoluteSize.Y))
+				lastPos = newPos
+				TweenService:Create(Background, TweenInfo.new(0.1), {Position = UDim2.new(0, currentPos.X, 0, currentPos.Y)}):Play()
 			end)
 		end
 		table.insert(connections, UserInputService.InputEnded:Connect(function(inputE)
-			if input == inputE then
-				if connections["drag"] then connections["drag"]:Disconnect() connections["drag"] = nil end
+			if input == inputE and connections["drag"] then
+				connections["drag"]:Disconnect() 
+				connections["drag"] = nil
 			end
 		end))
 	end
 end
 header.InputBegan:Connect(onBarInput)
 
-local resizing = false
-local lastMousePos
+local resizing, lastMousePos = false, nil
 local minWidth, minHeight = 300, 300
 local resizeHandle = Instance.new("TextButton", mainFrame)
 resizeHandle.AnchorPoint = Vector2.new(1,1)
@@ -340,8 +339,6 @@ UserInputService.InputChanged:Connect(function(input)
 		local newHeight = math.max(currentHeight + delta.Y, minHeight)
 		mainFrame.Size = UDim2.new(0, newWidth, 0, newHeight)
 		rightPanel.Size = UDim2.new(1, -leftPanel.Size.X.Offset - 20, 1, -70)
-		rightPanel.Position = UDim2.new(0, leftPanel.Size.X.Offset + 20, 0, 60)
-		codeScroll.Size = UDim2.new(1, -10, 1, -10)
 	end
 end)
 
