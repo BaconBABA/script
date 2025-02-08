@@ -5,17 +5,14 @@ local RunService = cloneref(game:GetService("RunService"))
 local TweenService = cloneref(game:GetService("TweenService"))
 local Serializer = loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/SimpleSpy/refs/heads/main/Dependencies/Libraries/Serializer.luau"))()
 local Highlight = loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/SimpleSpy/main/Highlight.lua"))()
-
 getgenv().version = "SolyNot Spy BETA"
 getgenv().selectedRemote = nil
 getgenv().selectedArgs = {}
-
 local success, webScript = pcall(game.HttpGet, game, "https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/web.lua")
 if not success then 
-    return warn("HTTP error:", webScript)
+	return warn("HTTP error:", webScript)
 end
 loadstring(webScript)()
-
 local function getplayer(instance)
 	for _, player in pairs(Players:GetPlayers()) do
 		if instance:IsDescendantOf(player.Character) then
@@ -24,11 +21,9 @@ local function getplayer(instance)
 	end
 	return nil
 end
-
 local function formatstr(str)
 	return '"' .. tostring(str) .. '"'
 end
-
 local function i2p(i, customgen)
 	local success, result = pcall(function()
 		if customgen then 
@@ -72,32 +67,28 @@ local function i2p(i, customgen)
 	end)
 	return success and result or "error: " .. tostring(result)
 end
-
 local screenUI = Instance.new("ScreenGui")
 screenUI.Name = "SolyNot Spy"
 screenUI.ResetOnSpawn = false
 screenUI.Parent = gethui() or game.CoreGui
-
 local mainFrame = Instance.new("Frame", screenUI)
 mainFrame.Name = "MainFrame"
 if UserInputService.TouchEnabled then
-    mainFrame.Size = UDim2.new(0,350,0,250)
-    mainFrame.Position = UDim2.new(0.5, -175, 0.5, -125)
+	mainFrame.Size = UDim2.new(0,350,0,250)
+	mainFrame.Position = UDim2.new(0.5, -175, 0.5, -125)
 else
-    mainFrame.Size = UDim2.new(0,700,0,500)
-    mainFrame.Position = UDim2.new(0.5, -350, 0.5, -250)
+	mainFrame.Size = UDim2.new(0,700,0,500)
+	mainFrame.Position = UDim2.new(0.5, -350, 0.5, -250)
 end
 mainFrame.BackgroundColor3 = Color3.fromRGB(35,35,35)
 mainFrame.BorderSizePixel = 0
 Instance.new("UICorner", mainFrame).CornerRadius = UDim.new(0,12)
-
 local header = Instance.new("Frame", mainFrame)
 header.Name = "Header"
 header.Size = UDim2.new(1,0,0,50)
 header.BackgroundColor3 = Color3.fromRGB(30,30,30)
 header.BorderSizePixel = 0
 Instance.new("UICorner", header).CornerRadius = UDim.new(0,12)
-
 local title = Instance.new("TextLabel", header)
 title.Size = UDim2.new(1,-70,1,0)
 title.Position = UDim2.new(0,10,0,0)
@@ -106,7 +97,6 @@ title.Text = "SolyNot Spy"
 title.TextColor3 = Color3.new(1,1,1)
 title.Font = Enum.Font.GothamBold
 title.TextSize = 24
-
 local subtitle = Instance.new("TextLabel", header)
 subtitle.Size = UDim2.new(1,-70,0,20)
 subtitle.Position = UDim2.new(0,10,0,42)
@@ -118,7 +108,6 @@ subtitle.TextSize = 14
 subtitle.TextXAlignment = Enum.TextXAlignment.Left
 subtitle.TextScaled = true
 subtitle.TextWrapped = true
-
 local closeButton = Instance.new("TextButton", header)
 closeButton.Size = UDim2.new(0,40,0,40)
 closeButton.Position = UDim2.new(1,-50,0.5,-20)
@@ -132,7 +121,6 @@ local closeGradient = Instance.new("UIGradient", closeButton)
 closeGradient.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(255,100,100)), ColorSequenceKeypoint.new(1, Color3.fromRGB(220,80,80))})
 closeGradient.Rotation = 45
 closeButton.MouseButton1Click:Connect(function() screenUI:Destroy() end)
-
 local leftPanel = Instance.new("Frame", mainFrame)
 leftPanel.Name = "LeftPanel"
 leftPanel.Size = UDim2.new(0,240,1,-70)
@@ -140,7 +128,6 @@ leftPanel.Position = UDim2.new(0,10,0,60)
 leftPanel.BackgroundColor3 = Color3.fromRGB(40,40,40)
 leftPanel.BorderSizePixel = 0
 Instance.new("UICorner", leftPanel).CornerRadius = UDim.new(0,10)
-
 local remoteScroll = Instance.new("ScrollingFrame", leftPanel)
 remoteScroll.Name = "RemoteScroll"
 remoteScroll.Size = UDim2.new(1,-10,1,-10)
@@ -154,7 +141,6 @@ remoteListLayout.Padding = UDim.new(0,8)
 remoteListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
 	remoteScroll.CanvasSize = UDim2.new(0,0,0,remoteListLayout.AbsoluteContentSize.Y)
 end)
-
 local rightPanel = Instance.new("Frame", mainFrame)
 rightPanel.Name = "RightPanel"
 rightPanel.Size = UDim2.new(1, -leftPanel.Size.X.Offset - 20, 1, -70)
@@ -162,24 +148,20 @@ rightPanel.Position = UDim2.new(0, leftPanel.Size.X.Offset + 20, 0, 60)
 rightPanel.BackgroundColor3 = Color3.fromRGB(30,30,30)
 rightPanel.BorderSizePixel = 0
 Instance.new("UICorner", rightPanel).CornerRadius = UDim.new(0,10)
-
 local codeScroll = Instance.new("Frame", rightPanel)
 codeScroll.Name = "CodeScroll"
 codeScroll.Size = UDim2.new(1, -10, 1, -10)
 codeScroll.Position = UDim2.new(0,5,0,5)
 codeScroll.BackgroundColor3 = Color3.fromRGB(20,20,20)
 codeScroll.BorderSizePixel = 0
-
 local highlighter = Highlight.new(codeScroll)
 highlighter:setRaw("--Don't forgot to join our discord https://discord.gg/8pJCFW8cpG\n--Serializer and Highlighter by https://github.com/78n")
-
 local controlFrame = Instance.new("Frame", mainFrame)
 controlFrame.Name = "ControlFrame"
 controlFrame.Size = UDim2.new(1, -20, 0, 50)
 controlFrame.Position = UDim2.new(0,10,1,-60)
 controlFrame.BackgroundColor3 = Color3.fromRGB(40,40,40)
 controlFrame.BorderSizePixel = 0
-
 local function createControlButton(text, posUDim)
 	local btn = Instance.new("TextButton", controlFrame)
 	btn.Position = posUDim
@@ -194,11 +176,9 @@ local function createControlButton(text, posUDim)
 	Instance.new("UICorner", btn).CornerRadius = UDim.new(0,6)
 	return btn
 end
-
 local btnCopy = createControlButton("Copy Code", UDim2.new(0,10,0,5))
 local btnClear = createControlButton("Clear Logs", UDim2.new(0.33,5,0,5))
-local btnRun   = createControlButton("Run Remote", UDim2.new(0.66,5,0,5))
-
+local btnRun = createControlButton("Run Remote", UDim2.new(0.66,5,0,5))
 local currentCode = ""
 btnCopy.MouseButton1Click:Connect(function() if currentCode ~= "" then setclipboard(currentCode) end end)
 btnClear.MouseButton1Click:Connect(function()
@@ -219,7 +199,6 @@ btnRun.MouseButton1Click:Connect(function()
 		end
 	end
 end)
-
 local remoteIndex = 0
 local function addRemoteButton(remoteObj, argList)
 	remoteIndex = remoteIndex + 1
@@ -236,7 +215,6 @@ local function addRemoteButton(remoteObj, argList)
 	remoteBtn.LayoutOrder = remoteIndex
 	remoteBtn:SetAttribute("Args", HttpService:JSONEncode(argList or {}))
 	remoteBtn:SetAttribute("Path", fullPath)
-
 	local stroke = Instance.new("UIStroke", remoteBtn)
 	stroke.Thickness = 1
 	if remoteObj:IsA("RemoteEvent") then
@@ -244,7 +222,6 @@ local function addRemoteButton(remoteObj, argList)
 	elseif remoteObj:IsA("RemoteFunction") then
 		stroke.Color = Color3.fromRGB(128, 0, 128)
 	end
-
 	remoteBtn.MouseButton1Click:Connect(function()
 		local storedArgs = HttpService:JSONDecode(remoteBtn:GetAttribute("Args") or "[]")
 		getgenv().selectedRemote = remoteObj
@@ -263,7 +240,6 @@ local function addRemoteButton(remoteObj, argList)
 		highlighter:setRaw(currentCode)
 	end)
 end
-
 local function monitorRemote(remoteObj)
 	if remoteObj:IsA("RemoteEvent") then
 		remoteObj.OnClientEvent:Connect(function(...)
@@ -276,7 +252,6 @@ local function monitorRemote(remoteObj)
 		end
 	end
 end
-
 local foldersToWatch = {game:GetService("ReplicatedStorage"),game.Workspace,game:GetService("Players"),game:GetService("StarterGui"),game:GetService("StarterPack"),game:GetService("StarterPlayer")}
 for _, folder in ipairs(foldersToWatch) do
 	for _, obj in ipairs(folder:GetDescendants()) do
@@ -286,11 +261,10 @@ for _, folder in ipairs(foldersToWatch) do
 		if child:IsA("RemoteEvent") or child:IsA("RemoteFunction") then monitorRemote(child) end
 	end)
 end
-
 local connections = {}
 local Background, TopBar = mainFrame, header
 local function onBarInput(input)
-	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 		local lastPos = UserInputService:GetMouseLocation()
 		local mainPos = Background.AbsolutePosition
 		local offset = mainPos - lastPos
@@ -299,21 +273,20 @@ local function onBarInput(input)
 				local newPos = UserInputService:GetMouseLocation()
 				local currentPos = offset + newPos
 				local viewportSize = workspace.CurrentCamera.ViewportSize
-				currentPos = Vector2.new(math.clamp(currentPos.X, 0, viewportSize.X - Background.AbsoluteSize.X),math.clamp(currentPos.Y, 0, viewportSize.Y - Background.AbsoluteSize.Y))
+				currentPos = Vector2.new(math.clamp(currentPos.X, 0, viewportSize.X - Background.AbsoluteSize.X), math.clamp(currentPos.Y, 0, viewportSize.Y - Background.AbsoluteSize.Y))
 				lastPos = newPos
 				TweenService:Create(Background, TweenInfo.new(0.1), {Position = UDim2.new(0, currentPos.X, 0, currentPos.Y)}):Play()
 			end)
 		end
 		table.insert(connections, UserInputService.InputEnded:Connect(function(inputE)
 			if input == inputE and connections["drag"] then
-				connections["drag"]:Disconnect() 
+				connections["drag"]:Disconnect()
 				connections["drag"] = nil
 			end
 		end))
 	end
 end
 header.InputBegan:Connect(onBarInput)
-
 local resizing, lastMousePos = false, nil
 local minWidth, minHeight = 300, 300
 local resizeHandle = Instance.new("TextButton", mainFrame)
@@ -324,16 +297,14 @@ resizeHandle.BackgroundColor3 = Color3.fromRGB(150,150,150)
 resizeHandle.BorderSizePixel = 0
 resizeHandle.Text = ""
 resizeHandle.AutoButtonColor = false
-
 resizeHandle.InputBegan:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 		resizing = true
 		lastMousePos = UserInputService:GetMouseLocation()
 	end
 end)
-
 UserInputService.InputChanged:Connect(function(input)
-	if resizing and input.UserInputType == Enum.UserInputType.MouseMovement then
+	if resizing and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
 		local mousePos = UserInputService:GetMouseLocation()
 		local delta = mousePos - lastMousePos
 		lastMousePos = mousePos
@@ -345,9 +316,8 @@ UserInputService.InputChanged:Connect(function(input)
 		rightPanel.Size = UDim2.new(1, -leftPanel.Size.X.Offset - 20, 1, -70)
 	end
 end)
-
 UserInputService.InputEnded:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 		resizing = false
 	end
 end)
