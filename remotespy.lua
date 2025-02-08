@@ -80,8 +80,13 @@ screenUI.Parent = gethui() or game.CoreGui
 
 local mainFrame = Instance.new("Frame", screenUI)
 mainFrame.Name = "MainFrame"
-mainFrame.Size = UDim2.new(0,700,0,500)
-mainFrame.Position = UDim2.new(0.5,-350,0.5,-250)
+if UserInputService.TouchEnabled then
+    mainFrame.Size = UDim2.new(0,350,0,250)
+    mainFrame.Position = UDim2.new(0.5, -175, 0.5, -125)
+else
+    mainFrame.Size = UDim2.new(0,700,0,500)
+    mainFrame.Position = UDim2.new(0.5, -350, 0.5, -250)
+end
 mainFrame.BackgroundColor3 = Color3.fromRGB(35,35,35)
 mainFrame.BorderSizePixel = 0
 Instance.new("UICorner", mainFrame).CornerRadius = UDim.new(0,12)
@@ -111,6 +116,8 @@ subtitle.TextColor3 = Color3.new(1,1,1)
 subtitle.Font = Enum.Font.Gotham
 subtitle.TextSize = 14
 subtitle.TextXAlignment = Enum.TextXAlignment.Left
+subtitle.TextScaled = true
+subtitle.TextWrapped = true
 
 local closeButton = Instance.new("TextButton", header)
 closeButton.Size = UDim2.new(0,40,0,40)
@@ -173,23 +180,24 @@ controlFrame.Position = UDim2.new(0,10,1,-60)
 controlFrame.BackgroundColor3 = Color3.fromRGB(40,40,40)
 controlFrame.BorderSizePixel = 0
 
-local function createControlButton(text, posUDim, sizeUDim)
+local function createControlButton(text, posUDim)
 	local btn = Instance.new("TextButton", controlFrame)
 	btn.Position = posUDim
-	btn.Size = sizeUDim
+	btn.Size = UDim2.new(0.33, -15, 1, -10)
 	btn.BackgroundColor3 = Color3.fromRGB(55,55,55)
 	btn.BorderSizePixel = 0
 	btn.Text = text
 	btn.Font = Enum.Font.GothamBold
 	btn.TextColor3 = Color3.new(1,1,1)
 	btn.TextSize = 18
+	btn.TextWrapped = true
 	Instance.new("UICorner", btn).CornerRadius = UDim.new(0,6)
 	return btn
 end
 
-local btnCopy = createControlButton("Copy Code", UDim2.new(0,10,0,5), UDim2.new(0.33, -15, 1, -10))
-local btnClear = createControlButton("Clear Logs", UDim2.new(0.33,5,0,5), UDim2.new(0.33, -10, 1, -10))
-local btnRun   = createControlButton("Run Remote", UDim2.new(0.66,5,0,5), UDim2.new(0.33, -15, 1, -10))
+local btnCopy = createControlButton("Copy Code", UDim2.new(0,10,0,5))
+local btnClear = createControlButton("Clear Logs", UDim2.new(0.33,5,0,5))
+local btnRun   = createControlButton("Run Remote", UDim2.new(0.66,5,0,5))
 
 local currentCode = ""
 btnCopy.MouseButton1Click:Connect(function() if currentCode ~= "" then setclipboard(currentCode) end end)
@@ -272,14 +280,10 @@ end
 local foldersToWatch = {game:GetService("ReplicatedStorage"),game.Workspace,game:GetService("Players"),game:GetService("StarterGui"),game:GetService("StarterPack"),game:GetService("StarterPlayer")}
 for _, folder in ipairs(foldersToWatch) do
 	for _, obj in ipairs(folder:GetDescendants()) do
-		if obj:IsA("RemoteEvent") or obj:IsA("RemoteFunction") then 
-			monitorRemote(obj) 
-		end
+		if obj:IsA("RemoteEvent") or obj:IsA("RemoteFunction") then monitorRemote(obj) end
 	end
 	folder.DescendantAdded:Connect(function(child)
-		if child:IsA("RemoteEvent") or child:IsA("RemoteFunction") then 
-			monitorRemote(child) 
-		end
+		if child:IsA("RemoteEvent") or child:IsA("RemoteFunction") then monitorRemote(child) end
 	end)
 end
 
