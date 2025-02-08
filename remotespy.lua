@@ -45,7 +45,7 @@ local function i2p(i, customgen)
 		elseif parent ~= game then
 			while true do
 				if parent and parent.Parent == game then
-					if cloneref(parent.ClassName) then
+					if parent.ClassName then
 						return string.lower(parent.ClassName) == "workspace" and "workspace" .. out or 'game:GetService("' .. parent.ClassName .. '")' .. out
 					else
 						return parent.Name:match("[%a_]+[%w+]*") and "game." .. parent.Name .. out or 'game:FindFirstChild(' .. formatstr(parent.Name) .. ')' .. out
