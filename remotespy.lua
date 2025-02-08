@@ -103,7 +103,7 @@ local subtitle = Instance.new("TextLabel", header)
 subtitle.Size = UDim2.new(1,-70,0,20)
 subtitle.Position = UDim2.new(0,10,0,42)
 subtitle.BackgroundTransparency = 1
-subtitle.Text = "A remote spy for low executer       Serializer and Highlighter by https://github.com/78n"
+subtitle.Text = "A remote spy for low executer/Serializer and Highlighter by https://github.com/78n"
 subtitle.TextColor3 = Color3.new(1,1,1)
 subtitle.Font = Enum.Font.Gotham
 subtitle.TextSize = 14
@@ -164,7 +164,7 @@ controlFrame.Size = UDim2.new(1, -20, 0, 50)
 controlFrame.Position = UDim2.new(0,10,1,-60)
 controlFrame.BackgroundColor3 = Color3.fromRGB(40,40,40)
 controlFrame.BorderSizePixel = 0
-local function createControlButton(text, posUDim)
+local function createButton(text, posUDim)
 	local btn = Instance.new("TextButton", controlFrame)
 	btn.Position = posUDim
 	btn.Size = UDim2.new(0.2,-15,1,-10)
@@ -178,11 +178,11 @@ local function createControlButton(text, posUDim)
 	Instance.new("UICorner", btn).CornerRadius = UDim.new(0,6)
 	return btn
 end
-local btnCopy = createControlButton("Copy Code", UDim2.new(0,10,0,5))
-local btnClear = createControlButton("Clear Logs", UDim2.new(0.2,5,0,5))
-local btnRun = createControlButton("Run Remote", UDim2.new(0.4,5,0,5))
-local btnBlock = createControlButton("Block Remote", UDim2.new(0.6,5,0,5))
-local btnUnblock = createControlButton("Unblock All Remote",UDim2.new(0.8,5,0,5))
+local btnCopy = createButton("Copy Code", UDim2.new(0,10,0,5))
+local btnClear = createButton("Clear Logs", UDim2.new(0.2,5,0,5))
+local btnRun = createButton("Run Remote", UDim2.new(0.4,5,0,5))
+local btnBlock = createButton("Block Remote", UDim2.new(0.6,5,0,5))
+local btnUnblock = createButton("Unblock All Remote",UDim2.new(0.8,5,0,5))
 local currentCode = ""
 btnCopy.MouseButton1Click:Connect(function() if currentCode ~= "" then setclipboard(currentCode) end end)
 btnClear.MouseButton1Click:Connect(function()
@@ -265,14 +265,9 @@ local function addRemoteButton(remoteObj, argList)
 end
 local function monitorRemote(remoteObj)
 	if remoteObj:IsA("RemoteEvent") then
-		remoteObj.OnClientEvent:Connect(function(...)
-			addRemoteButton(remoteObj, {...})
-		end)
+		remoteObj.OnClientEvent:Connect(function(...) addRemoteButton(remoteObj, {...}) end)
 	elseif remoteObj:IsA("RemoteFunction") then
-		remoteObj.OnClientInvoke = function(...)
-			addRemoteButton(remoteObj, {...})
-			return nil
-		end
+		remoteObj.OnClientInvoke = function(...) addRemoteButton(remoteObj, {...}) return nil end
 	end
 end
 local foldersToWatch = {game:GetService("ReplicatedStorage"),game.Workspace,game:GetService("Players"),game:GetService("StarterGui"),game:GetService("StarterPack"),game:GetService("StarterPlayer")}
