@@ -223,7 +223,6 @@ btnUnblock.MouseButton1Click:Connect(function()
     getgenv().blockedRemotes, getgenv().selectedRemote = {}, nil
 end)
 local remoteIndex = 0
-local remoteIndex = 0
 local function addRemoteButton(remoteObj, argList)
     local fullPath = i2p(remoteObj)
     if getgenv().blockedRemotes and table.find(getgenv().blockedRemotes, fullPath) then return end
