@@ -1,7 +1,4 @@
--- join our discord server
--- https://discord.gg/HjZKVFk2ue
 local version = "2.4.8"
-local fe = string.reverse("eu2kFVKZjH/gg.drocsid")
 
 local StarterGui = game:GetService("StarterGui")
 local showNotification = true
