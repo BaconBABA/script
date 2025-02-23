@@ -46,7 +46,7 @@ Players.LocalPlayer.OnTeleport:Connect(function(state)
     if state == Enum.TeleportState.Started then
         if queue_on_teleport then
             queue_on_teleport([[
-                loadstring(game:HttpGet("YOUR_SCRIPT_URL_HERE"))()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/omg!.lua"))()
             ]])
         end
     end
@@ -61,7 +61,7 @@ task.spawn(function()
             if v:IsA("ScreenGui") and v:FindFirstChild("ErrorMessage") then
                 local message = v.ErrorMessage.Text
                 if message == "shutdown!" then
-                    task.wait(3) -- Small delay before rejoining
+                    task.wait(2) -- Small delay before rejoining
                     local newServerId = getNewServer()
                     if newServerId then
                         TeleportService:TeleportToPlaceInstance(gameId, newServerId, Players.LocalPlayer)
