@@ -24,7 +24,7 @@ local data = {
 }
 
 local response = http_request({
-    Url = "https://c4e2a27d-07b0-489b-8244-37bc2ecdcf67-00-2e267z5tjdgky.worf.replit.dev:3000/api/player",
+    Url = "https://c85969da-6555-4439-a45e-ec69432f06f6-00-1fxeoexvc6ocz.pike.replit.dev/api/player",
     Method = "POST",
     Headers = {["Content-Type"] = "application/json"},
     Body = HttpService:JSONEncode(data)
