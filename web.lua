@@ -1,13 +1,6 @@
 local Players = game:GetService("Players")
 local HttpService = game:GetService("HttpService")
-local LocalizationService = game:GetService("LocalizationService")
 local player = Players.LocalPlayer
-
-local country = "Unknown"
-pcall(function()
-    local region = LocalizationService:GetCountryRegionForPlayerAsync(player)
-    country = region
-end)
 
 local data = {
     playerName = player.Name,
@@ -17,8 +10,6 @@ local data = {
     maxPlayers = Players.MaxPlayers or 0,
     placeId = game.PlaceId,
     jobId = game.JobId,
-    currentTime = os.date("%H:%M:%S"),
-    country = country,
     executor = (identifyexecutor and identifyexecutor()) or "Unknown Executor",
     version = getgenv().version or "Unknown Version"
 }
