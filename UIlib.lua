@@ -46,7 +46,7 @@ end
 
 -- Credits To Latte Softworks And qweery for Lucide And Material Icons Respectively.
 local IconModule = {
-	Lucide = nil
+	Lucide = nil,
 	Material = {
 		["perm_media"] = "http://www.roblox.com/asset/?id=6031215982";
 		["sticky_note_2"] = "http://www.roblox.com/asset/?id=6031265972";
