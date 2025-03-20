@@ -149,9 +149,9 @@ local heartbeatConnection = RunService.Heartbeat:Connect(function()
 	uiGradient.Rotation = (uiGradient.Rotation + 4) % 360
 end)
 
-for _, game in ipairs(games) do
-	createButton(`load {game.name}`, game.description, function()
-		loadstring(game:HttpGet(games.link))()
+for _, e in ipairs(games) do
+	createButton(`load {e.name}`, e.description, function()
+		loadstring(game:HttpGet(e.link))()
 		heartbeatConnection:Disconnect()
 		loader:Destroy()
 	end)
