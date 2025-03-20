@@ -151,7 +151,7 @@ end)
 
 for _, game in ipairs(games) do
 	createButton(`load {game.name}`, game.description, function()
-		loadstring(game:HttpGet(game.link))()
+		loadstring(game:HttpGet(games.link))()
 		heartbeatConnection:Disconnect()
 		loader:Destroy()
 	end)
