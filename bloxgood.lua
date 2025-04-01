@@ -6,6 +6,7 @@ local TweenService = game:GetService("TweenService")
 local games = {
 	{name = "SolyNot V2", description = "bad performance but have all function", link = "https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/bfbvgV2.lua"},
 	{name = "SolyNot V3", description = "good performance but not finished", link = "https://raw.githubusercontent.com/BaconBABA/script/refs/heads/main/bfbvgV3.lua"}
+	{name = "SolyNot V4", description = "FULL release", link = "https://raw.githubusercontent.com/BaconBABA/test/refs/heads/main/kill.lua"}
 }
 local loader = Instance.new("ScreenGui", CoreGui)
 
